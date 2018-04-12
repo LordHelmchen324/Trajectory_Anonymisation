@@ -21,6 +21,11 @@ public class Anonymisation {
     
         double astsd = Trajectory.shortTimeSeriesDistance(r, s);
         System.out.println("Adapted Short Time Series Distance r, s = " + astsd);
+
+        double autocorr0 = r.autocorrelation(0.0);
+        System.out.println("Adapted Autocorrelation r, 0.0 = " + autocorr0);
+        double autocorr1 = r.autocorrelation(1.0);
+        System.out.println("Adapted Autocorrelation r, 1.0 = " + autocorr1);
     }
 
 }

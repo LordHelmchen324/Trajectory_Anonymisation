@@ -11,12 +11,12 @@ public class Trajectory {
 
     Trajectory(Trajectory source) {
         this.places = new ArrayList<Place>();
-        for (int i = 0; i < source.getLenght(); i++) {
+        for (int i = 0; i < source.lenght(); i++) {
             this.places.add(source.places.get(i));
         }
     }
 
-    int getLenght() {
+    int lenght() {
         return this.places.size();
     }
 
@@ -35,12 +35,12 @@ public class Trajectory {
     // Euclidean Distance
 
     static double euclideanDistance(final Trajectory r, final Trajectory s) {
-        if (r.getLenght() != s.getLenght()) {
+        if (r.lenght() != s.lenght()) {
             System.err.println("Trajectories have different length!");
         }
 
         int result = 0;
-        for (int i = 0; i < r.getLenght(); i++) {
+        for (int i = 0; i < r.lenght(); i++) {
             Place p = r.getPlaceAtIndex(i);
             Place q = s.getPlaceAtIndex(i);
         
@@ -49,8 +49,6 @@ public class Trajectory {
             int ysqrd = (p.y - q.y) * (p.y - q.y);
         
             result += (1 + tsqrd) * (xsqrd + ysqrd);
-
-            System.out.println(result);
         }
     
         return Math.sqrt((double)result);
@@ -59,7 +57,7 @@ public class Trajectory {
     // Short Time Series Distance
 
     static double shortTimeSeriesDistance(final Trajectory r, final Trajectory s) {
-        if (r.getLenght() != s.getLenght()) {
+        if (r.lenght() != s.lenght()) {
             System.err.println("Trajectories have different length!");
         }
 
@@ -70,7 +68,7 @@ public class Trajectory {
         sCopy.insertPlaceAtBeginning(origin);
 
         double result = 0.0;
-        for (int i = 0; i < rCopy.getLenght() - 1 ; i++) {
+        for (int i = 0; i < rCopy.lenght() - 1 ; i++) {
             Place p = rCopy.getPlaceAtIndex(i);
             Place pNext = rCopy.getPlaceAtIndex(i + 1);
             Place q = sCopy.getPlaceAtIndex(i);
@@ -88,6 +86,43 @@ public class Trajectory {
         }
         
         return Math.sqrt(result);
+    }
+
+    // Autocorrelation
+
+    private double meanX() {
+        int sum = 0;
+        for (int i = 0; i < this.lenght(); i++) {
+            sum += this.places.get(i).x;
+        }
+    
+        return (double)sum / (double)this.lenght();
+    }
+
+    private double meanY() {
+        int sum = 0;
+        for (int i = 0; i < this.lenght(); i++) {
+            sum += this.places.get(i).y;
+        }
+    
+        return (double)sum / (double)this.lenght();
+    }
+
+    private double gammaPrimeA(double h) {
+        int iterCount = this.lenght() - (int)Math.abs(h);
+        double result = 0.0;
+        for (int i = 0; i < iterCount; i++) {
+            Place place = this.getPlaceAtIndex(i);
+            Place shiftedPlace = this.getPlaceAtIndex(i + (int)Math.abs(h));
+        
+            result += ((double)shiftedPlace.x - this.meanX()) * ((double)place.x - this.meanX()) + ((double)shiftedPlace.y - this.meanY()) * ((double)place.y - this.meanY());
+        }
+    
+        return result / (double)this.lenght();
+    }
+
+    double autocorrelation(double h) {
+        return this.gammaPrimeA(h) / this.gammaPrimeA(0);
     }
 
 }
