@@ -1,11 +1,11 @@
+import javax.swing.TransferHandler;
+
 public class Trajectory {
 
-    int x, y, t;
+    Place[] places;
 
-    Trajectory(int x, y, t) {
-        this.x = x;
-        this.y = y;
-        this.t = t;
+    Trajectory(int length) {
+        this.places = new Place[length];
     }
 
 }
