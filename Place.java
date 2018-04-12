@@ -1,6 +1,6 @@
 public class Place {
 
-    int x, y, t;
+    public int x, y, t;
 
     Place(int x, int y, int t) {
         this.x = x;
