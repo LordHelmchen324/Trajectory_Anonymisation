@@ -13,7 +13,7 @@ class Cluster {
         return this.trajectories.size();
     }
 
-    void convertMeanXMeanY() {
+    void convertXMedianYMedian() {
         List<List<Place>> placesByTimestamp = new LinkedList<List<Place>>();
         for (Trajectory t : this.trajectories) {
             for (Place p : t.getPlaces()) {
