@@ -1,4 +1,4 @@
-public class Anonymisation {
+class Anonymisation {
 
     public static void main(String[] args) {
         Trajectory r = new Trajectory();

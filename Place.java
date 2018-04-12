@@ -1,4 +1,4 @@
-public class Place {
+class Place {
 
     public int x, y, t;
 
