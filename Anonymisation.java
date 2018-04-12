@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.List;
+
 class Anonymisation {
 
     public static void main(String[] args) {
@@ -26,6 +29,19 @@ class Anonymisation {
         System.out.println("Adapted Autocorrelation r, 0.0 = " + autocorr0);
         double autocorr1 = r.autocorrelation(1.0);
         System.out.println("Adapted Autocorrelation r, 1.0 = " + autocorr1);
+
+        List<Trajectory> trajectories = new LinkedList<Trajectory>();
+        trajectories.add(r);
+        trajectories.add(s);
+        trajectories.add(u);
+        Cluster c = new Cluster(trajectories);
+        c.convertXMedianYMedian();
+        for (Trajectory t : c.getTrajectories()) {
+            System.out.println("------");
+            for (Place p : t.getPlaces()) {
+                System.out.println("(" + p.x + "," + p.y + "," + p.t + ")");
+            }
+        }
     }
 
 }

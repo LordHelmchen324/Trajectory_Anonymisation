@@ -13,6 +13,10 @@ class Cluster {
         return this.trajectories.size();
     }
 
+    List<Trajectory> getTrajectories() {
+        return this.trajectories;
+    }
+
     void convertXMedianYMedian() {
         List<List<Place>> placesByTimestamp = new LinkedList<List<Place>>();
         for (Trajectory t : this.trajectories) {
