@@ -11,8 +11,8 @@ class Trajectory {
 
     Trajectory(Trajectory source) {
         this.places = new ArrayList<Place>();
-        for (int i = 0; i < source.lenght(); i++) {
-            this.places.add(source.places.get(i));
+        for (Place p : source.places) {
+            this.places.add(p);
         }
     }
 
@@ -92,8 +92,8 @@ class Trajectory {
 
     private double meanX() {
         int sum = 0;
-        for (int i = 0; i < this.lenght(); i++) {
-            sum += this.places.get(i).x;
+        for (Place p : this.places) {
+            sum += p.x;
         }
     
         return (double)sum / (double)this.lenght();
@@ -101,8 +101,8 @@ class Trajectory {
 
     private double meanY() {
         int sum = 0;
-        for (int i = 0; i < this.lenght(); i++) {
-            sum += this.places.get(i).y;
+        for (Place p : this.places) {
+            sum += p.y;
         }
     
         return (double)sum / (double)this.lenght();
