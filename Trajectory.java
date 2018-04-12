@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import Place;
 
 public class Trajectory {
 
@@ -18,7 +17,7 @@ public class Trajectory {
     }
 
     int getLenght() {
-        return this.places.length;
+        return this.places.size();
     }
 
     Place getPlaceAtIndex(int i) {
@@ -35,9 +34,9 @@ public class Trajectory {
 
     // Euclidean Distance
 
-    static double euclideanDistance(Trajectory r, Trajectory s) {
+    static double euclideanDistance(final Trajectory r, final Trajectory s) {
         if (r.getLenght() != s.getLenght()) {
-            System.err.println("Cannot compute distance for trajectories of different length!");
+            System.err.println("Trajectories have different length!");
         }
 
         int result = 0;
@@ -50,6 +49,8 @@ public class Trajectory {
             int ysqrd = (p.y - q.y) * (p.y - q.y);
         
             result += (1 + tsqrd) * (xsqrd + ysqrd);
+
+            System.out.println(result);
         }
     
         return Math.sqrt((double)result);
@@ -57,19 +58,19 @@ public class Trajectory {
 
     // Short Time Series Distance
 
-    static double shortTimeSeriesDistance(Trajectory r, Trajectory s) {
+    static double shortTimeSeriesDistance(final Trajectory r, final Trajectory s) {
         if (r.getLenght() != s.getLenght()) {
-            System.err.println("Cannot compute distance for trajectories of different length!");
+            System.err.println("Trajectories have different length!");
         }
 
-        Place origin = Place(0, 0, 0);
+        Place origin = new Place(0, 0, 0);
         Trajectory rCopy = new Trajectory(r);
         rCopy.insertPlaceAtBeginning(origin);
         Trajectory sCopy = new Trajectory(s);
         sCopy.insertPlaceAtBeginning(origin);
 
         double result = 0.0;
-        for (int i = 0; i < rCopy.getLenght() ; i++) {
+        for (int i = 0; i < rCopy.getLenght() - 1 ; i++) {
             Place p = rCopy.getPlaceAtIndex(i);
             Place pNext = rCopy.getPlaceAtIndex(i + 1);
             Place q = sCopy.getPlaceAtIndex(i);
