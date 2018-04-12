@@ -24,6 +24,10 @@ class Trajectory {
         return places.get(i);
     }
 
+    List<Place> getPlaces() {
+        return this.places;
+    }
+
     void add(Place p) {
         this.places.add(p);
     }
