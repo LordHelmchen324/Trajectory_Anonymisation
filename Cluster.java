@@ -17,100 +17,102 @@ class Cluster {
         return this.trajectories;
     }
 
-    private List<List<Place>> allPlacesByTimestamp() {
-        // add Places into list of lists of Places that were recorded at the same time
-        List<List<Place>> placesByTimestamp = new LinkedList<List<Place>>();
+    private List<Place> allPlaces() {
+        List<Place> places = new LinkedList<Place>();
         for (Trajectory t : this.trajectories) {
-            for (Place p : t.getPlaces()) {
-                boolean added = false;
-                for (List<Place> ps : placesByTimestamp) {
-                    if (p.t == ps.get(0).t) {
-                        added = true;
-                        break;
-                    }
-                }
-                if (!added) {
-                    List<Place> placesAtNewTimestamp = new LinkedList<Place>();
-                    placesAtNewTimestamp.add(p);
-                    placesByTimestamp.add(placesAtNewTimestamp);
-                }
-            }
+            places.addAll(t.getPlaces());
         }
-        return placesByTimestamp;
+        return places;
     }
 
-    private void setXToMedian(List<Place> ps) {
-        int sum = 0;
-            for (Place p : ps) sum += p.x;
-            double avrg = (double)sum / ps.size();
-
-            double minDiff = Double.MAX_VALUE;
-            int centered = 0;
-            for (Place p : ps) {
-                double diff = Math.abs((double)p.x - avrg);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    centered = p.x;
-                }
-            }
-
-            for (Place p : ps) p.x = centered;
+    private List<Place> placesAtTime(int t) {
+        List<Place> places = this.allPlaces();
+        List<Place> concurrentPlaces = new LinkedList<Place>();
+        for (Place p : places) {
+            if (p.t == t) concurrentPlaces.add(p);
+        }
+        return concurrentPlaces;
     }
 
-    private void setYToMedian(List<Place> ps) {
-        int sum = 0;
-            for (Place p : ps) sum += p.y;
-            double avrg = (double)sum / ps.size();
+    private Place findXMedianPlaceAtTime(int t) {
+        List<Place> concurrentPlaces = this.placesAtTime(t);
 
-            double minDiff = Double.MAX_VALUE;
-            int centered = 0;
-            for (Place p : ps) {
-                double diff = Math.abs((double)p.y - avrg);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    centered = p.y;
-                }
-            }
+        concurrentPlaces.sort(new Place.XComparator());
+        int n = concurrentPlaces.size();
 
-            for (Place p : ps) p.y = centered;
+        if ((n & 1) != 0) return concurrentPlaces.get((n + 1) / 2);
+
+        Place lowerMedian = concurrentPlaces.get(n / 2);
+        Place upperMedian = concurrentPlaces.get(n / 2 + 1);
+        int xMedian = (lowerMedian.x + upperMedian.x) / 2;
+        if (Math.abs(xMedian - lowerMedian.x) < Math.abs(xMedian - upperMedian.x)) {
+            return lowerMedian;
+        } else {
+            return upperMedian;
+        }
+    }
+
+    private Place findYMedianPlaceAtTime(int t) {
+        List<Place> concurrentPlaces = this.placesAtTime(t);
+
+        concurrentPlaces.sort(new Place.YComparator());
+        int n = concurrentPlaces.size();
+
+        if ((n & 1) != 0) return concurrentPlaces.get((n + 1) / 2);
+
+        Place lowerMedian = concurrentPlaces.get(n / 2);
+        Place upperMedian = concurrentPlaces.get(n / 2 + 1);
+        int yMedian = (lowerMedian.y + upperMedian.y) / 2;
+        if (Math.abs(yMedian - lowerMedian.y) < Math.abs(yMedian - upperMedian.y)) {
+            return lowerMedian;
+        } else {
+            return upperMedian;
+        }
     }
 
     void convertXMedianYMedian() {
-        List<List<Place>> placesByTimestamp = this.allPlacesByTimestamp();
+        // get a set of all timestamps;
+        List<Place> places = this.allPlaces();
+        List<Integer> timestamps = new LinkedList<Integer>();
+        for (Place p : places) {
+            if ( !timestamps.contains(p.t) ) timestamps.add(p.t);
+        }
 
         // for all Places recorded at the same time, set their x-coordinate to the median
-        for (List<Place> ps : placesByTimestamp) {
-            this.setXToMedian(ps);
+        for (Integer t : timestamps) {
+            Place xMedian = this.findXMedianPlaceAtTime(t);
+            List<Place> concurrentPlaces = this.placesAtTime(t);
+            for (Place p : concurrentPlaces) {
+                p.x = xMedian.x;
+            }
         }
 
         // for all Places recorded at the same time, set their y-coordinate to the median
-        for (List<Place> ps : placesByTimestamp) {
-            this.setYToMedian(ps);
+        for (Integer t : timestamps) {
+            Place yMedian = this.findYMedianPlaceAtTime(t);
+            List<Place> concurrentPlaces = this.placesAtTime(t);
+            for (Place p : concurrentPlaces) {
+                p.y = yMedian.y;
+            }
         }
     }
 
     void convertXMedianY() {
-        List<List<Place>> placesByTimestamp = this.allPlacesByTimestamp();
+        // get a set of all timestamps;
+        List<Place> places = this.allPlaces();
+        List<Integer> timestamps = new LinkedList<Integer>();
+        for (Place p : places) {
+            if ( !timestamps.contains(p.t) ) timestamps.add(p.t);
+        }
 
         // for all Places recorded at the same time, set their x-coordinate to the median
-        for (List<Place> ps : placesByTimestamp) {
-            int sum = 0;
-            for (Place p : ps) sum += p.x;
-            double avrg = (double)sum / ps.size();
-
-            double minDiff = Double.MAX_VALUE;
-            Place centered = Place.makeOrigin();
-            for (Place p : ps) {
-                double diff = Math.abs((double)p.x - avrg);
-                if (diff < minDiff) {
-                    minDiff = diff;
-                    centered = p;
-                }
-            }
-
-            for (Place p : ps) {
-                p.x = centered.x;
-                p.y = centered.y;
+        // and their y-coordinate to the corresponding y
+        for (Integer t : timestamps) {
+            Place xMedian = this.findXMedianPlaceAtTime(t);
+            List<Place> concurrentPlaces = this.placesAtTime(t);
+            for (Place p : concurrentPlaces) {
+                p.x = xMedian.x;
+                p.y = xMedian.y;
             }
         }
     }
