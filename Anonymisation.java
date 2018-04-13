@@ -4,8 +4,8 @@ import java.util.List;
 class Anonymisation {
 
     public static void main(String[] args) {
-        TrajectoryTest trajTest = new TrajectoryTest();
-        trajTest.testAutocorrelation();
+        /*TrajectoryTest trajTest = new TrajectoryTest();
+        trajTest.testAutocorrelation();*/
 
         Trajectory r = new Trajectory();
         r.add(new Place(3, 6, 1));
@@ -22,7 +22,7 @@ class Anonymisation {
         u.add(new Place(6, 2, 2));
         u.add(new Place(9, 2, 3));
     
-        double aeud = Trajectory.euclideanDistance(r, s);
+        /*double aeud = Trajectory.euclideanDistance(r, s);
         System.out.println("Adapted Euclidean Distance r, s = " + aeud);
     
         double astsd = Trajectory.shortTimeSeriesDistance(r, s);
@@ -31,7 +31,7 @@ class Anonymisation {
         double autocorr0 = r.autocorrelation(0.0);
         System.out.println("Adapted Autocorrelation r, 0.0 = " + autocorr0);
         double autocorr1 = r.autocorrelation(1.0);
-        System.out.println("Adapted Autocorrelation r, 1.0 = " + autocorr1);
+        System.out.println("Adapted Autocorrelation r, 1.0 = " + autocorr1);*/
 
         List<Trajectory> trajectories = new LinkedList<Trajectory>();
         trajectories.add(r);
@@ -43,10 +43,10 @@ class Anonymisation {
         c1.convertXMedianYMedian();
         System.out.println("After:\n" + c1.description());
 
-        Cluster c2 = new Cluster(trajectories);
+        /*Cluster c2 = new Cluster(trajectories);
         System.out.println("Before:\n" + c2.description());
         c2.convertXMedianY();
-        System.out.println("After:\n" + c2.description());
+        System.out.println("After:\n" + c2.description());*/
     }
 
 }
