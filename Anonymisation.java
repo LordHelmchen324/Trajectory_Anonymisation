@@ -37,9 +37,21 @@ class Anonymisation {
         trajectories.add(r);
         trajectories.add(s);
         trajectories.add(u);
-        Cluster c = new Cluster(trajectories);
-        c.convertXMedianYMedian();
-        for (Trajectory t : c.getTrajectories()) {
+
+        Cluster c1 = new Cluster(trajectories);
+        c1.convertXMedianYMedian();
+        for (Trajectory t : c1.getTrajectories()) {
+            System.out.println("------");
+            for (Place p : t.getPlaces()) {
+                System.out.println("(" + p.x + "," + p.y + "," + p.t + ")");
+            }
+        }
+
+        System.out.println("XXXXXXXXXXXXXXXXX");
+
+        Cluster c2 = new Cluster(trajectories);
+        c2.convertXMedianY();
+        for (Trajectory t : c2.getTrajectories()) {
             System.out.println("------");
             for (Place p : t.getPlaces()) {
                 System.out.println("(" + p.x + "," + p.y + "," + p.t + ")");

@@ -89,4 +89,30 @@ class Cluster {
         }
     }
 
+    void convertXMedianY() {
+        List<List<Place>> placesByTimestamp = this.allPlacesByTimestamp();
+
+        // for all Places recorded at the same time, set their x-coordinate to the median
+        for (List<Place> ps : placesByTimestamp) {
+            int sum = 0;
+            for (Place p : ps) sum += p.x;
+            double avrg = (double)sum / ps.size();
+
+            double minDiff = Double.MAX_VALUE;
+            Place centered = Place.makeOrigin();
+            for (Place p : ps) {
+                double diff = Math.abs((double)p.x - avrg);
+                if (diff < minDiff) {
+                    minDiff = diff;
+                    centered = p;
+                }
+            }
+
+            for (Place p : ps) {
+                p.x = centered.x;
+                p.y = centered.y;
+            }
+        }
+    }
+
 }
