@@ -17,7 +17,7 @@ class Cluster {
         return this.trajectories;
     }
 
-    void convertXMedianYMedian() {
+    private List<List<Place>> allPlacesByTimestamp() {
         // add Places into list of lists of Places that were recorded at the same time
         List<List<Place>> placesByTimestamp = new LinkedList<List<Place>>();
         for (Trajectory t : this.trajectories) {
@@ -36,10 +36,11 @@ class Cluster {
                 }
             }
         }
+        return placesByTimestamp;
+    }
 
-        // for all Places recorded at the same time, set their x-coordinate to the median
-        for (List<Place> ps : placesByTimestamp) {
-            int sum = 0;
+    private void setXToMedian(List<Place> ps) {
+        int sum = 0;
             for (Place p : ps) sum += p.x;
             double avrg = (double)sum / ps.size();
 
@@ -54,11 +55,10 @@ class Cluster {
             }
 
             for (Place p : ps) p.x = centered;
-        }
+    }
 
-        // for all Places recorded at the same time, set their y-coordinate to the median
-        for (List<Place> ps : placesByTimestamp) {
-            int sum = 0;
+    private void setYToMedian(List<Place> ps) {
+        int sum = 0;
             for (Place p : ps) sum += p.y;
             double avrg = (double)sum / ps.size();
 
@@ -73,6 +73,19 @@ class Cluster {
             }
 
             for (Place p : ps) p.y = centered;
+    }
+
+    void convertXMedianYMedian() {
+        List<List<Place>> placesByTimestamp = this.allPlacesByTimestamp();
+
+        // for all Places recorded at the same time, set their x-coordinate to the median
+        for (List<Place> ps : placesByTimestamp) {
+            this.setXToMedian(ps);
+        }
+
+        // for all Places recorded at the same time, set their y-coordinate to the median
+        for (List<Place> ps : placesByTimestamp) {
+            this.setYToMedian(ps);
         }
     }
 
