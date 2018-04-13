@@ -46,10 +46,10 @@ class Cluster {
         concurrentPlaces.sort(new Place.XComparator());
         int n = concurrentPlaces.size();
 
-        if ((n & 1) != 0) return concurrentPlaces.get((n + 1) / 2);
+        if ((n & 1) != 0) return concurrentPlaces.get(n / 2);
 
-        Place lowerMedian = concurrentPlaces.get(n / 2);
-        Place upperMedian = concurrentPlaces.get(n / 2 + 1);
+        Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
+        Place upperMedian = concurrentPlaces.get(n / 2);
         int xMedian = (lowerMedian.x + upperMedian.x) / 2;
         if (Math.abs(xMedian - lowerMedian.x) < Math.abs(xMedian - upperMedian.x)) {
             return lowerMedian;
@@ -64,10 +64,10 @@ class Cluster {
         concurrentPlaces.sort(new Place.YComparator());
         int n = concurrentPlaces.size();
 
-        if ((n & 1) != 0) return concurrentPlaces.get((n + 1) / 2);
+        if ((n & 1) != 0) return concurrentPlaces.get(n / 2);
 
-        Place lowerMedian = concurrentPlaces.get(n / 2);
-        Place upperMedian = concurrentPlaces.get(n / 2 + 1);
+        Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
+        Place upperMedian = concurrentPlaces.get(n / 2);
         int yMedian = (lowerMedian.y + upperMedian.y) / 2;
         if (Math.abs(yMedian - lowerMedian.y) < Math.abs(yMedian - upperMedian.y)) {
             return lowerMedian;
