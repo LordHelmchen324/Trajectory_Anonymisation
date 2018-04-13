@@ -8,4 +8,8 @@ class Place {
         this.t = t;
     }
 
+    static Place makeOrigin() {
+        return new Place(0, 0, 0);
+    }
+
 }
