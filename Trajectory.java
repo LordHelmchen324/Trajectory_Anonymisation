@@ -5,40 +5,40 @@ class Trajectory {
 
     private List<Place> places;
 
-    Trajectory() {
+    public Trajectory() {
         this.places = new ArrayList<Place>();
     }
 
-    Trajectory(Trajectory source) {
+    public Trajectory(Trajectory source) {
         this.places = new ArrayList<Place>();
         for (Place p : source.places) {
             this.places.add(p);
         }
     }
 
-    int lenght() {
+    public int lenght() {
         return this.places.size();
     }
 
-    Place getPlaceAtIndex(int i) {
+    public Place getPlaceAtIndex(int i) {
         return places.get(i);
     }
 
-    List<Place> getPlaces() {
+    public List<Place> getPlaces() {
         return this.places;
     }
 
-    void add(Place p) {
+    public void add(Place p) {
         this.places.add(p);
     }
 
-    void insertPlaceAtBeginning(Place p) {
+    public void insertPlaceAtBeginning(Place p) {
         this.places.add(0, p);
     }
 
     // Euclidean Distance
 
-    static double euclideanDistance(final Trajectory r, final Trajectory s) {
+    public static double euclideanDistance(final Trajectory r, final Trajectory s) {
         if (r.lenght() != s.lenght()) {
             System.err.println("Trajectories have different length!");
         }
@@ -60,7 +60,7 @@ class Trajectory {
 
     // Short Time Series Distance
 
-    static double shortTimeSeriesDistance(final Trajectory r, final Trajectory s) {
+    public static double shortTimeSeriesDistance(final Trajectory r, final Trajectory s) {
         if (r.lenght() != s.lenght()) {
             System.err.println("Trajectories have different length!");
         }
@@ -125,7 +125,7 @@ class Trajectory {
         return result / (double)this.lenght();
     }
 
-    double autocorrelation(double h) {
+    public double autocorrelation(double h) {
         return this.gammaPrimeA(h) / this.gammaPrimeA(0);
     }
 

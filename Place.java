@@ -4,29 +4,27 @@ class Place {
 
     public int x, y, t;
 
-    Place(int x, int y, int t) {
+    public Place(int x, int y, int t) {
         this.x = x;
         this.y = y;
         this.t = t;
     }
 
-    static Place makeOrigin() {
+    public static Place makeOrigin() {
         return new Place(0, 0, 0);
     }
 
-    static class XComparator implements Comparator {
-        int compare(Place o1, Place o2) {
-            if (o1.x < o2.x) return -1;
-            if (o1.x > o2.x) return 1;
-            return 0;
+    public static class XComparator implements Comparator<Place> {
+        @Override
+        public int compare(Place o1, Place o2) {
+            return o1.x - o2.x;
         }
     }
 
-    static class YComparator implements Comparator {
-        int compare(Place o1, Place o2) {
-            if (o1.y < o2.y) return -1;
-            if (o1.y > o2.y) return 1;
-            return 0;
+    public static class YComparator implements Comparator<Place> {
+        @Override
+        public int compare(Place o1, Place o2) {
+            return o1.y - o2.y;
         }
     }
 

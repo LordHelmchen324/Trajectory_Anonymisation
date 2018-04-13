@@ -5,15 +5,15 @@ class Cluster {
 
     private List<Trajectory> trajectories;
 
-    Cluster(List<Trajectory> trajectories) {
+    public Cluster(List<Trajectory> trajectories) {
         this.trajectories = trajectories;
     }
 
-    int size() {
+    public int size() {
         return this.trajectories.size();
     }
 
-    List<Trajectory> getTrajectories() {
+    public List<Trajectory> getTrajectories() {
         return this.trajectories;
     }
 
@@ -70,7 +70,7 @@ class Cluster {
         }
     }
 
-    void convertXMedianYMedian() {
+    public void convertXMedianYMedian() {
         // get a set of all timestamps;
         List<Place> places = this.allPlaces();
         List<Integer> timestamps = new LinkedList<Integer>();
@@ -97,7 +97,7 @@ class Cluster {
         }
     }
 
-    void convertXMedianY() {
+    public void convertXMedianY() {
         // get a set of all timestamps;
         List<Place> places = this.allPlaces();
         List<Integer> timestamps = new LinkedList<Integer>();
