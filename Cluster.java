@@ -18,6 +18,7 @@ class Cluster {
     }
 
     void convertXMedianYMedian() {
+        // add Places into list of lists of Places that were recorded at the same time
         List<List<Place>> placesByTimestamp = new LinkedList<List<Place>>();
         for (Trajectory t : this.trajectories) {
             for (Place p : t.getPlaces()) {
@@ -36,6 +37,7 @@ class Cluster {
             }
         }
 
+        // for all Places recorded at the same time, set their x-coordinate to the median
         for (List<Place> ps : placesByTimestamp) {
             int sum = 0;
             for (Place p : ps) sum += p.x;
@@ -54,6 +56,7 @@ class Cluster {
             for (Place p : ps) p.x = centered;
         }
 
+        // for all Places recorded at the same time, set their y-coordinate to the median
         for (List<Place> ps : placesByTimestamp) {
             int sum = 0;
             for (Place p : ps) sum += p.y;
