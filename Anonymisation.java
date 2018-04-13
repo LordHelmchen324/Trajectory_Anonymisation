@@ -4,6 +4,9 @@ import java.util.List;
 class Anonymisation {
 
     public static void main(String[] args) {
+        TrajectoryTest trajTest = new TrajectoryTest();
+        trajTest.testAutocorrelation();
+
         Trajectory r = new Trajectory();
         r.add(new Place(3, 6, 1));
         r.add(new Place(1, 7, 2));
