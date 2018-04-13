@@ -10,6 +10,10 @@ class Place {
         this.t = t;
     }
 
+    public String description() {
+        return "(" + x + "," + y + "," + t + ")";
+    }
+
     public static Place makeOrigin() {
         return new Place(0, 0, 0);
     }
