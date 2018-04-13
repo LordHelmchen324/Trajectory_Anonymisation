@@ -38,15 +38,15 @@ class Anonymisation {
         trajectories.add(s);
         trajectories.add(u);
 
-        Cluster c1 = new Cluster(trajectories);
+        /*Cluster c1 = new Cluster(trajectories);
         System.out.println("Before:\n" + c1.description());
         c1.convertXMedianYMedian();
-        System.out.println("After:\n" + c1.description());
+        System.out.println("After:\n" + c1.description());*/
 
-        /*Cluster c2 = new Cluster(trajectories);
+        Cluster c2 = new Cluster(trajectories);
         System.out.println("Before:\n" + c2.description());
         c2.convertXMedianY();
-        System.out.println("After:\n" + c2.description());*/
+        System.out.println("After:\n" + c2.description());
     }
 
 }
