@@ -4,7 +4,7 @@ import org.junit.Test;
 import java.util.LinkedList;
 import java.util.List;
 
-class ClusterTest {
+public class ClusterTest {
 
     @Test
     public void allShouldBeEqualAfterXMedianYMedian() {

@@ -1,7 +1,7 @@
 import static org.junit.Assert.*;
 import org.junit.Test;
 
-class PlaceTest {
+public class PlaceTest {
 
     @Test
     public void shouldEqual() {
