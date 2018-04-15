@@ -1,3 +1,0 @@
-class Cluster extends Dataset {
-
-}
