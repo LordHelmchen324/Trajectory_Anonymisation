@@ -155,13 +155,13 @@ class Dataset {
         return furthest;
     }
 
-    private List<Trajectory> clusterAround(Trajectory t, int size) {
+    private List<Trajectory> clusterAround(Trajectory t, int size, Trajectory.DistanceMeasure dM) {
         List<Trajectory> cluster = new LinkedList<Trajectory>();
         cluster.add(t);
         this.remove(t);
 
         for (int i = 0; i < size - 1; i++) {
-            Trajectory closest = this.closestTrajectoryTo(t);
+            Trajectory closest = this.closestTrajectoryTo(t, dM);
             cluster.add(closest);
             this.remove(closest);
         }
@@ -175,12 +175,12 @@ class Dataset {
 
         while (temp.size() > k) {
             Trajectory avrg = temp.xMedianYMedian();      // TODO: make this general and replacable
-            Trajectory furthest = temp.furthestTrajectoryTo(avrg);
-            clusters.add(temp.clusterAround(furthest, k));
+            Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
+            clusters.add(temp.clusterAround(furthest, k, dM));
 
             if (temp.size() > k) {
-                Trajectory furthest2 = temp.furthestTrajectoryTo(avrg);
-                clusters.add(temp.clusterAround(furthest, k));
+                Trajectory furthest2 = temp.furthestTrajectoryTo(avrg, dM);
+                clusters.add(temp.clusterAround(furthest, k, dM));
             }
         }
 
