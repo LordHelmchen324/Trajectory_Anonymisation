@@ -13,12 +13,6 @@ class Cluster {
         return this.trajectories.size();
     }
 
-    public String description() {
-        String d = "Cluster of size " + this.trajectories.size() + ":";
-        for (Trajectory t : this.trajectories) d += "\n  " + t.description();
-        return d;
-    }
-
     public List<Trajectory> getTrajectories() {
         return this.trajectories;
     }

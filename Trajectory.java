@@ -20,12 +20,6 @@ class Trajectory {
         return this.places.size();
     }
 
-    public String description() {
-        String d = "Trajectory (" + this.places.size() + "): ";
-        for (Place p : this.places) d += ", " + p.description();
-        return d;
-    }
-
     public Place getPlaceAtIndex(int i) {
         return places.get(i);
     }
