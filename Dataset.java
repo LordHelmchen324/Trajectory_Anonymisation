@@ -5,6 +5,10 @@ class Dataset {
 
     private List<Trajectory> trajectories = new LinkedList<Trajectory>();
 
+    public void add(Trajectory t) {
+        this.trajectories.add(t);
+    }
+
     public int size() {
         return this.trajectories.size();
     }
@@ -84,7 +88,7 @@ class Dataset {
         return median;
     }
 
-    public Trajectory convertXMedianY() {
+    public Trajectory xMedianY() {
         Trajectory median = new Trajectory();
 
         // get a set of all timestamps;
