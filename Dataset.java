@@ -15,6 +15,10 @@ class Dataset {
         this.trajectories.add(t);
     }
 
+    public void remove(Trajectory t) {
+        this.trajectories.remove(t);
+    }
+
     public int size() {
         return this.trajectories.size();
     }
@@ -115,6 +119,82 @@ class Dataset {
         }
 
         return median;
+    }
+
+    // MDAV
+
+    private Trajectory closestTrajectoryTo(Trajectory t) {
+        if (this.trajectories.isEmpty()) return t;      // TODO: error
+
+        double minDistance = Double.MAX_VALUE;
+        Trajectory closest = null;
+        for (Trajectory t2 : this.trajectories) {
+            double distance = Trajectory.euclideanDistance(t, t2);      // TODO: make this general and replacable
+            if (distance < minDistance) {
+                minDistance = distance;
+                closest = t2;
+            }
+        }
+
+        return closest;
+    }
+
+    private Trajectory furthestTrajectoryTo(Trajectory t) {
+        if (this.trajectories.isEmpty()) return t;      // TODO: error
+
+        double maxDistance = 0.0;
+        Trajectory furthest = null;
+        for (Trajectory t2 : this.trajectories) {
+            double distance = Trajectory.euclideanDistance(t, t2);      // TODO: make this general and replacable
+            if (distance > maxDistance) {
+                maxDistance = distance;
+                furthest = t2;
+            }
+        }
+
+        return furthest;
+    }
+
+    private List<Trajectory> clusterAround(Trajectory t, int size) {
+        List<Trajectory> cluster = new LinkedList<Trajectory>();
+        cluster.add(t);
+        this.remove(t);
+
+        for (int i = 0; i < size - 1; i++) {
+            Trajectory closest = this.closestTrajectoryTo(t);
+            cluster.add(closest);
+            this.remove(closest);
+        }
+
+        return cluster;
+    }
+
+    public Dataset protectedByMDAV(int k) {
+        Dataset temp = new Dataset(this);
+        List<List<Trajectory>> clusters = new LinkedList<List<Trajectory>>();
+
+        while (temp.size() > k) {
+            Trajectory avrg = temp.xMedianYMedian();      // TODO: make this general and replacable
+            Trajectory furthest = temp.furthestTrajectoryTo(avrg);
+            clusters.add(temp.clusterAround(furthest, k));
+
+            if (temp.size() > k) {
+                Trajectory furthest2 = temp.furthestTrajectoryTo(avrg);
+                clusters.add(temp.clusterAround(furthest, k));
+            }
+        }
+
+        List<Trajectory> lastCluster = new LinkedList<Trajectory>();
+        for (Trajectory t : temp.trajectories) {
+            lastCluster.add(t);
+            temp.remove(t);
+        }
+        clusters.add(lastCluster);
+
+        Dataset result = new Dataset();
+        for (List<Trajectory> c : clusters) {
+            
+        }
     }
 
 }
