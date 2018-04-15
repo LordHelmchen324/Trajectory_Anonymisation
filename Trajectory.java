@@ -3,17 +3,12 @@ import java.util.List;
 
 class Trajectory {
 
-    private List<Place> places;
+    private List<Place> places = new ArrayList<Place>();
 
-    public Trajectory() {
-        this.places = new ArrayList<Place>();
-    }
+    public Trajectory() { }
 
-    public Trajectory(Trajectory source) {
-        this.places = new ArrayList<Place>();
-        for (Place p : source.places) {
-            this.places.add(p);
-        }
+    public Trajectory(Trajectory original) {
+        for (Place p : original.places) this.add(new Place(p));
     }
 
     @Override

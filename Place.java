@@ -10,6 +10,10 @@ class Place {
         this.t = t;
     }
 
+    public Place(Place original) {
+        this(original.x, original.y, original.t);
+    }
+
     public static Place makeOrigin() {
         return new Place(0, 0, 0);
     }

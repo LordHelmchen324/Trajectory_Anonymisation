@@ -5,6 +5,12 @@ class Dataset {
 
     private List<Trajectory> trajectories = new LinkedList<Trajectory>();
 
+    public Dataset() { }
+
+    public Dataset(Dataset original) {
+        for (Trajectory t : original.trajectories) this.add(new Trajectory(t));
+    }
+
     public void add(Trajectory t) {
         this.trajectories.add(t);
     }
@@ -12,6 +18,8 @@ class Dataset {
     public int size() {
         return this.trajectories.size();
     }
+
+    // median computaions
 
     private List<Place> allPlaces() {
         List<Place> places = new LinkedList<Place>();
