@@ -1,10 +1,26 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import org.junit.Test;
 
 import java.util.Random;
 
 public class TrajectoryTest {
+
+    // general tests
+
+    @Test
+    public void shouldEqual() {
+        Trajectory r1 = new Trajectory();
+        r1.add(new Place(3, 6, 1));
+        r1.add(new Place(1, 7, 2));
+        r1.add(new Place(8, 5, 3));
+
+        Trajectory r2 = new Trajectory();
+        r2.add(new Place(3, 6, 1));
+        r2.add(new Place(1, 7, 2));
+        r2.add(new Place(8, 5, 3));
+
+        assertTrue(r1.equals(r2));
+    }
 
     // tests for Euclidean Distance
 
