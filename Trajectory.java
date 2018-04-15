@@ -55,6 +55,7 @@ class Trajectory {
     public static double euclideanDistance(final Trajectory r, final Trajectory s) {
         if (r.lenght() != s.lenght()) {
             System.err.println("Trajectories have different length!");
+            System.exit(-1);
         }
 
         int result = 0;
@@ -77,6 +78,7 @@ class Trajectory {
     public static double shortTimeSeriesDistance(final Trajectory r, final Trajectory s) {
         if (r.lenght() != s.lenght()) {
             System.err.println("Trajectories have different length!");
+            System.exit(-1);
         }
 
         Place origin = new Place(0, 0, 0);
