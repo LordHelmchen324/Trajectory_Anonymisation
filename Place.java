@@ -14,6 +14,16 @@ class Place {
         return new Place(0, 0, 0);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o instanceof Place) {
+            Place p = (Place)o;
+            return (this.x == p.x) && (this.y == p.y) && (this.t == p.t);
+        } else return false;
+    }
+
     public static class XComparator implements Comparator<Place> {
         @Override
         public int compare(Place o1, Place o2) {

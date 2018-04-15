@@ -16,6 +16,20 @@ class Trajectory {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o instanceof Trajectory) {
+            Trajectory t = (Trajectory)o;
+            if (this.lenght() != t.lenght()) return false;
+            for (int i = 0; i < this.lenght(); i++) {
+                if (this.places.get(i) != t.places.get(i)) return false;
+            }
+            return true;
+        } else return false;
+    }
+
     public int lenght() {
         return this.places.size();
     }
