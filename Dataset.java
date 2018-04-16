@@ -123,7 +123,7 @@ class Dataset {
 
     // MDAV
 
-    private Trajectory closestTrajectoryTo(Trajectory t, Trajectory.DistanceMeasure dM) {
+    private Trajectory closestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
         if (this.trajectories.isEmpty()) return t;      // TODO: error
 
         double minDistance = Double.MAX_VALUE;
@@ -139,7 +139,7 @@ class Dataset {
         return closest;
     }
 
-    private Trajectory furthestTrajectoryTo(Trajectory t, Trajectory.DistanceMeasure dM) {
+    private Trajectory furthestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
         if (this.trajectories.isEmpty()) return t;      // TODO: error
 
         double maxDistance = 0.0;
@@ -155,7 +155,7 @@ class Dataset {
         return furthest;
     }
 
-    private List<Trajectory> clusterAround(Trajectory t, int size, Trajectory.DistanceMeasure dM) {
+    private List<Trajectory> clusterAround(Trajectory t, int size, DistanceMeasure dM) {
         List<Trajectory> cluster = new LinkedList<Trajectory>();
         cluster.add(t);
         this.remove(t);
@@ -169,7 +169,7 @@ class Dataset {
         return cluster;
     }
 
-    public Dataset protectedByMDAV(int k, Trajectory.DistanceMeasure dM) {
+    public Dataset protectedByMDAV(int k, DistanceMeasure dM) {
         Dataset temp = new Dataset(this);
         List<List<Trajectory>> clusters = new LinkedList<List<Trajectory>>();
 
