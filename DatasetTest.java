@@ -44,6 +44,23 @@ public class DatasetTest {
         assertEquals(oldSize + 1, this.d.size());
     }
 
+    @Test
+    public void allEqualLengthAfterFillUp() {
+        this.d.getTrajectories().get(0).add(new Place(5, 3, 5));
+        this.d.getTrajectories().get(0).add(new Place(3, 4, 6));
+        this.d.getTrajectories().get(0).add(new Place(9, 3, 8));
+        this.d.getTrajectories().get(0).add(new Place(8, 2, 9));
+        
+        this.d.getTrajectories().get(2).add(new Place(9, 3, 8));
+        this.d.getTrajectories().get(2).add(new Place(8, 2, 9));
+
+        d.fillUpToEqualLength();
+
+        for (int i = 0; i < d.size() - 1; i++) {
+            assertEquals(this.d.getTrajectories().get(i).lenght(), this.d.getTrajectories().get(i + 1).lenght());
+        }
+    }
+
     // median tests
 
     MedianStrategy xMedianYMedian = new XMedianYMedian();
