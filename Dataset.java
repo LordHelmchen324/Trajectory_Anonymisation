@@ -23,6 +23,10 @@ class Dataset {
         return this.trajectories.size();
     }
 
+    public List<Trajectory> getTrajectories() {     // TODO: not nice
+        return this.trajectories;
+    }
+
     // MDAV
 
     private Trajectory closestTrajectoryTo(Trajectory t, DistanceMeasure dM) {

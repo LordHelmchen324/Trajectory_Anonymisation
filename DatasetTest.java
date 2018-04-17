@@ -28,6 +28,8 @@ public class DatasetTest {
         d.add(u);
     }
 
+    // general tests
+
     @Test
     public void addTrajectory() {
         int oldSize = this.d.size();
@@ -42,6 +44,10 @@ public class DatasetTest {
         assertEquals(oldSize + 1, this.d.size());
     }
 
+    // median tests
+
+    MedianStrategy xMedianYMedian = new XMedianYMedian();
+
     @Test
     public void xMedianYMedianAsInPaper() {
         Trajectory expected = new Trajectory();
@@ -49,10 +55,12 @@ public class DatasetTest {
         expected.add(new Place(6, 7, 2));
         expected.add(new Place(8, 4, 3));
 
-        Trajectory actual = this.d.xMedianYMedian();
+        Trajectory actual = this.xMedianYMedian.computeMedian(this.d.getTrajectories());
 
         assertEquals(expected, actual);
     }
+
+    MedianStrategy xMedianY = new XMedianY();
 
     @Test
     public void xMedianYAsInPaper() {
@@ -61,8 +69,8 @@ public class DatasetTest {
         expected.add(new Place(6, 2, 2));
         expected.add(new Place(8, 5, 3));
 
-        Trajectory actual = this.d.xMedianY();
-
+        Trajectory actual = this.xMedianY.computeMedian(this.d.getTrajectories());
+        
         assertEquals(expected, actual);
     }
 
