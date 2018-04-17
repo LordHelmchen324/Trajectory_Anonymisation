@@ -24,6 +24,8 @@ public class TrajectoryTest {
 
     // tests for Euclidean Distance
 
+    DistanceMeasure euclidean = new EuclideanDistance();
+
     @Test
     public void euclideanDistanceOfRAndS() {
         Trajectory r = new Trajectory();
@@ -37,12 +39,14 @@ public class TrajectoryTest {
         s.add(new Place(2, 4, 3));
 
         double expected = 9.16515138991168;
-        double actual = Trajectory.euclideanDistance(r, s);
+        double actual = this.euclidean.computeDistance(r, s);
 
         assertEquals(expected, actual, 0.001);
     }
 
     // tests for Short Time Series Distance
+
+    DistanceMeasure shortTimeSeries = new ShortTimeSeriesDistance();
 
     @Test
     public void shortTimeSeriesDistanceOfRAndS() {
@@ -57,8 +61,8 @@ public class TrajectoryTest {
         s.add(new Place(2, 4, 3));
 
         double expected = 14.52583904633395;
-        double actual = Trajectory.shortTimeSeriesDistance(r, s);
-
+        double actual = this.shortTimeSeries.computeDistance(r, s);
+        
         assertEquals(expected, actual, 0.001);
     }
 
