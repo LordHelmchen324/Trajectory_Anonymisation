@@ -22,6 +22,74 @@ public class TrajectoryTest {
         assertTrue(r1.equals(r2));
     }
 
+    @Test
+    public void lengthEqualAfterLengthening() {
+        Trajectory r = new Trajectory();
+        r.add(new Place(3, 6, 1));
+        r.add(new Place(1, 7, 2));
+        r.add(new Place(8, 5, 3));
+        r.add(new Place(2, 4, 4));
+
+        Trajectory s = new Trajectory();
+        s.add(new Place(2, 9, 1));
+        s.add(new Place(7, 8, 2));
+
+        s.lengthenToEqualLengthAs(r);
+
+        assertEquals(r.lenght(), s.lenght());
+    }
+
+    @Test
+    public void noNewLoactionsAddedByLengthening() {
+        Trajectory r = new Trajectory();
+        r.add(new Place(3, 6, 1));
+        r.add(new Place(1, 7, 2));
+        r.add(new Place(8, 5, 3));
+        r.add(new Place(2, 4, 4));
+
+        Trajectory s = new Trajectory();
+        s.add(new Place(2, 9, 1));
+        s.add(new Place(7, 8, 2));
+
+        s.lengthenToEqualLengthAs(r);
+
+        for (Place p : s.getPlaces()) {
+            assertTrue((p.x == 2 && p.y == 9) || (p.x == 7 && p.y == 8));
+        }
+    }
+
+    @Test
+    public void lengthenedContainsOriginal() {
+        Trajectory r = new Trajectory();
+        r.add(new Place(3, 6, 1));
+        r.add(new Place(1, 7, 2));
+        r.add(new Place(8, 5, 3));
+        r.add(new Place(2, 4, 4));
+        r.add(new Place(3, 5, 5));
+        r.add(new Place(4, 5, 6));
+
+        Trajectory s = new Trajectory();
+        s.add(new Place(2, 9, 1));
+        s.add(new Place(7, 8, 2));
+        s.add(new Place(8, 8, 5));
+
+        Trajectory sOriginal = new Trajectory(s);
+
+        s.lengthenToEqualLengthAs(r);
+
+        boolean found = false;
+        for (int i = 0; i < r.lenght() - 3; i++) {
+            Trajectory t = new Trajectory();
+            t.add(s.getPlaceAtIndex(i));
+            t.add(s.getPlaceAtIndex(i + 1));
+            t.add(s.getPlaceAtIndex(i + 2));
+
+            if (t.equals(sOriginal)) found = true;
+        }
+
+        assertTrue(found);
+    }
+
     // tests for Euclidean Distance
 
     DistanceMeasure euclidean = new EuclideanDistance();
