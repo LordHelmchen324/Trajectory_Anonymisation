@@ -91,7 +91,7 @@ class Dataset {
 
             if (temp.size() > k) {
                 Trajectory furthest2 = temp.furthestTrajectoryTo(avrg, dM);
-                clusters.add(temp.clusterAround(furthest, k, dM));
+                clusters.add(temp.clusterAround(furthest2, k, dM));
             }
         }
 
@@ -104,8 +104,11 @@ class Dataset {
 
         Dataset result = new Dataset(this.medianStrategy);
         for (List<Trajectory> c : clusters) {
-            
+            Trajectory clusterMedian = this.medianStrategy.computeMedian(c);
+            for (int i = 0; i < c.size(); i++) result.add(clusterMedian);
         }
+
+        return result;
     }
 
 }
