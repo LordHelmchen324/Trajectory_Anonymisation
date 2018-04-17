@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -82,6 +83,24 @@ class Dataset {
         }
 
         return cluster;
+    }
+
+    public void fillUpToEqualLength() {
+        if (this.trajectories.isEmpty()) {
+            System.err.println("Tried to fill up empty Dataset!");
+            return;
+        }
+
+        // find longest
+        Iterator<Trajectory> i = this.trajectories.iterator();
+        Trajectory longest = i.next();
+        while (i.hasNext()) {
+            Trajectory t = i.next();
+            if (t.lenght() > longest.lenght()) longest = t;
+        }
+
+        // fill up all the trajectories to the length of the longest
+        for (Trajectory t : this.trajectories) t.lengthenToEqualLengthAs(longest);
     }
 
     public Dataset protectedByMDAV(int k, DistanceMeasure dM, MedianStrategy mS) {
