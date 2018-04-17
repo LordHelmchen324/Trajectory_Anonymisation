@@ -5,15 +5,10 @@ class Dataset {
 
     private List<Trajectory> trajectories = new LinkedList<Trajectory>();
 
-    private MedianStrategy medianStrategy;
-
-    public Dataset(MedianStrategy medianStrategy) {
-        this.medianStrategy = medianStrategy;
-    }
+    public Dataset() { }
 
     public Dataset(Dataset original) {
         for (Trajectory t : original.trajectories) this.add(new Trajectory(t));
-        this.medianStrategy = original.medianStrategy;
     }
 
     public void add(Trajectory t) {
@@ -26,10 +21,6 @@ class Dataset {
 
     public int size() {
         return this.trajectories.size();
-    }
-
-    public Trajectory median() {
-        return this.medianStrategy.computeMedian(this.trajectories);
     }
 
     // MDAV
@@ -80,12 +71,12 @@ class Dataset {
         return cluster;
     }
 
-    public Dataset protectedByMDAV(int k, DistanceMeasure dM) {
+    public Dataset protectedByMDAV(int k, DistanceMeasure dM, MedianStrategy mS) {
         Dataset temp = new Dataset(this);
         List<List<Trajectory>> clusters = new LinkedList<List<Trajectory>>();
 
         while (temp.size() > k) {
-            Trajectory avrg = temp.median();
+            Trajectory avrg = mS.computeMedian(temp.trajectories);
             Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
             clusters.add(temp.clusterAround(furthest, k, dM));
 
@@ -102,9 +93,9 @@ class Dataset {
         }
         clusters.add(lastCluster);
 
-        Dataset result = new Dataset(this.medianStrategy);
+        Dataset result = new Dataset();
         for (List<Trajectory> c : clusters) {
-            Trajectory clusterMedian = this.medianStrategy.computeMedian(c);
+            Trajectory clusterMedian = mS.computeMedian(c);
             for (int i = 0; i < c.size(); i++) result.add(clusterMedian);
         }
 
