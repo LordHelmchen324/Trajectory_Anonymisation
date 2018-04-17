@@ -11,6 +11,15 @@ class Dataset {
         for (Trajectory t : original.trajectories) this.add(new Trajectory(t));
     }
 
+    @Override
+    public String toString() {
+        final String lineSeperator = "--------------";
+        String s = "" + lineSeperator;
+        for (Trajectory t : this.trajectories) s += "\n" + t.toString();
+        s += "\n" + lineSeperator;
+        return s;
+    }
+
     public void add(Trajectory t) {
         this.trajectories.add(t);
     }

@@ -19,6 +19,11 @@ class Place {
     }
 
     @Override
+    public String toString() {
+        return "(" + this.x + "," + this.y + "," + this.t + ")";
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
 

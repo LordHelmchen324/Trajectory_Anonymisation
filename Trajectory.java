@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 class Trajectory {
@@ -9,6 +10,19 @@ class Trajectory {
 
     public Trajectory(Trajectory original) {
         for (Place p : original.places) this.add(new Place(p));
+    }
+
+    @Override
+    public String toString() {
+        String s = "[";
+        Iterator<Place> i = this.places.iterator();
+        while (i.hasNext()) {
+            Place p = i.next();
+            s += p.toString();
+            if (i.hasNext()) s += ", ";
+        }
+        s += "]";
+        return s;
     }
 
     @Override
