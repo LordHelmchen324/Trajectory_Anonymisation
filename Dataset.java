@@ -5,10 +5,15 @@ class Dataset {
 
     private List<Trajectory> trajectories = new LinkedList<Trajectory>();
 
-    public Dataset() { }
+    private MedianStrategy medianStrategy;
+
+    public Dataset(MedianStrategy medianStrategy) {
+        this.medianStrategy = medianStrategy;
+    }
 
     public Dataset(Dataset original) {
         for (Trajectory t : original.trajectories) this.add(new Trajectory(t));
+        this.medianStrategy = original.medianStrategy;
     }
 
     public void add(Trajectory t) {
@@ -23,102 +28,8 @@ class Dataset {
         return this.trajectories.size();
     }
 
-    // median computaions
-
-    private List<Place> allPlaces() {
-        List<Place> places = new LinkedList<Place>();
-        for (Trajectory t : this.trajectories) {
-            places.addAll(t.getPlaces());
-        }
-        return places;
-    }
-
-    private List<Place> placesAtTime(int t) {
-        List<Place> places = this.allPlaces();
-        List<Place> concurrentPlaces = new LinkedList<Place>();
-        for (Place p : places) {
-            if (p.t == t) concurrentPlaces.add(p);
-        }
-        return concurrentPlaces;
-    }
-
-    private Place findXMedianPlaceAtTime(int t) {
-        List<Place> concurrentPlaces = this.placesAtTime(t);
-
-        concurrentPlaces.sort(new Place.XComparator());
-        int n = concurrentPlaces.size();
-
-        if ((n & 1) != 0) return concurrentPlaces.get(n / 2);
-
-        Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
-        Place upperMedian = concurrentPlaces.get(n / 2);
-        int xMedian = (lowerMedian.x + upperMedian.x) / 2;
-        if (Math.abs(xMedian - lowerMedian.x) < Math.abs(xMedian - upperMedian.x)) {
-            return lowerMedian;
-        } else {
-            return upperMedian;
-        }
-    }
-
-    private Place findYMedianPlaceAtTime(int t) {
-        List<Place> concurrentPlaces = this.placesAtTime(t);
-
-        concurrentPlaces.sort(new Place.YComparator());
-        int n = concurrentPlaces.size();
-
-        if ((n & 1) != 0) return concurrentPlaces.get(n / 2);
-
-        Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
-        Place upperMedian = concurrentPlaces.get(n / 2);
-        int yMedian = (lowerMedian.y + upperMedian.y) / 2;
-        if (Math.abs(yMedian - lowerMedian.y) < Math.abs(yMedian - upperMedian.y)) {
-            return lowerMedian;
-        } else {
-            return upperMedian;
-        }
-    }
-
-    public Trajectory xMedianYMedian() {
-        Trajectory median = new Trajectory();
-
-        // get a set of all timestamps;
-        List<Place> places = this.allPlaces();
-        List<Integer> timestamps = new LinkedList<Integer>();
-        for (Place p : places) {
-            if ( !timestamps.contains(p.t) ) timestamps.add(p.t);
-        }
-
-        // for all timestamps, find the corresponding median Place
-        for (Integer t : timestamps) {
-            Place xMedian = this.findXMedianPlaceAtTime(t);
-            Place yMedian = this.findYMedianPlaceAtTime(t);
-
-            Place p = new Place(xMedian.x, yMedian.y, t);
-            median.add(p);
-        }
-
-        return median;
-    }
-
-    public Trajectory xMedianY() {
-        Trajectory median = new Trajectory();
-
-        // get a set of all timestamps;
-        List<Place> places = this.allPlaces();
-        List<Integer> timestamps = new LinkedList<Integer>();
-        for (Place p : places) {
-            if ( !timestamps.contains(p.t) ) timestamps.add(p.t);
-        }
-
-        // for all timestamps, find the corresponding median Place
-        for (Integer t : timestamps) {
-            Place xMedian = this.findXMedianPlaceAtTime(t);
-            
-            Place p = new Place(xMedian.x, xMedian.y, t);
-            median.add(p);
-        }
-
-        return median;
+    public Trajectory median() {
+        return this.medianStrategy.computeMedian(this.trajectories);
     }
 
     // MDAV
@@ -174,7 +85,7 @@ class Dataset {
         List<List<Trajectory>> clusters = new LinkedList<List<Trajectory>>();
 
         while (temp.size() > k) {
-            Trajectory avrg = temp.xMedianYMedian();      // TODO: make this general and replacable
+            Trajectory avrg = temp.median();
             Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
             clusters.add(temp.clusterAround(furthest, k, dM));
 
@@ -191,7 +102,7 @@ class Dataset {
         }
         clusters.add(lastCluster);
 
-        Dataset result = new Dataset();
+        Dataset result = new Dataset(this.medianStrategy);
         for (List<Trajectory> c : clusters) {
             
         }
