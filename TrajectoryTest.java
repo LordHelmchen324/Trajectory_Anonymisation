@@ -1,7 +1,9 @@
-import static org.junit.Assert.*;
-import org.junit.Test;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Random;
+
+import org.junit.Test;
 
 public class TrajectoryTest {
 
@@ -36,7 +38,7 @@ public class TrajectoryTest {
 
         s.lengthenToEqualLengthAs(r);
 
-        assertEquals(r.lenght(), s.lenght());
+        assertEquals(r.length(), s.length());
     }
 
     @Test
@@ -78,7 +80,7 @@ public class TrajectoryTest {
         s.lengthenToEqualLengthAs(r);
 
         boolean found = false;
-        for (int i = 0; i < r.lenght() - 3; i++) {
+        for (int i = 0; i < r.length() - 3; i++) {
             Trajectory t = new Trajectory();
             t.add(s.getPlaceAtIndex(i));
             t.add(s.getPlaceAtIndex(i + 1));

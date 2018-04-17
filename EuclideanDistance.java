@@ -2,13 +2,13 @@ public class EuclideanDistance implements DistanceMeasure {
 
     @Override
     public double computeDistance(final Trajectory r, final Trajectory s) {
-        if (r.lenght() != s.lenght()) {
+        if (r.length() != s.length()) {
             System.err.println("Trajectories have different length!");
             System.exit(-1);
         }
 
         int result = 0;
-        for (int i = 0; i < r.lenght(); i++) {
+        for (int i = 0; i < r.length(); i++) {
             Place p = r.getPlaceAtIndex(i);
             Place q = s.getPlaceAtIndex(i);
         

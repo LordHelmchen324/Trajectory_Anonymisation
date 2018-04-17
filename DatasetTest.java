@@ -57,7 +57,7 @@ public class DatasetTest {
         d.fillUpToEqualLength();
 
         for (int i = 0; i < d.size() - 1; i++) {
-            assertEquals(this.d.getTrajectories().get(i).lenght(), this.d.getTrajectories().get(i + 1).lenght());
+            assertEquals(this.d.getTrajectories().get(i).length(), this.d.getTrajectories().get(i + 1).length());
         }
     }
 

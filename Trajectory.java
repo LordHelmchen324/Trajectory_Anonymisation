@@ -31,15 +31,15 @@ class Trajectory {
 
         if (o instanceof Trajectory) {
             Trajectory t = (Trajectory)o;
-            if (this.lenght() != t.lenght()) return false;
-            for (int i = 0; i < this.lenght(); i++) {
+            if (this.length() != t.length()) return false;
+            for (int i = 0; i < this.length(); i++) {
                 if (!this.places.get(i).equals(t.places.get(i))) return false;
             }
             return true;
         } else return false;
     }
 
-    public int lenght() {
+    public int length() {
         return this.places.size();
     }
 
@@ -67,7 +67,7 @@ class Trajectory {
             sum += p.x;
         }
     
-        return (double)sum / (double)this.lenght();
+        return (double)sum / (double)this.length();
     }
 
     private double meanY() {
@@ -76,11 +76,11 @@ class Trajectory {
             sum += p.y;
         }
     
-        return (double)sum / (double)this.lenght();
+        return (double)sum / (double)this.length();
     }
 
     private double gammaPrimeA(double h) {
-        int iterCount = this.lenght() - (int)Math.abs(h);
+        int iterCount = this.length() - (int)Math.abs(h);
         double result = 0.0;
         for (int i = 0; i < iterCount; i++) {
             Place place = this.getPlaceAtIndex(i);
@@ -89,7 +89,7 @@ class Trajectory {
             result += ((double)shiftedPlace.x - this.meanX()) * ((double)place.x - this.meanX()) + ((double)shiftedPlace.y - this.meanY()) * ((double)place.y - this.meanY());
         }
     
-        return result / (double)this.lenght();
+        return result / (double)this.length();
     }
 
     public double autocorrelation(double h) {
@@ -100,22 +100,22 @@ class Trajectory {
     // others
 
     public void lengthenToEqualLengthAs(Trajectory other) {
-        if (other.lenght() == this.lenght()) return;
-        if (this.lenght() > other.lenght()) {
+        if (other.length() == this.length()) return;
+        if (this.length() > other.length()) {
             System.err.println("Attempted to lengthen Trajectory to length of shorter one!");
             return;
         }
 
-        int missingCount = other.lenght() - this.lenght();
+        int missingCount = other.length() - this.length();
 
         for ( ; missingCount > 0; missingCount--) {
             if ((missingCount & 1) == 0) {  // even: add one at the end
-                Place last = this.places.get(this.lenght() - 1);
+                Place last = this.places.get(this.length() - 1);
                 this.add(new Place(last.x, last.y, last.t + 1));
             } else {                        // odd: add at the start if possible, end otherwise
                 Place first = this.places.get(0);
                 if (first.t < 1) {
-                    Place last = this.places.get(this.lenght() - 1);
+                    Place last = this.places.get(this.length() - 1);
                     this.add(new Place(last.x, last.y, last.t + 1));
                 } else {
                     this.insertPlaceAtBeginning(new Place(first.x, first.y, first.t - 1));;

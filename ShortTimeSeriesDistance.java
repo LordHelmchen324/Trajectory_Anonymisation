@@ -2,7 +2,7 @@ public class ShortTimeSeriesDistance implements DistanceMeasure {
 
     @Override
     public double computeDistance(final Trajectory r, final Trajectory s) {
-        if (r.lenght() != s.lenght()) {
+        if (r.length() != s.length()) {
             System.err.println("Trajectories have different length!");
             System.exit(-1);
         }
@@ -14,7 +14,7 @@ public class ShortTimeSeriesDistance implements DistanceMeasure {
         sCopy.insertPlaceAtBeginning(origin);
 
         double result = 0.0;
-        for (int i = 0; i < rCopy.lenght() - 1 ; i++) {
+        for (int i = 0; i < rCopy.length() - 1 ; i++) {
             Place p = rCopy.getPlaceAtIndex(i);
             Place pNext = rCopy.getPlaceAtIndex(i + 1);
             Place q = sCopy.getPlaceAtIndex(i);

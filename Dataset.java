@@ -96,7 +96,7 @@ class Dataset {
         Trajectory longest = i.next();
         while (i.hasNext()) {
             Trajectory t = i.next();
-            if (t.lenght() > longest.lenght()) longest = t;
+            if (t.length() > longest.length()) longest = t;
         }
 
         // fill up all the trajectories to the length of the longest
