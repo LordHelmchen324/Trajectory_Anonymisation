@@ -4,12 +4,12 @@ class Anonymisation {
         Dataset d = new Dataset();
 
         Trajectory t1 = new Trajectory();
-        t1.add(new Place(1, 0, 2));
-        t1.add(new Place(3, 2, 3));
-        t1.add(new Place(4, 2, 4));
-        t1.add(new Place(5, 2, 6));
-        t1.add(new Place(5, 2, 7));
-        t1.add(new Place(9, 7, 8));
+        t1.add(new Place(1, 0, 1));
+        t1.add(new Place(3, 2, 2));
+        t1.add(new Place(4, 2, 3));
+        t1.add(new Place(5, 2, 4));
+        t1.add(new Place(5, 2, 5));
+        t1.add(new Place(9, 7, 6));
         d.add(t1);
 
         Trajectory t11 = new Trajectory();
@@ -22,15 +22,22 @@ class Anonymisation {
         d.add(t11);
 
         Trajectory t2 = new Trajectory();
-        t2.add(new Place(1, 0, 0));
-        t2.add(new Place(9, 7, 7));
+        t2.add(new Place(1, 0, 1));
+        t2.add(new Place(3, 2, 2));
+        t2.add(new Place(4, 2, 3));
+        t2.add(new Place(5, 2, 4));
+        t2.add(new Place(5, 2, 5));
+        t2.add(new Place(9, 7, 6));
         d.add(t2);
         d.add(t2);
 
         Trajectory t22 = new Trajectory();
-        t22.add(new Place(1, 0, 0));
-        t22.add(new Place(5, 3, 4));
-        t22.add(new Place(9, 7, 7));
+        t22.add(new Place(1, 0, 1));
+        t22.add(new Place(3, 6, 2));
+        t22.add(new Place(5, 3, 3));
+        t22.add(new Place(9, 7, 4));
+        t22.add(new Place(2, 4, 5));
+        t22.add(new Place(4, 2, 6));
         d.add(t22);
 
         System.out.println("Before filling it up:\n" + d);
