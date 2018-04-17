@@ -96,4 +96,32 @@ class Trajectory {
         return this.gammaPrimeA(h) / this.gammaPrimeA(0);
     }
 
+
+    // others
+
+    public void lengthenToEqualLengthAs(Trajectory other) {
+        if (other.lenght() == this.lenght()) return;
+        if (this.lenght() > other.lenght()) {
+            System.err.println("Attempted to lengthen Trajectory to length of shorter one!");
+            return;
+        }
+
+        int missingCount = other.lenght() - this.lenght();
+
+        for ( ; missingCount > 0; missingCount--) {
+            if ((missingCount & 1) == 0) {  // even: add one at the end
+                Place last = this.places.get(this.lenght() - 1);
+                this.add(new Place(last.x, last.y, last.t + 1));
+            } else {                        // odd: add at the start if possible, end otherwise
+                Place first = this.places.get(0);
+                if (first.t < 1) {
+                    Place last = this.places.get(this.lenght() - 1);
+                    this.add(new Place(last.x, last.y, last.t + 1));
+                } else {
+                    this.insertPlaceAtBeginning(new Place(first.x, first.y, first.t - 1));;
+                }
+            }
+        }
+    }
+
 }
