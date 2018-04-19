@@ -46,7 +46,7 @@ class Dataset {
         Trajectory closest = null;
         for (Trajectory t2 : this.trajectories) {
             double distance = dM.computeDistance(t, t2);
-            if (distance < minDistance) {
+            if (distance < minDistance || closest == null) {
                 minDistance = distance;
                 closest = t2;
             }
@@ -62,7 +62,7 @@ class Dataset {
         Trajectory furthest = null;
         for (Trajectory t2 : this.trajectories) {
             double distance = dM.computeDistance(t, t2);
-            if (distance > maxDistance) {
+            if (distance > maxDistance || furthest == null) {
                 maxDistance = distance;
                 furthest = t2;
             }
