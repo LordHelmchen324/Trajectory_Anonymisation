@@ -1,6 +1,21 @@
 class Anonymisation {
 
     public static void main(String[] args) {
+        Dataset d = makeSmallDataset();
+
+        System.out.println("Before filling it up:\n" + d);
+        d.fillUpToEqualLength();
+        System.out.println("After filling it up:\n" + d);
+
+        DistanceMeasure dM = new ShortTimeSeriesDistance();
+        MedianStrategy mS = new XMedianY();
+
+        Dataset result = d.protectedByMDAV(2, dM, mS);
+
+        System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
+    }
+
+    public static Dataset makeSmallDataset() {
         Dataset d = new Dataset();
 
         Trajectory t1 = new Trajectory();
@@ -40,16 +55,7 @@ class Anonymisation {
         t22.add(new Place(4, 2, 6));
         d.add(t22);
 
-        System.out.println("Before filling it up:\n" + d);
-        d.fillUpToEqualLength();
-        System.out.println("After filling it up:\n" + d);
-
-        DistanceMeasure dM = new ShortTimeSeriesDistance();
-        MedianStrategy mS = new XMedianY();
-
-        Dataset result = d.protectedByMDAV(2, dM, mS);
-
-        System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
+        return d;
     }
 
 }
