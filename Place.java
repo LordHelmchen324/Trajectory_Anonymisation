@@ -47,4 +47,11 @@ class Place {
         }
     }
 
+    public static class TComparator implements Comparator<Place> {
+        @Override
+        public int compare(Place o1, Place o2) {
+            return o1.t - o2.t;
+        }
+    }
+
 }
