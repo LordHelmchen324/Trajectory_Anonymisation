@@ -12,9 +12,9 @@ public class EuclideanDistance implements DistanceMeasure {
             Place p = r.getPlaceAtIndex(i);
             Place q = s.getPlaceAtIndex(i);
         
-            int tsqrd = (p.t - q.t) * (p.t - q.t);
-            int xsqrd = (p.x - q.x) * (p.x - q.x);
-            int ysqrd = (p.y - q.y) * (p.y - q.y);
+            int tsqrd = (p.getT() - q.getT()) * (p.getT() - q.getT());
+            int xsqrd = (p.getX() - q.getX()) * (p.getX() - q.getX());
+            int ysqrd = (p.getY() - q.getY()) * (p.getY() - q.getY());
         
             result += (1 + tsqrd) * (xsqrd + ysqrd);
         }

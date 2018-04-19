@@ -15,7 +15,7 @@ abstract class MedianStrategy {
         List<Place> places = this.allPlaces(trajectories);
         List<Place> concurrentPlaces = new LinkedList<Place>();
         for (Place p : places) {
-            if (p.t == t) concurrentPlaces.add(p);
+            if (p.getT() == t) concurrentPlaces.add(p);
         }
         return concurrentPlaces;
     }
@@ -30,8 +30,8 @@ abstract class MedianStrategy {
 
         Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
         Place upperMedian = concurrentPlaces.get(n / 2);
-        int xMedian = (lowerMedian.x + upperMedian.x) / 2;
-        if (Math.abs(xMedian - lowerMedian.x) < Math.abs(xMedian - upperMedian.x)) {
+        int xMedian = (lowerMedian.getX() + upperMedian.getX()) / 2;
+        if (Math.abs(xMedian - lowerMedian.getX()) < Math.abs(xMedian - upperMedian.getX())) {
             return lowerMedian;
         } else {
             return upperMedian;
@@ -48,8 +48,8 @@ abstract class MedianStrategy {
 
         Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
         Place upperMedian = concurrentPlaces.get(n / 2);
-        int yMedian = (lowerMedian.y + upperMedian.y) / 2;
-        if (Math.abs(yMedian - lowerMedian.y) < Math.abs(yMedian - upperMedian.y)) {
+        int yMedian = (lowerMedian.getY() + upperMedian.getY()) / 2;
+        if (Math.abs(yMedian - lowerMedian.getY()) < Math.abs(yMedian - upperMedian.getY())) {
             return lowerMedian;
         } else {
             return upperMedian;

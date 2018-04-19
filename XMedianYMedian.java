@@ -11,7 +11,7 @@ class XMedianYMedian extends MedianStrategy {
         List<Place> places = this.allPlaces(trajectories);
         List<Integer> timestamps = new LinkedList<Integer>();
         for (Place p : places) {
-            if ( !timestamps.contains(p.t) ) timestamps.add(p.t);
+            if ( !timestamps.contains(p.getT()) ) timestamps.add(p.getT());
         }
 
         // for all timestamps, find the corresponding median Place
@@ -19,7 +19,7 @@ class XMedianYMedian extends MedianStrategy {
             Place xMedian = this.findXMedianPlaceAtTime(trajectories, t);
             Place yMedian = this.findYMedianPlaceAtTime(trajectories, t);
 
-            Place p = new Place(xMedian.x, yMedian.y, t);
+            Place p = new Place(xMedian.getX(), yMedian.getY(), t);
             median.add(p);
         }
 

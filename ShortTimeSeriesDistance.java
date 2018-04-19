@@ -20,12 +20,12 @@ public class ShortTimeSeriesDistance implements DistanceMeasure {
             Place q = sCopy.getPlaceAtIndex(i);
             Place qNext = sCopy.getPlaceAtIndex(i + 1);
         
-            double a1 = (double)(qNext.x - q.x) / (double)(qNext.t - q.t);
-            double a2 = (double)(pNext.x - p.x) / (double)(qNext.t - q.t);
+            double a1 = (double)(qNext.getX() - q.getX()) / (double)(qNext.getT() - q.getT());
+            double a2 = (double)(pNext.getX() - p.getX()) / (double)(qNext.getT() - q.getT());
             double asqrd = (a1 - a2) * (a1 - a2);
         
-            double b1 = (double)(qNext.y - q.y) / (double)(pNext.t - p.t);
-            double b2 = (double)(pNext.y- p.y) / (double)(pNext.t - p.t);
+            double b1 = (double)(qNext.getY() - q.getY()) / (double)(pNext.getT() - p.getT());
+            double b2 = (double)(pNext.getY() - p.getY()) / (double)(pNext.getT() - p.getT());
             double bsqrd = (b1 - b2) * (b1 - b2);
         
             result += asqrd + bsqrd;
