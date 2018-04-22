@@ -4,10 +4,11 @@ import org.junit.Before;
 
 public class DatasetTest {
 
-    Dataset d = new Dataset();
+    Dataset paperDataset = new Dataset();
+    Dataset paperDatasetTwin = new Dataset();
 
     @Before
-    public void initialiseDataset() {
+    public void initialisePaperDataset() {
         Trajectory r = new Trajectory();
         r.add(new Place(3, 6, 1));
         r.add(new Place(1, 7, 2));
@@ -23,72 +24,278 @@ public class DatasetTest {
         u.add(new Place(6, 2, 2));
         u.add(new Place(9, 2, 3));
 
-        d.add(r);
-        d.add(s);
-        d.add(u);
+        paperDataset.add(r);
+        paperDataset.add(s);
+        paperDataset.add(u);
+
+        paperDatasetTwin.add(u);
+        paperDatasetTwin.add(s);
+        paperDatasetTwin.add(r);
     }
 
-    // general tests
+    Dataset largeDataset = new Dataset();
+
+    @Before
+    public void initialiseLargeDataset() {
+        
+        // club 1
+
+        Trajectory t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 0, 2));
+        t.add(new Place(2, 0, 3));
+        t.add(new Place(3, 0, 4));
+        t.add(new Place(4, 0, 5));
+        t.add(new Place(5, 0, 6));
+        t.add(new Place(6, 0, 7));
+        t.add(new Place(7, 0, 8));
+        t.add(new Place(8, 0, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 0, 2));
+        t.add(new Place(2, 0, 3));
+        t.add(new Place(3, 0, 4));
+        t.add(new Place(4, 0, 5));
+        t.add(new Place(5, 0, 6));
+        t.add(new Place(6, 0, 7));
+        t.add(new Place(7, 0, 8));
+        t.add(new Place(8, 0, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 0, 2));
+        t.add(new Place(2, 0, 3));
+        t.add(new Place(3, 0, 4));
+        t.add(new Place(4, 0, 5));
+        t.add(new Place(5, 0, 6));
+        t.add(new Place(6, 0, 7));
+        t.add(new Place(7, 0, 8));
+        t.add(new Place(8, 0, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 0, 2));
+        t.add(new Place(2, 0, 3));
+        t.add(new Place(3, 0, 4));
+        t.add(new Place(4, 0, 5));
+        t.add(new Place(5, 0, 6));
+        t.add(new Place(6, 0, 7));
+        t.add(new Place(7, 0, 8));
+        t.add(new Place(8, 0, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 0, 2));
+        t.add(new Place(2, 0, 3));
+        t.add(new Place(3, 0, 4));
+        t.add(new Place(4, 0, 5));
+        t.add(new Place(5, 0, 6));
+        t.add(new Place(6, 0, 7));
+        t.add(new Place(7, 0, 8));
+        t.add(new Place(8, 0, 9));
+        this.largeDataset.add(t);
+
+        // club 2
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 1, 2));
+        t.add(new Place(2, 2, 3));
+        t.add(new Place(3, 3, 4));
+        t.add(new Place(4, 4, 5));
+        t.add(new Place(5, 5, 6));
+        t.add(new Place(6, 6, 7));
+        t.add(new Place(7, 7, 8));
+        t.add(new Place(8, 8, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 1, 2));
+        t.add(new Place(2, 2, 3));
+        t.add(new Place(3, 3, 4));
+        t.add(new Place(4, 4, 5));
+        t.add(new Place(5, 5, 6));
+        t.add(new Place(6, 6, 7));
+        t.add(new Place(7, 7, 8));
+        t.add(new Place(8, 8, 9));
+        this.largeDataset.add(t);
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 1, 2));
+        t.add(new Place(2, 2, 3));
+        t.add(new Place(3, 3, 4));
+        t.add(new Place(4, 4, 5));
+        t.add(new Place(5, 5, 6));
+        t.add(new Place(6, 6, 7));
+        t.add(new Place(7, 7, 8));
+        t.add(new Place(8, 8, 9));
+        this.largeDataset.add(t);
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 1, 2));
+        t.add(new Place(2, 2, 3));
+        t.add(new Place(3, 3, 4));
+        t.add(new Place(4, 4, 5));
+        t.add(new Place(5, 5, 6));
+        t.add(new Place(6, 6, 7));
+        t.add(new Place(7, 7, 8));
+        t.add(new Place(8, 8, 9));
+        this.largeDataset.add(t);
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 1, 2));
+        t.add(new Place(2, 2, 3));
+        t.add(new Place(3, 3, 4));
+        t.add(new Place(4, 4, 5));
+        t.add(new Place(5, 5, 6));
+        t.add(new Place(6, 6, 7));
+        t.add(new Place(7, 7, 8));
+        t.add(new Place(8, 8, 9));
+        this.largeDataset.add(t);
+
+        // club 3
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(0, 1, 2));
+        t.add(new Place(0, 2, 3));
+        t.add(new Place(0, 3, 4));
+        t.add(new Place(0, 4, 5));
+        t.add(new Place(0, 5, 6));
+        t.add(new Place(0, 6, 7));
+        t.add(new Place(0, 7, 8));
+        t.add(new Place(0, 8, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(0, 1, 2));
+        t.add(new Place(0, 2, 3));
+        t.add(new Place(0, 3, 4));
+        t.add(new Place(0, 4, 5));
+        t.add(new Place(0, 5, 6));
+        t.add(new Place(0, 6, 7));
+        t.add(new Place(0, 7, 8));
+        t.add(new Place(0, 8, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(0, 1, 2));
+        t.add(new Place(0, 2, 3));
+        t.add(new Place(0, 3, 4));
+        t.add(new Place(0, 4, 5));
+        t.add(new Place(0, 5, 6));
+        t.add(new Place(0, 6, 7));
+        t.add(new Place(0, 7, 8));
+        t.add(new Place(0, 8, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(0, 1, 2));
+        t.add(new Place(0, 2, 3));
+        t.add(new Place(0, 3, 4));
+        t.add(new Place(0, 4, 5));
+        t.add(new Place(0, 5, 6));
+        t.add(new Place(0, 6, 7));
+        t.add(new Place(0, 7, 8));
+        t.add(new Place(0, 8, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(0, 1, 2));
+        t.add(new Place(0, 2, 3));
+        t.add(new Place(0, 3, 4));
+        t.add(new Place(0, 4, 5));
+        t.add(new Place(0, 5, 6));
+        t.add(new Place(0, 6, 7));
+        t.add(new Place(0, 7, 8));
+        t.add(new Place(0, 8, 9));
+        this.largeDataset.add(t);
+    }
 
     @Test
     public void addTrajectory() {
-        int oldSize = this.d.size();
+        int oldSize = this.paperDataset.size();
 
         Trajectory t = new Trajectory();
         t.add(new Place(3, 2, 4));
         t.add(new Place(5, 5, 2));
         t.add(new Place(9, 9, 6));
 
-        this.d.add(t);
+        this.paperDataset.add(t);
 
-        assertEquals(oldSize + 1, this.d.size());
+        assertEquals(oldSize + 1, this.paperDataset.size());
+        assertTrue(this.paperDataset.getTrajectories().contains(t));
     }
 
     @Test
-    public void allEqualLengthAfterFillUp() {
-        this.d.getTrajectories().get(0).add(new Place(5, 3, 5));
-        this.d.getTrajectories().get(0).add(new Place(3, 4, 6));
-        this.d.getTrajectories().get(0).add(new Place(9, 3, 8));
-        this.d.getTrajectories().get(0).add(new Place(8, 2, 9));
-        
-        this.d.getTrajectories().get(2).add(new Place(9, 3, 8));
-        this.d.getTrajectories().get(2).add(new Place(8, 2, 9));
+    public void shouldEqual() {
+        assertEquals(this.paperDataset, this.paperDatasetTwin);
+    }
 
-        d.fillUpToEqualLength();
-
-        for (int i = 0; i < d.size() - 1; i++) {
-            assertEquals(this.d.getTrajectories().get(i).length(), this.d.getTrajectories().get(i + 1).length());
-        }
+    @Test
+    public void equalsAfterCopy() {
+        Dataset copy = new Dataset(paperDataset);
+        assertEquals(copy, paperDataset);
     }
 
     // median tests
 
-    MedianStrategy xMedianYMedian = new XMedianYMedian();
-
     @Test
     public void xMedianYMedianAsInPaper() {
+        MedianStrategy mS = new XMedianYMedian();
+
         Trajectory expected = new Trajectory();
         expected.add(new Place(2, 6, 1));
         expected.add(new Place(6, 7, 2));
         expected.add(new Place(8, 4, 3));
 
-        Trajectory actual = this.xMedianYMedian.computeMedian(this.d.getTrajectories());
+        Trajectory actual = mS.computeMedian(this.paperDataset.getTrajectories());
 
         assertEquals(expected, actual);
     }
 
-    MedianStrategy xMedianY = new XMedianY();
-
     @Test
     public void xMedianYAsInPaper() {
+        MedianStrategy mS = new XMedianY();
+
         Trajectory expected = new Trajectory();
         expected.add(new Place(2, 9, 1));
         expected.add(new Place(6, 2, 2));
         expected.add(new Place(8, 5, 3));
 
-        Trajectory actual = this.xMedianY.computeMedian(this.d.getTrajectories());
+        Trajectory actual = mS.computeMedian(this.paperDataset.getTrajectories());
         
         assertEquals(expected, actual);
+    }
+
+    // MDAV tests
+
+    DistanceMeasure euclidean = new EuclideanDistance();
+    DistanceMeasure shortTimeSeries = new ShortTimeSeriesDistance();
+
+    @Test
+    public void nooneIsCloserThanClosest() {
+        Trajectory t = new Trajectory();
+        t.add(new Place(0, 3, 1));
+        t.add(new Place(6, 2, 2));
+        t.add(new Place(9, 3, 3));
+
+        Trajectory closestEuclidean = this.paperDataset.closestTrajectoryTo(t, euclidean);
+        Trajectory closestShortTimeSeries = this.paperDataset.closestTrajectoryTo(t, shortTimeSeries);
+
+        for (Trajectory e : this.paperDataset.getTrajectories()) {
+            assertTrue(euclidean.computeDistance(t, e) >= euclidean.computeDistance(t, closestEuclidean));
+            assertTrue(shortTimeSeries.computeDistance(t, e) >= shortTimeSeries.computeDistance(t, closestShortTimeSeries));
+        }
     }
 
 }

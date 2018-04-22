@@ -66,7 +66,7 @@ class Dataset {
 
     // MDAV
 
-    private Trajectory closestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
+    public Trajectory closestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
         if (this.trajectories.isEmpty()) return t;      // TODO: error
 
         double minDistance = Double.MAX_VALUE;
@@ -82,7 +82,7 @@ class Dataset {
         return closest;
     }
 
-    private Trajectory furthestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
+    public Trajectory furthestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
         if (this.trajectories.isEmpty()) return t;      // TODO: error
 
         double maxDistance = 0.0;
@@ -98,7 +98,7 @@ class Dataset {
         return furthest;
     }
 
-    private List<Trajectory> clusterAround(Trajectory t, int size, DistanceMeasure dM) {
+    public List<Trajectory> removeClusterAround(Trajectory t, int size, DistanceMeasure dM) {
         List<Trajectory> cluster = new LinkedList<Trajectory>();
         cluster.add(t);
         this.remove(t);
@@ -137,18 +137,20 @@ class Dataset {
         while (temp.size() > k) {
             Trajectory avrg = mS.computeMedian(temp.trajectories);
             Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
-            clusters.add(temp.clusterAround(furthest, k, dM));
+            clusters.add(temp.removeClusterAround(furthest, k, dM));
 
             if (temp.size() > k) {
                 Trajectory furthest2 = temp.furthestTrajectoryTo(avrg, dM);
-                clusters.add(temp.clusterAround(furthest2, k, dM));
+                clusters.add(temp.removeClusterAround(furthest2, k, dM));
             }
         }
 
         List<Trajectory> lastCluster = new LinkedList<Trajectory>();
-        for (Trajectory t : temp.trajectories) {
+        Iterator<Trajectory> it = temp.trajectories.iterator();
+        while (it.hasNext()) {
+            Trajectory t = it.next();
             lastCluster.add(t);
-            temp.remove(t);
+            it.remove();
         }
         clusters.add(lastCluster);
 
