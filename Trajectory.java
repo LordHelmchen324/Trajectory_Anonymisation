@@ -60,7 +60,9 @@ class Trajectory {
         int i = 0;
         while (i < this.length() && this.getPlaceAtIndex(i).getT() < p.getT()) i++;
 
-        if (this.getPlaceAtIndex(i).getT() == p.getT()) {
+        if (i == this.length()) {
+            this.places.add(p);
+        } else if (this.getPlaceAtIndex(i).getT() == p.getT()) {
             System.err.println("Illegaly attempted to add Place " + p + " with same t as the Place at index " + i + " to Trajectory" + this + " !");
             System.exit(1);
         } else {
