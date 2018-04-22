@@ -7,8 +7,6 @@ import org.junit.Test;
 
 public class TrajectoryTest {
 
-    // general tests
-
     @Test
     public void shouldEqual() {
         Trajectory r1 = new Trajectory();
@@ -25,71 +23,71 @@ public class TrajectoryTest {
     }
 
     @Test
-    public void lengthEqualAfterLengthening() {
-        Trajectory r = new Trajectory();
-        r.add(new Place(3, 6, 1));
-        r.add(new Place(1, 7, 2));
-        r.add(new Place(8, 5, 3));
-        r.add(new Place(2, 4, 4));
+    public void copyEquals() {
+        Trajectory t = new Trajectory();
+        t.add(new Place(3, 6, 1));
+        t.add(new Place(1, 7, 2));
+        t.add(new Place(8, 5, 3));
 
-        Trajectory s = new Trajectory();
-        s.add(new Place(2, 9, 1));
-        s.add(new Place(7, 8, 2));
+        Trajectory tCopy = new Trajectory(t);
 
-        s.lengthenToEqualLengthAs(r);
-
-        assertEquals(r.length(), s.length());
+        assertEquals(t, tCopy);
     }
 
     @Test
-    public void noNewLoactionsAddedByLengthening() {
-        Trajectory r = new Trajectory();
-        r.add(new Place(3, 6, 1));
-        r.add(new Place(1, 7, 2));
-        r.add(new Place(8, 5, 3));
-        r.add(new Place(2, 4, 4));
+    public void copyDoesHaveSameListOfPlaces() {
+        Trajectory t = new Trajectory();
+        t.add(new Place(3, 6, 1));
+        t.add(new Place(1, 7, 2));
+        t.add(new Place(8, 5, 3));
 
-        Trajectory s = new Trajectory();
-        s.add(new Place(2, 9, 1));
-        s.add(new Place(7, 8, 2));
+        Trajectory tCopy = new Trajectory(t);
 
-        s.lengthenToEqualLengthAs(r);
+        assertTrue(t.getPlaces() != tCopy.getPlaces());
+    }
 
-        for (Place p : s.getPlaces()) {
-            assertTrue((p.x == 2 && p.y == 9) || (p.x == 7 && p.y == 8));
+    @Test
+    public void copyDoesNotContainSamePlace() {
+        Trajectory t = new Trajectory();
+        t.add(new Place(3, 6, 1));
+        t.add(new Place(1, 7, 2));
+        t.add(new Place(8, 5, 3));
+
+        Trajectory tCopy = new Trajectory(t);
+
+        for (int i = 0; i < t.length(); i++) {
+            for (int j = 0; j < tCopy.length(); j++) {
+                assertTrue(t.getPlaceAtIndex(i) != tCopy.getPlaceAtIndex(j));
+            }
         }
     }
 
     @Test
-    public void lengthenedContainsOriginal() {
-        Trajectory r = new Trajectory();
-        r.add(new Place(3, 6, 1));
-        r.add(new Place(1, 7, 2));
-        r.add(new Place(8, 5, 3));
-        r.add(new Place(2, 4, 4));
-        r.add(new Place(3, 5, 5));
-        r.add(new Place(4, 5, 6));
+    public void placesAreOrderedWhenAddededOrdered() {
+        Trajectory t = new Trajectory();
+        t.add(new Place(3, 2, 0));
+        t.add(new Place(3, 6, 1));
+        t.add(new Place(1, 7, 2));
+        t.add(new Place(8, 5, 3));
+        t.add(new Place(6, 3, 9));
 
-        Trajectory s = new Trajectory();
-        s.add(new Place(2, 9, 1));
-        s.add(new Place(7, 8, 2));
-        s.add(new Place(8, 8, 5));
-
-        Trajectory sOriginal = new Trajectory(s);
-
-        s.lengthenToEqualLengthAs(r);
-
-        boolean found = false;
-        for (int i = 0; i < r.length() - 3; i++) {
-            Trajectory t = new Trajectory();
-            t.add(s.getPlaceAtIndex(i));
-            t.add(s.getPlaceAtIndex(i + 1));
-            t.add(s.getPlaceAtIndex(i + 2));
-
-            if (t.equals(sOriginal)) found = true;
+        for (int i = 0; i < t.length() - 1; i++) {
+            assertTrue(t.getPlaceAtIndex(i).getT() < t.getPlaceAtIndex(i + 1).getT());
         }
+    }
 
-        assertTrue(found);
+    @Test
+    public void placesAreOrderedWhenAddededUnordered() {
+        Trajectory t = new Trajectory();
+        t.add(new Place(8, 5, 3));
+        t.add(new Place(3, 2, 0));
+        t.add(new Place(3, 6, 1));
+        t.add(new Place(6, 3, 9));
+        t.add(new Place(1, 7, 2));
+
+        for (int i = 0; i < t.length() - 1; i++) {
+            assertTrue(t.getPlaceAtIndex(i).getT() < t.getPlaceAtIndex(i + 1).getT());
+        }
     }
 
     // tests for Euclidean Distance
