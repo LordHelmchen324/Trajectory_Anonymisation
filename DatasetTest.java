@@ -53,15 +53,27 @@ public class DatasetTest {
         this.largeDataset.add(t);
 
         t = new Trajectory();
-        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 2, 1));
         t.add(new Place(1, 0, 2));
         t.add(new Place(2, 0, 3));
         t.add(new Place(3, 0, 4));
-        t.add(new Place(4, 0, 5));
+        t.add(new Place(4, 1, 5));
         t.add(new Place(5, 0, 6));
         t.add(new Place(6, 0, 7));
         t.add(new Place(7, 0, 8));
         t.add(new Place(8, 0, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 0, 1));
+        t.add(new Place(1, 0, 2));
+        t.add(new Place(2, 1, 3));
+        t.add(new Place(3, 1, 4));
+        t.add(new Place(4, 0, 5));
+        t.add(new Place(5, 0, 6));
+        t.add(new Place(6, 0, 7));
+        t.add(new Place(7, 0, 8));
+        t.add(new Place(6, 1, 9));
         this.largeDataset.add(t);
 
         t = new Trajectory();
@@ -73,25 +85,13 @@ public class DatasetTest {
         t.add(new Place(5, 0, 6));
         t.add(new Place(6, 0, 7));
         t.add(new Place(7, 0, 8));
-        t.add(new Place(8, 0, 9));
+        t.add(new Place(9, 0, 9));
         this.largeDataset.add(t);
 
         t = new Trajectory();
-        t.add(new Place(0, 0, 1));
-        t.add(new Place(1, 0, 2));
-        t.add(new Place(2, 0, 3));
-        t.add(new Place(3, 0, 4));
-        t.add(new Place(4, 0, 5));
-        t.add(new Place(5, 0, 6));
-        t.add(new Place(6, 0, 7));
-        t.add(new Place(7, 0, 8));
-        t.add(new Place(8, 0, 9));
-        this.largeDataset.add(t);
-
-        t = new Trajectory();
-        t.add(new Place(0, 0, 1));
-        t.add(new Place(1, 0, 2));
-        t.add(new Place(2, 0, 3));
+        t.add(new Place(0, 1, 1));
+        t.add(new Place(1, 1, 2));
+        t.add(new Place(2, 1, 3));
         t.add(new Place(3, 0, 4));
         t.add(new Place(4, 0, 5));
         t.add(new Place(5, 0, 6));
@@ -116,6 +116,18 @@ public class DatasetTest {
         t = new Trajectory();
         t.add(new Place(0, 0, 1));
         t.add(new Place(1, 1, 2));
+        t.add(new Place(2, 3, 3));
+        t.add(new Place(3, 4, 4));
+        t.add(new Place(4, 5, 5));
+        t.add(new Place(5, 6, 6));
+        t.add(new Place(6, 7, 7));
+        t.add(new Place(7, 8, 8));
+        t.add(new Place(8, 8, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 2, 1));
+        t.add(new Place(1, 2, 2));
         t.add(new Place(2, 2, 3));
         t.add(new Place(3, 3, 4));
         t.add(new Place(4, 4, 5));
@@ -124,6 +136,7 @@ public class DatasetTest {
         t.add(new Place(7, 7, 8));
         t.add(new Place(8, 8, 9));
         this.largeDataset.add(t);
+
         t = new Trajectory();
         t.add(new Place(0, 0, 1));
         t.add(new Place(1, 1, 2));
@@ -131,26 +144,16 @@ public class DatasetTest {
         t.add(new Place(3, 3, 4));
         t.add(new Place(4, 4, 5));
         t.add(new Place(5, 5, 6));
-        t.add(new Place(6, 6, 7));
-        t.add(new Place(7, 7, 8));
-        t.add(new Place(8, 8, 9));
+        t.add(new Place(6, 7, 7));
+        t.add(new Place(8, 8, 8));
+        t.add(new Place(9, 9, 9));
         this.largeDataset.add(t);
+
         t = new Trajectory();
         t.add(new Place(0, 0, 1));
         t.add(new Place(1, 1, 2));
-        t.add(new Place(2, 2, 3));
-        t.add(new Place(3, 3, 4));
-        t.add(new Place(4, 4, 5));
-        t.add(new Place(5, 5, 6));
-        t.add(new Place(6, 6, 7));
-        t.add(new Place(7, 7, 8));
-        t.add(new Place(8, 8, 9));
-        this.largeDataset.add(t);
-        t = new Trajectory();
-        t.add(new Place(0, 0, 1));
-        t.add(new Place(1, 1, 2));
-        t.add(new Place(2, 2, 3));
-        t.add(new Place(3, 3, 4));
+        t.add(new Place(1, 2, 3));
+        t.add(new Place(2, 3, 4));
         t.add(new Place(4, 4, 5));
         t.add(new Place(5, 5, 6));
         t.add(new Place(6, 6, 7));
@@ -173,8 +176,32 @@ public class DatasetTest {
         this.largeDataset.add(t);
 
         t = new Trajectory();
+        t.add(new Place(1, 0, 1));
+        t.add(new Place(1, 1, 2));
+        t.add(new Place(0, 2, 3));
+        t.add(new Place(0, 3, 4));
+        t.add(new Place(0, 4, 5));
+        t.add(new Place(0, 5, 6));
+        t.add(new Place(0, 6, 7));
+        t.add(new Place(0, 7, 8));
+        t.add(new Place(1, 8, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
         t.add(new Place(0, 0, 1));
         t.add(new Place(0, 1, 2));
+        t.add(new Place(0, 2, 3));
+        t.add(new Place(0, 3, 4));
+        t.add(new Place(1, 4, 5));
+        t.add(new Place(1, 5, 6));
+        t.add(new Place(2, 6, 7));
+        t.add(new Place(1, 7, 8));
+        t.add(new Place(0, 8, 9));
+        this.largeDataset.add(t);
+
+        t = new Trajectory();
+        t.add(new Place(0, 2, 1));
+        t.add(new Place(0, 2, 2));
         t.add(new Place(0, 2, 3));
         t.add(new Place(0, 3, 4));
         t.add(new Place(0, 4, 5));
@@ -191,33 +218,9 @@ public class DatasetTest {
         t.add(new Place(0, 3, 4));
         t.add(new Place(0, 4, 5));
         t.add(new Place(0, 5, 6));
-        t.add(new Place(0, 6, 7));
-        t.add(new Place(0, 7, 8));
-        t.add(new Place(0, 8, 9));
-        this.largeDataset.add(t);
-
-        t = new Trajectory();
-        t.add(new Place(0, 0, 1));
-        t.add(new Place(0, 1, 2));
-        t.add(new Place(0, 2, 3));
-        t.add(new Place(0, 3, 4));
-        t.add(new Place(0, 4, 5));
-        t.add(new Place(0, 5, 6));
-        t.add(new Place(0, 6, 7));
-        t.add(new Place(0, 7, 8));
-        t.add(new Place(0, 8, 9));
-        this.largeDataset.add(t);
-
-        t = new Trajectory();
-        t.add(new Place(0, 0, 1));
-        t.add(new Place(0, 1, 2));
-        t.add(new Place(0, 2, 3));
-        t.add(new Place(0, 3, 4));
-        t.add(new Place(0, 4, 5));
-        t.add(new Place(0, 5, 6));
-        t.add(new Place(0, 6, 7));
-        t.add(new Place(0, 7, 8));
-        t.add(new Place(0, 8, 9));
+        t.add(new Place(0, 7, 7));
+        t.add(new Place(0, 8, 8));
+        t.add(new Place(0, 9, 9));
         this.largeDataset.add(t);
     }
 
