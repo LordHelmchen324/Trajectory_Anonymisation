@@ -52,16 +52,22 @@ class Trajectory {
     }
 
     public void add(Place p) {
-        this.places.add(p);
-    }
+        if (this.length() == 0) this.places.add(p);
 
-    public void insertPlaceAtBeginning(Place p) {
-        this.places.add(0, p);
+        int i = 0;
+        while (i < this.length() && this.getPlaceAtIndex(i).getT() < p.getT()) i++;
+
+        if (this.getPlaceAtIndex(i).getT() == p.getT()) {
+            System.err.println("Illegaly attempted to add Place " + p + " with same t as the Place at indes " + i + "to Trajectory" + this + " !");
+            System.exit(1);
+        } else {
+            this.places.add(i, p);
+        }
     }
 
     // Autocorrelation
 
-    private double meanX() {
+    private double averageX() {
         int sum = 0;
         for (Place p : this.places) {
             sum += p.getX();
@@ -70,7 +76,7 @@ class Trajectory {
         return (double)sum / (double)this.length();
     }
 
-    private double meanY() {
+    private double averageY() {
         int sum = 0;
         for (Place p : this.places) {
             sum += p.getY();
@@ -86,7 +92,7 @@ class Trajectory {
             Place place = this.getPlaceAtIndex(i);
             Place shiftedPlace = this.getPlaceAtIndex(i + (int)Math.abs(h));
         
-            result += ((double)shiftedPlace.getX() - this.meanX()) * ((double)place.getX() - this.meanX()) + ((double)shiftedPlace.getY() - this.meanY()) * ((double)place.getY() - this.meanY());
+            result += ((double)shiftedPlace.getX() - this.averageX()) * ((double)place.getX() - this.averageX()) + ((double)shiftedPlace.getY() - this.averageY()) * ((double)place.getY() - this.averageY());
         }
     
         return result / (double)this.length();
@@ -118,7 +124,7 @@ class Trajectory {
                     Place last = this.places.get(this.length() - 1);
                     this.add(new Place(last.getX(), last.getY(), last.getT() + 1));
                 } else {
-                    this.insertPlaceAtBeginning(new Place(first.getX(), first.getY(), first.getT() - 1));;
+                    this.add(new Place(first.getX(), first.getY(), first.getT() - 1));;
                 }
             }
         }
