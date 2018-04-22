@@ -52,7 +52,10 @@ class Trajectory {
     }
 
     public void add(Place p) {
-        if (this.length() == 0) this.places.add(p);
+        if (this.length() == 0) {
+            this.places.add(p);
+            return;
+        }
 
         int i = 0;
         while (i < this.length() && this.getPlaceAtIndex(i).getT() < p.getT()) i++;
