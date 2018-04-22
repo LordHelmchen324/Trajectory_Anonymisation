@@ -60,14 +60,17 @@ class Dataset {
         return this.trajectories.size();
     }
 
-    public List<Trajectory> getTrajectories() {     // TODO: not nice
+    public List<Trajectory> getTrajectories() {
         return this.trajectories;
     }
 
     // MDAV
 
     public Trajectory closestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
-        if (this.trajectories.isEmpty()) return t;      // TODO: error
+        if (this.trajectories.isEmpty()) {
+            System.err.println("Cannot return clostest Trajectory to t = " + t + " from within empty Dataset!");
+            System.exit(1);
+        }
 
         double minDistance = Double.MAX_VALUE;
         Trajectory closest = null;
@@ -83,7 +86,10 @@ class Dataset {
     }
 
     public Trajectory furthestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
-        if (this.trajectories.isEmpty()) return t;      // TODO: error
+        if (this.trajectories.isEmpty()) {
+            System.err.println("Cannot return furthest Trajectory to t = " + t + " from within empty Dataset!");
+            System.exit(1);
+        }
 
         double maxDistance = 0.0;
         Trajectory furthest = null;
