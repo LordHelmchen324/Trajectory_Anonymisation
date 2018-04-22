@@ -9,9 +9,9 @@ public class ShortTimeSeriesDistance implements DistanceMeasure {
 
         Place origin = new Place(0, 0, 0);
         Trajectory rCopy = new Trajectory(r);
-        rCopy.insertPlaceAtBeginning(origin);
+        rCopy.add(origin);
         Trajectory sCopy = new Trajectory(s);
-        sCopy.insertPlaceAtBeginning(origin);
+        sCopy.add(origin);
 
         double result = 0.0;
         for (int i = 0; i < rCopy.length() - 1 ; i++) {
