@@ -1,14 +1,41 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
+import com.google.gson.Gson;
+
 class Anonymisation {
 
     public static void main(String[] args) {
-        Dataset d = makeLargeDataset();
+        File datasetFile = new File("../Geolife Trajectories 1.3/translated.json");
+        try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
+            String jsonString = "";
+            String line = r.readLine();
+            while (line != null) {
+                jsonString += line;
+                line = r.readLine();
+            }
 
-        DistanceMeasure dM = new ShortTimeSeriesDistance();
-        MedianStrategy mS = new XMedianY();
+            Gson gson = new Gson();
+            Dataset d = gson.fromJson(jsonString, Dataset.class);
 
-        Dataset result = d.protectedByMDAV(4, dM, mS);
+            System.out.println("Size of the data set = " + d.size());
 
-        System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
+            DistanceMeasure dM = new ShortTimeSeriesDistance();
+            MedianStrategy mS = new XMedianY();
+
+            Dataset result = d.protectedByMDAV(4, dM, mS);
+
+            System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find file at path \"" + datasetFile.getName() + "\".");
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println("An I/O exception occured: " + e.getLocalizedMessage());
+            System.exit(1);
+        }
     }
 
     public static Dataset makeSmallDataset() {
