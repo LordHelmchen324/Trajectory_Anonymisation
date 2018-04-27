@@ -158,8 +158,7 @@ class Dataset {
             lastCluster.add(t);
             it.remove();
         }
-        clusters.add(lastCluster);
-
+        
         Dataset result = new Dataset();
         for (List<Trajectory> c : clusters) {
             Trajectory clusterMedian = mS.computeMedian(c);
