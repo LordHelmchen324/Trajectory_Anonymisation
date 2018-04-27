@@ -151,7 +151,7 @@ class Dataset {
             }
         }
 
-        List<Trajectory> lastCluster = new LinkedList<Trajectory>();
+        List<Trajectory> lastCluster = clusters.get(clusters.size() - 1);
         Iterator<Trajectory> it = temp.trajectories.iterator();
         while (it.hasNext()) {
             Trajectory t = it.next();
