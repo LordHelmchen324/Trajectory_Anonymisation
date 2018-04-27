@@ -11,7 +11,7 @@ abstract class MedianStrategy {
         return places;
     }
 
-    protected List<Place> placesAtTime(List<Trajectory> trajectories, int t) {
+    protected List<Place> placesAtTime(List<Trajectory> trajectories, long t) {
         List<Place> places = this.allPlaces(trajectories);
         List<Place> concurrentPlaces = new LinkedList<Place>();
         for (Place p : places) {
@@ -20,7 +20,7 @@ abstract class MedianStrategy {
         return concurrentPlaces;
     }
 
-    protected Place findXMedianPlaceAtTime(List<Trajectory> trajectories, int t) {
+    protected Place findXMedianPlaceAtTime(List<Trajectory> trajectories, long t) {
         List<Place> concurrentPlaces = this.placesAtTime(trajectories, t);
 
         concurrentPlaces.sort(new Place.XComparator());
@@ -30,7 +30,7 @@ abstract class MedianStrategy {
 
         Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
         Place upperMedian = concurrentPlaces.get(n / 2);
-        int xMedian = (lowerMedian.getX() + upperMedian.getX()) / 2;
+        long xMedian = (lowerMedian.getX() + upperMedian.getX()) / 2;
         if (Math.abs(xMedian - lowerMedian.getX()) < Math.abs(xMedian - upperMedian.getX())) {
             return lowerMedian;
         } else {
@@ -38,7 +38,7 @@ abstract class MedianStrategy {
         }
     }
 
-    protected Place findYMedianPlaceAtTime(List<Trajectory> trajectories, int t) {
+    protected Place findYMedianPlaceAtTime(List<Trajectory> trajectories, long t) {
         List<Place> concurrentPlaces = this.placesAtTime(trajectories, t);
 
         concurrentPlaces.sort(new Place.YComparator());
@@ -48,7 +48,7 @@ abstract class MedianStrategy {
 
         Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
         Place upperMedian = concurrentPlaces.get(n / 2);
-        int yMedian = (lowerMedian.getY() + upperMedian.getY()) / 2;
+        long yMedian = (lowerMedian.getY() + upperMedian.getY()) / 2;
         if (Math.abs(yMedian - lowerMedian.getY()) < Math.abs(yMedian - upperMedian.getY())) {
             return lowerMedian;
         } else {

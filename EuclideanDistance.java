@@ -7,14 +7,14 @@ public class EuclideanDistance implements DistanceMeasure {
             System.exit(-1);
         }
 
-        int result = 0;
+        long result = 0;
         for (int i = 0; i < r.length(); i++) {
             Place p = r.getPlaceAtIndex(i);
             Place q = s.getPlaceAtIndex(i);
         
-            int tsqrd = (p.getT() - q.getT()) * (p.getT() - q.getT());
-            int xsqrd = (p.getX() - q.getX()) * (p.getX() - q.getX());
-            int ysqrd = (p.getY() - q.getY()) * (p.getY() - q.getY());
+            long tsqrd = (p.getT() - q.getT()) * (p.getT() - q.getT());
+            long xsqrd = (p.getX() - q.getX()) * (p.getX() - q.getX());
+            long ysqrd = (p.getY() - q.getY()) * (p.getY() - q.getY());
         
             result += (1 + tsqrd) * (xsqrd + ysqrd);
         }
