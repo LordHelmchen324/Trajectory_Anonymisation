@@ -8,7 +8,7 @@ public class DatasetTest {
     Dataset paperDatasetTwin = new Dataset();
 
     @Before
-    public void initialisePaperDataset() {
+    public void initPaperDataset() {
         Trajectory r = new Trajectory();
         r.add(new Place(3, 6, 1));
         r.add(new Place(1, 7, 2));
@@ -36,7 +36,7 @@ public class DatasetTest {
     Dataset largeDataset = new Dataset();
 
     @Before
-    public void initialiseLargeDataset() {
+    public void initLargeDataset() {
         
         // club 1
 
@@ -299,6 +299,16 @@ public class DatasetTest {
             assertTrue(euclidean.computeDistance(t, e) >= euclidean.computeDistance(t, closestEuclidean));
             assertTrue(shortTimeSeries.computeDistance(t, e) >= shortTimeSeries.computeDistance(t, closestShortTimeSeries));
         }
+    }
+
+    @Test
+    public void protectedHasTheSameAmountTrajectories() {
+        DistanceMeasure dM = new ShortTimeSeriesDistance();
+        MedianStrategy mS = new XMedianY();
+
+        Dataset result = this.largeDataset.protectedByMDAV(4, dM, mS);
+
+        assertEquals(result.size(), this.largeDataset.size());
     }
 
 }
