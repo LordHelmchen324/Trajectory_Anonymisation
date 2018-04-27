@@ -76,7 +76,7 @@ class Dataset {
         Trajectory closest = null;
         for (Trajectory t2 : this.trajectories) {
             double distance = dM.computeDistance(t, t2);
-            if (distance < minDistance || closest == null) {
+            if (distance < minDistance) {
                 minDistance = distance;
                 closest = t2;
             }
@@ -95,7 +95,7 @@ class Dataset {
         Trajectory furthest = null;
         for (Trajectory t2 : this.trajectories) {
             double distance = dM.computeDistance(t, t2);
-            if (distance > maxDistance || furthest == null) {
+            if (distance > maxDistance) {
                 maxDistance = distance;
                 furthest = t2;
             }
@@ -158,7 +158,7 @@ class Dataset {
             lastCluster.add(t);
             it.remove();
         }
-        
+
         Dataset result = new Dataset();
         for (List<Trajectory> c : clusters) {
             Trajectory clusterMedian = mS.computeMedian(c);
