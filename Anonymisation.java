@@ -14,6 +14,7 @@ class Anonymisation {
         File datasetFile = new File("../Geolife Trajectories 1.3/translated.json");
         try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
             Gson gson = new Gson();
+            //Dataset d = makeLargeDataset();
             Dataset d = gson.fromJson(r, Dataset.class);
 
             System.out.print("done!\n");

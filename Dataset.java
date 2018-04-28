@@ -72,6 +72,8 @@ class Dataset {
             System.exit(1);
         }
 
+        System.out.print("    > Finding closest trajectory ... ");
+
         double minDistance = Double.MAX_VALUE;
         Trajectory closest = null;
         for (Trajectory t2 : this.trajectories) {
@@ -82,6 +84,8 @@ class Dataset {
             }
         }
 
+        System.out.print("done!\n");
+
         return closest;
     }
 
@@ -90,6 +94,8 @@ class Dataset {
             System.err.println("Cannot return furthest Trajectory to t = " + t + " from within empty Dataset!");
             System.exit(1);
         }
+
+        System.out.print("    > Finding furthest trajectory ... ");
 
         double maxDistance = 0.0;
         Trajectory furthest = null;
@@ -100,6 +106,8 @@ class Dataset {
                 furthest = t2;
             }
         }
+
+        System.out.print("done!\n");
 
         return furthest;
     }
@@ -139,7 +147,7 @@ class Dataset {
     }
 
     public Dataset protectedByMDAV(int k, DistanceMeasure dM, MedianStrategy mS) {
-        System.out.print(" -> Creating a temprary copy of the dataset ... ");
+        System.out.print(" -> Creating a temporary copy of the dataset ... ");
 
         Dataset temp = new Dataset(this);
 

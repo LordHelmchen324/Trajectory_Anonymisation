@@ -1,18 +1,19 @@
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 class XMedianYMedian extends MedianStrategy {
 
     @Override
     public Trajectory computeMedian(List<Trajectory> trajectories) {
+        System.out.println("    > Computing XMedianY ... ");
+
         Trajectory median = new Trajectory();
 
         // get a set of all timestamps;
         List<Place> places = this.allPlaces(trajectories);
-        List<Long> timestamps = new LinkedList<Long>();
-        for (Place p : places) {
-            if ( !timestamps.contains(p.getT()) ) timestamps.add(p.getT());
-        }
+        Set<Long> timestamps = new HashSet<Long>();
+        for (Place p : places) timestamps.add(p.getT());
 
         // for all timestamps, find the corresponding median Place
         for (Long t : timestamps) {
