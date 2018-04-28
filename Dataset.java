@@ -115,6 +115,8 @@ class Dataset {
             this.remove(closest);
         }
 
+        System.out.println("    > Made cluster of size " + size);
+
         return cluster;
     }
 
@@ -137,17 +139,28 @@ class Dataset {
     }
 
     public Dataset protectedByMDAV(int k, DistanceMeasure dM, MedianStrategy mS) {
+        System.out.print(" -> Creating a temprary copy of the dataset ... ");
+
         Dataset temp = new Dataset(this);
+
+        System.out.print("done!\n");
+
         List<List<Trajectory>> clusters = new LinkedList<List<Trajectory>>();
+
+        System.out.println(" -> Clustering ...");
 
         while (temp.size() > k) {
             Trajectory avrg = mS.computeMedian(temp.trajectories);
             Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
             clusters.add(temp.removeClusterAround(furthest, k, dM));
 
+            System.out.println("    > " + temp.size() + " trajecotires remaining");
+
             if (temp.size() > k) {
                 Trajectory furthest2 = temp.furthestTrajectoryTo(avrg, dM);
                 clusters.add(temp.removeClusterAround(furthest2, k, dM));
+
+                System.out.println("    > " + temp.size() + " trajecotires remaining");
             }
         }
 
@@ -158,6 +171,8 @@ class Dataset {
             lastCluster.add(t);
             it.remove();
         }
+
+        System.out.println(" -> Setting clusters to their median ...");
 
         Dataset result = new Dataset();
         for (List<Trajectory> c : clusters) {

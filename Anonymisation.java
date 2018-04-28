@@ -9,17 +9,24 @@ import com.google.gson.Gson;
 class Anonymisation {
 
     public static void main(String[] args) {
+        System.out.print("Reading data set from JSON file ... ");
+
         File datasetFile = new File("../Geolife Trajectories 1.3/translated.json");
         try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
             Gson gson = new Gson();
             Dataset d = gson.fromJson(r, Dataset.class);
-            
-            System.out.println("Size of the data set = " + d.size());
+
+            System.out.print("done!\n");
+            System.out.println("Size of the data set = " + d.size() + "\n");
 
             DistanceMeasure dM = new ShortTimeSeriesDistance();
             MedianStrategy mS = new XMedianY();
 
-            Dataset result = d.protectedByMDAV(4, dM, mS);
+            System.out.println("Protecting data set ...");
+
+            Dataset result = d.protectedByMDAV(9, dM, mS);
+
+            System.out.println("Data set protection finished.\n");
 
             System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
         } catch (FileNotFoundException e) {
