@@ -1,35 +1,39 @@
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 abstract class MedianStrategy {
 
-    protected List<Place> allPlaces(List<Trajectory> trajectories) {
-        List<Place> places = new LinkedList<Place>();
+    protected Map<Long,List<Place>> placesByTime(List<Trajectory> trajectories) {
+        Map<Long,List<Place>> placesByTime = new HashMap<Long, List<Place>>();
+
         for (Trajectory t : trajectories) {
-            places.addAll(t.getPlaces());
+            List<Place> places = t.getPlaces();
+
+            for (Place p : places) {
+                List<Place> concurrentPlaces = placesByTime.get(p.getT());
+                if (concurrentPlaces == null) {
+                    concurrentPlaces = new LinkedList<Place>();
+                    concurrentPlaces.add(p);
+                    placesByTime.put(p.getT(), concurrentPlaces);
+                } else {
+                    concurrentPlaces.add(p);
+                }
+            }
         }
-        return places;
+
+        return placesByTime;
     }
 
-    protected List<Place> placesAtTime(List<Trajectory> trajectories, long t) {
-        List<Place> places = this.allPlaces(trajectories);
-        List<Place> concurrentPlaces = new LinkedList<Place>();
-        for (Place p : places) {
-            if (p.getT() == t) concurrentPlaces.add(p);
-        }
-        return concurrentPlaces;
-    }
+    protected Place findXMedianPlace(List<Place> places) {
+        places.sort(new Place.XComparator());
+        int n = places.size();
 
-    protected Place findXMedianPlaceAtTime(List<Trajectory> trajectories, long t) {
-        List<Place> concurrentPlaces = this.placesAtTime(trajectories, t);
+        if ((n & 1) != 0) return places.get(n / 2);
 
-        concurrentPlaces.sort(new Place.XComparator());
-        int n = concurrentPlaces.size();
-
-        if ((n & 1) != 0) return concurrentPlaces.get(n / 2);
-
-        Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
-        Place upperMedian = concurrentPlaces.get(n / 2);
+        Place lowerMedian = places.get(n / 2 - 1);
+        Place upperMedian = places.get(n / 2);
         long xMedian = (lowerMedian.getX() + upperMedian.getX()) / 2;
         if (Math.abs(xMedian - lowerMedian.getX()) < Math.abs(xMedian - upperMedian.getX())) {
             return lowerMedian;
@@ -38,16 +42,14 @@ abstract class MedianStrategy {
         }
     }
 
-    protected Place findYMedianPlaceAtTime(List<Trajectory> trajectories, long t) {
-        List<Place> concurrentPlaces = this.placesAtTime(trajectories, t);
+    protected Place findYMedianPlace(List<Place> places) {
+        places.sort(new Place.YComparator());
+        int n = places.size();
 
-        concurrentPlaces.sort(new Place.YComparator());
-        int n = concurrentPlaces.size();
+        if ((n & 1) != 0) return places.get(n / 2);
 
-        if ((n & 1) != 0) return concurrentPlaces.get(n / 2);
-
-        Place lowerMedian = concurrentPlaces.get(n / 2 - 1);
-        Place upperMedian = concurrentPlaces.get(n / 2);
+        Place lowerMedian = places.get(n / 2 - 1);
+        Place upperMedian = places.get(n / 2);
         long yMedian = (lowerMedian.getY() + upperMedian.getY()) / 2;
         if (Math.abs(yMedian - lowerMedian.getY()) < Math.abs(yMedian - upperMedian.getY())) {
             return lowerMedian;
