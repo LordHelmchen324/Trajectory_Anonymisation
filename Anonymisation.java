@@ -11,16 +11,9 @@ class Anonymisation {
     public static void main(String[] args) {
         File datasetFile = new File("../Geolife Trajectories 1.3/translated.json");
         try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
-            String jsonString = "";
-            String line = r.readLine();
-            while (line != null) {
-                jsonString += line;
-                line = r.readLine();
-            }
-
             Gson gson = new Gson();
-            Dataset d = gson.fromJson(jsonString, Dataset.class);
-
+            Dataset d = gson.fromJson(r, Dataset.class);
+            
             System.out.println("Size of the data set = " + d.size());
 
             DistanceMeasure dM = new ShortTimeSeriesDistance();
