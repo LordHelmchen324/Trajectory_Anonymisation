@@ -7,16 +7,16 @@ public class PlaceTest {
 
     @Test
     public void shouldEqual() {
-        Place p1 = new Place(3, 2, 4);
-        Place p2 = new Place(3, 2, 4);
+        Place p1 = new Place(3, 2);
+        Place p2 = new Place(3, 2);
 
         assertTrue(p1.equals(p2));
     }
 
     @Test
     public void compareX() {
-        Place smallerX = new Place(3, 5, 2);
-        Place greaterX = new Place(5, 3, 3);
+        Place smallerX = new Place(3, 5);
+        Place greaterX = new Place(5, 3);
 
         Comparator<Place> c = new Place.XComparator();
 
@@ -28,8 +28,8 @@ public class PlaceTest {
 
     @Test
     public void compareY() {
-        Place smallerY = new Place(5, 3, 3);
-        Place greaterY = new Place(3, 5, 2);
+        Place smallerY = new Place(5, 3);
+        Place greaterY = new Place(3, 5);
 
         Comparator<Place> c = new Place.YComparator();
 
@@ -37,19 +37,6 @@ public class PlaceTest {
         assertTrue(c.compare(greaterY, smallerY) > 0);
         assertTrue(c.compare(smallerY, smallerY) == 0);
         assertTrue(c.compare(greaterY, greaterY) == 0);
-    }
-
-    @Test
-    public void compareT() {
-        Place smallerT = new Place(3, 5, 2);
-        Place greaterT = new Place(5, 3, 3);
-
-        Comparator<Place> c = new Place.TComparator();
-
-        assertTrue(c.compare(smallerT, greaterT) < 0);
-        assertTrue(c.compare(greaterT, smallerT) > 0);
-        assertTrue(c.compare(smallerT, smallerT) == 0);
-        assertTrue(c.compare(greaterT, greaterT) == 0);
     }
 
 }

@@ -28,8 +28,7 @@ class XMedianY extends MedianStrategy {
 
             Place xMedian = this.findXMedianPlace(entry.getValue());
             
-            Place p = new Place(xMedian.getX(), xMedian.getY(), entry.getKey());
-            median.add(p);
+            median.add(entry.getKey(), new Place(xMedian.getX(), xMedian.getY()));
         }
 
         System.out.println("    > Finished.");

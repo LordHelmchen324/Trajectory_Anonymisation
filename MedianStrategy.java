@@ -9,17 +9,18 @@ abstract class MedianStrategy {
         Map<Long,List<Place>> placesByTime = new HashMap<Long, List<Place>>();
 
         for (Trajectory t : trajectories) {
-            List<Place> places = t.getPlaces();
+            List<Long> timestamps = t.getTimestamps();
 
-            for (Place p : places) {
-                List<Place> concurrentPlaces = placesByTime.get(p.getT());
+            for (long time : timestamps) {
+                List<Place> concurrentPlaces = placesByTime.get(t);
+
+                // If no list for that timestamp is found, make one
                 if (concurrentPlaces == null) {
                     concurrentPlaces = new LinkedList<Place>();
-                    concurrentPlaces.add(p);
-                    placesByTime.put(p.getT(), concurrentPlaces);
-                } else {
-                    concurrentPlaces.add(p);
+                    placesByTime.put(time, concurrentPlaces);
                 }
+
+                concurrentPlaces.add(t.getPlaceAtTime(time));
             }
         }
 
@@ -58,7 +59,7 @@ abstract class MedianStrategy {
         }
     }
 
-    // has to be overidden by subclasses
+    // Has to be overidden by subclasses
     public Trajectory computeMedian(List<Trajectory> trajectories) {
         return null;
     }

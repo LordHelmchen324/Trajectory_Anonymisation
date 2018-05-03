@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class EuclideanDistance implements DistanceMeasure {
 
     @Override
@@ -8,11 +10,19 @@ public class EuclideanDistance implements DistanceMeasure {
         }
 
         long result = 0;
+
+        List<Long> rTimes = r.getTimestamps();
+        List<Place> rPlaces = r.getPlaces();
+        List<Long> sTimes = s.getTimestamps();
+        List<Place> sPlaces = s.getPlaces();
+
         for (int i = 0; i < r.length(); i++) {
-            Place p = r.getPlaceAtIndex(i);
-            Place q = s.getPlaceAtIndex(i);
+            long pt = rTimes.get(i);
+            Place p = rPlaces.get(i);
+            long qt = sTimes.get(i);
+            Place q = sPlaces.get(i);
         
-            long tsqrd = (p.getT() - q.getT()) * (p.getT() - q.getT());
+            long tsqrd = (pt - qt) * (pt - qt);
             long xsqrd = (p.getX() - q.getX()) * (p.getX() - q.getX());
             long ysqrd = (p.getY() - q.getY()) * (p.getY() - q.getY());
         
