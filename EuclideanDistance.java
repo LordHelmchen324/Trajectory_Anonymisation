@@ -3,6 +3,9 @@ import java.util.List;
 public class EuclideanDistance implements DistanceMeasure {
 
     @Override
+    public void prepareDataset(Dataset d) { }
+
+    @Override
     public double computeDistance(final Trajectory r, final Trajectory s) {
         if (r.length() != s.length()) {
             System.err.println("Trajectories have different length!");
