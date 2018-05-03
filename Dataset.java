@@ -158,7 +158,8 @@ class Dataset {
         System.out.println(" -> Clustering ...");
 
         while (temp.size() > k) {
-            Trajectory avrg = mS.computeMedian(temp.trajectories);
+            //Trajectory avrg = mS.computeMedian(temp.trajectories);
+            Trajectory avrg = this.trajectories.get(0);
             Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
             clusters.add(temp.removeClusterAround(furthest, k, dM));
 
