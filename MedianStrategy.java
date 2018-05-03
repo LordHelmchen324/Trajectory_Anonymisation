@@ -12,7 +12,7 @@ abstract class MedianStrategy {
             List<Long> timestamps = t.getTimestamps();
 
             for (long time : timestamps) {
-                List<Place> concurrentPlaces = placesByTime.get(t);
+                List<Place> concurrentPlaces = placesByTime.get(time);
 
                 // If no list for that timestamp is found, make one
                 if (concurrentPlaces == null) {
