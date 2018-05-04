@@ -98,7 +98,17 @@ public class SynchronisedDistance implements DistanceMeasure {
     }
 
     private double directDistance(Trajectory r, Trajectory s) {
+        Set<Long> ot = new HashSet<Long>(r.getTimestamps());
+        ot.retainAll(s.getTimestamps());
 
+        double sum = 0.0;
+        for (long t : ot) {
+            double a1 = Math.pow(r.getPlaceAtTime(t).getX() - s.getPlaceAtTime(t).getX(), 2);
+            double a2 = Math.pow(r.getPlaceAtTime(t).getY() - s.getPlaceAtTime(t).getY(), 2);
+            sum += (a1 + a2) / Math.pow(ot.size(), 2);
+        }
+
+        return Math.sqrt(sum) / this.percentContemporary(r, s);
     }
 
     private double[][] computeShortestDistanceMatrix(double[][] distanceGraph) {
