@@ -87,7 +87,14 @@ public class SynchronisedDistance implements DistanceMeasure {
     }
 
     private double percentContemporary(Trajectory r, Trajectory s) {
+        long rFirstT = Collections.min(r.getTimestamps());
+        long rLastT = Collections.max(r.getTimestamps());
+        long sFirstT = Collections.min(s.getTimestamps());
+        long sLastT = Collections.max(s.getTimestamps());
 
+        long I = Math.max(Math.min(rLastT, sLastT) - Math.max(rFirstT, sFirstT), 0);
+
+        return 100 * Math.min((double)I / (double)(rLastT - rFirstT), (double)I / (double)(sLastT - sFirstT));
     }
 
     private double directDistance(Trajectory r, Trajectory s) {
