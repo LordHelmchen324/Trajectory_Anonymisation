@@ -38,12 +38,15 @@ public class SynchronisedDistance implements DistanceMeasure {
 
     private void synchroniseTrajectories(Dataset d) {
         // Get a set of all timestamps of all existing places within the data set
+        System.out.println("      > Getting set of all timestamps ...");
         Set<Long> ts = new HashSet<Long>();
         for (Trajectory tj : d.getTrajectories()) {
             ts.addAll(tj.getTimestamps());
         }
 
         for (Trajectory r : d.getTrajectories()) {
+            System.out.println("      > Synchronising trajectory of length " + r.length() + " ...");
+
             long minT = Collections.min(r.getTimestamps());    // TODO: Return timestamps as set ?
             long maxT = Collections.max(r.getTimestamps());
 
