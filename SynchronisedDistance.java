@@ -157,7 +157,7 @@ public class SynchronisedDistance implements DistanceMeasure {
 
         for (int i = 0; i < d.size(); i++) {
             if (visitedMask[i] == -1) {
-                int n = this.depthFirstSearch(i, c);
+                int n = this.depthFirstSearch(i, c, visitedMask);
                 if (n > largestCSize) {
                     largestC = c;
                     largestCSize = n;
@@ -176,8 +176,19 @@ public class SynchronisedDistance implements DistanceMeasure {
         }
     }
     
-    public int depthFirstSearch(int v, int c) {
-        
+    public int depthFirstSearch(int v, int c, int[] visitedMask) {
+        visitedMask[v] = c;
+
+        double[] connections = this.distanceGraph[v];
+        int n = 1;
+        for (int i = 0; i < connections.length; i++) {
+            if (connections[i] < Double.POSITIVE_INFINITY && visitedMask[i] == -1) {
+                int k = this.depthFirstSearch(i, c, visitedMask);
+                n += k;
+            }
+        }
+
+        return n;
     }
 
 	@Override
