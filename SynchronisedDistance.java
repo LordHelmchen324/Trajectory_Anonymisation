@@ -43,7 +43,7 @@ public class SynchronisedDistance implements DistanceMeasure {
         for (Trajectory r : d.getTrajectories()) {
             System.out.println("      > Synchronising trajectory of length " + r.length() + " ...");
 
-            long minT = Collections.min(r.getTimestamps());    // TODO: Return timestamps as set ?
+            long minT = Collections.min(r.getTimestamps());
             long maxT = Collections.max(r.getTimestamps());
 
             // For all timestamps in the data set ...
