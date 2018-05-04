@@ -1,5 +1,6 @@
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -169,8 +170,10 @@ public class SynchronisedDistance implements DistanceMeasure {
         for (int i = 0; i < d.size(); i++) {
             if (visitedMask[i] != largestC) {
                 List<Trajectory> rs = d.getTrajectories();
-                for (Trajectory r : rs) {
-                    if (r.id == i) rs.remove(r);
+                Iterator<Trajectory> rsIter = rs.iterator();
+                while (rsIter.hasNext()) {
+                    Trajectory r = rsIter.next();
+                    if (r.id == i) rsIter.remove();
                 }
             }
         }
