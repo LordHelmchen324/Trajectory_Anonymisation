@@ -8,6 +8,7 @@ import java.util.Set;
 class Trajectory {
 
     private Map<Long, Place> places = new HashMap<Long, Place>();
+    public int id = -1;
 
     public Trajectory() { }
 
@@ -17,6 +18,7 @@ class Trajectory {
             Place p = new Place(entry.getValue());
             this.places.put(t, p);
         }
+        this.id = original.id;
     }
 
     @Override

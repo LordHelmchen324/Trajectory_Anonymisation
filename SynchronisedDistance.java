@@ -1,31 +1,28 @@
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 public class SynchronisedDistance implements DistanceMeasure {
 
-    private Map<Trajectory, Integer> dict;
     private double[][] shortestDistanceMatrix;
 
     @Override
 	public void createSupportData(Dataset d) {
         System.out.println(" -> SynchronisedDistance: Creating support data ...");
 
+        System.out.println("    > Assigning indicies as IDs to the trajectories ...");
+        int i = 0;
+        for (Trajectory r : d.getTrajectories()) {
+            r.id = i;
+            i++;
+        }
+
         System.out.println("    > Copying dataset ... ");
         Dataset temp = new Dataset(d);
 
         System.out.println("    > Synchronising trajectories ...");
         this.synchroniseTrajectories(temp);
-
-        System.out.println("    > Creating dictionary of trajectories to in indicies ...");
-        this.dict = new HashMap<Trajectory, Integer>();
-        int i = 0;
-        for (Trajectory r : d.getTrajectories()) {
-            this.dict.put(r, i);
-            i++;
-        }
 
         System.out.println("    > Building distance graph ...");
         double[][] distanceGraph = this.makeDistanceGraph(temp);
@@ -78,15 +75,13 @@ public class SynchronisedDistance implements DistanceMeasure {
     }
 
     private double[][] makeDistanceGraph(Dataset temp) {
-        Set<Trajectory> trajectories = temp.getTrajectories();
+        List<Trajectory> trajectories = temp.getTrajectories();
 
         double[][] distanceGraph = new double[trajectories.size()][trajectories.size()];
 
         for (Trajectory r : trajectories) {
             for (Trajectory s : trajectories) {
                 double d;
-                int rIndex = this.dict.get(r);
-                int sIndex = this.dict.get(s);
 
                 if (s == r) {
                     d = 0;
@@ -96,7 +91,7 @@ public class SynchronisedDistance implements DistanceMeasure {
                     d = Double.POSITIVE_INFINITY;
                 }
 
-                distanceGraph[rIndex][sIndex] = distanceGraph[sIndex][rIndex] = d;
+                distanceGraph[r.id][s.id] = distanceGraph[s.id][r.id] = d;
             }
         }
 
@@ -154,10 +149,7 @@ public class SynchronisedDistance implements DistanceMeasure {
 
 	@Override
 	public double computeDistance(Trajectory r, Trajectory s) {
-        int rIndex = this.dict.get(r);
-        int sIndex = this.dict.get(s);
-
-        return this.shortestDistanceMatrix[rIndex][sIndex];
+        return this.shortestDistanceMatrix[r.id][s.id];
 	}
 
 }
