@@ -112,7 +112,27 @@ public class SynchronisedDistance implements DistanceMeasure {
     }
 
     private double[][] computeShortestDistanceMatrix(double[][] distanceGraph) {
-        
+        int n = distanceGraph.length;
+
+        double[][] shortestDistanceMatrix = new double[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                shortestDistanceMatrix[i][j] = distanceGraph[i][j];
+            }
+        }
+
+        for (int k = 0; k < n; k++) {
+            for (int i = 0; i < n; i++) {
+                for (int j = 0; j < n; j++) {
+                    if (distanceGraph[i][k] + distanceGraph[k][j] < distanceGraph[i][j]) {
+                        distanceGraph[i][j] = distanceGraph[i][k] + distanceGraph[k][j];
+                    }
+                }
+            }
+        }
+
+        return distanceGraph;
     }
 
 	@Override
