@@ -1,26 +1,36 @@
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class SynchronisedDistance implements DistanceMeasure {
 
-    private HashMap<Trajectory, Integer> dict;
+    private Map<Trajectory, Integer> dict;
     private double[][] shortestDistanceMatrix;
 
     @Override
 	public void createSupportData(Dataset d) {
+        System.out.println(" -> SynchronisedDistance: Creating support data ...");
+
+        System.out.println("    > Copying dataset ... ");
         Dataset temp = new Dataset(d);
 
+        System.out.println("    > Synchronising trajectories ...");
         this.synchroniseTrajectories(temp);
 
+        System.out.println("    > Creating dictionary of trajectories to in indicies ...");
+        this.dict = new HashMap<Trajectory, Integer>();
         int i = 0;
-        for (Trajectory r : temp.getTrajectories()) {
+        for (Trajectory r : d.getTrajectories()) {
             this.dict.put(r, i);
             i++;
         }
 
-        double[][] distanceGraph = this.makeDistanceGraph();
+        System.out.println("    > Building distance graph ...");
+        double[][] distanceGraph = this.makeDistanceGraph(temp);
+
+        System.out.println("    > Computing shortest distance matrix ...");
         this.shortestDistanceMatrix = this.computeShortestDistanceMatrix(distanceGraph);
     }
 
@@ -67,8 +77,8 @@ public class SynchronisedDistance implements DistanceMeasure {
         }
     }
 
-    private double[][] makeDistanceGraph() {
-        Set<Trajectory> trajectories = this.dict.keySet();
+    private double[][] makeDistanceGraph(Dataset temp) {
+        Set<Trajectory> trajectories = temp.getTrajectories();
 
         double[][] distanceGraph = new double[trajectories.size()][trajectories.size()];
 
