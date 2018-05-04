@@ -15,9 +15,9 @@ class Anonymisation {
         try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
             System.out.print("Reading data set from JSON file ... ");
 
-            //Gson gson = new Gson();
-            d = makeLargeDataset();
-            //d = gson.fromJson(r, Dataset.class);
+            Gson gson = new Gson();
+            //d = makeLargeDataset();
+            d = gson.fromJson(r, Dataset.class);
 
             System.out.print("done!\n");
             System.out.println(" -> Size of the data set = " + d.size() + "\n");
