@@ -148,8 +148,37 @@ public class SynchronisedDistance implements DistanceMeasure {
 
     @Override
 	public void removeImpossibleTrajectoriesFromDataset(Dataset d) {
-		return;   // TODO: Remove everything but the largest part
-	}
+        int[] visitedMask = new int[d.size()];
+        for (int i = 0; i < visitedMask.length; i++) visitedMask[i] = -1;
+
+        int c = 0;
+        int largestC = 0;
+        int largestCSize = 0;
+
+        for (int i = 0; i < d.size(); i++) {
+            if (visitedMask[i] == -1) {
+                int n = this.depthFirstSearch(i, c);
+                if (n > largestCSize) {
+                    largestC = c;
+                    largestCSize = n;
+                }
+                c++;
+            }
+        }
+
+        for (int i = 0; i < d.size(); i++) {
+            if (visitedMask[i] != largestC) {
+                List<Trajectory> rs = d.getTrajectories();
+                for (Trajectory r : rs) {
+                    if (r.id == i) rs.remove(r);
+                }
+            }
+        }
+    }
+    
+    public int depthFirstSearch(int v, int c) {
+        
+    }
 
 	@Override
 	public double computeDistance(Trajectory r, Trajectory s) {
