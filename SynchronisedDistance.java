@@ -1,12 +1,25 @@
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 
 public class SynchronisedDistance implements DistanceMeasure {
 
+    private HashMap<Trajectory, Integer> dict;
+    private double[][] shortestDistanceMatrix;
+
     @Override
     public void prepareDataset(Dataset d) {
         this.synchroniseTrajectories(d);
+
+        int i = 0;
+        for (Trajectory r : d.getTrajectories()) {
+            this.dict.put(r, i);
+            i++;
+        }
+
+        double[][] distanceGraph = this.makeDistanceGraph();
+        this.shortestDistanceMatrix = this.computeShortestDistanceMatrix(distanceGraph);
     }
 
     private void synchroniseTrajectories(Dataset d) {
@@ -45,6 +58,44 @@ public class SynchronisedDistance implements DistanceMeasure {
                 }
             }
         }
+    }
+
+    private double[][] makeDistanceGraph() {
+        Set<Trajectory> trajectories = this.dict.keySet();
+
+        double[][] distanceGraph = new double[trajectories.size()][trajectories.size()];
+
+        for (Trajectory r : trajectories) {
+            for (Trajectory s : trajectories) {
+                double d;
+                int rIndex = this.dict.get(r);
+                int sIndex = this.dict.get(s);
+
+                if (s == r) {
+                    d = 0;
+                } else if (this.percentContemporary(r, s) > 0) {
+                    d = this.directDistance(r, s);
+                } else {
+                    d = Double.POSITIVE_INFINITY;
+                }
+
+                distanceGraph[rIndex][sIndex] = distanceGraph[sIndex][rIndex] = d;
+            }
+        }
+
+        return distanceGraph;
+    }
+
+    private double percentContemporary(Trajectory r, Trajectory s) {
+
+    }
+
+    private double directDistance(Trajectory r, Trajectory s) {
+
+    }
+
+    private double[][] computeShortestDistanceMatrix(double[][] distanceGraph) {
+        
     }
 
 	@Override
