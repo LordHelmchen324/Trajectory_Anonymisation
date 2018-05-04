@@ -1,6 +1,7 @@
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 class Dataset {
 
@@ -78,7 +79,7 @@ class Dataset {
         Trajectory closest = null;
         for (Trajectory t2 : this.trajectories) {
             double distance = dM.computeDistance(t, t2);
-            if (distance < minDistance) {
+            if (distance < minDistance || closest == null) {
                 minDistance = distance;
                 closest = t2;
             }
@@ -101,7 +102,7 @@ class Dataset {
         Trajectory furthest = null;
         for (Trajectory t2 : this.trajectories) {
             double distance = dM.computeDistance(t, t2);
-            if (distance > maxDistance) {
+            if (distance > maxDistance || furthest == null) {
                 maxDistance = distance;
                 furthest = t2;
             }
@@ -157,9 +158,10 @@ class Dataset {
 
         System.out.println(" -> Clustering ...");
 
+        Random rand = new Random();
         while (temp.size() > k) {
             //Trajectory avrg = mS.computeMedian(temp.trajectories);
-            Trajectory avrg = this.trajectories.get(0);
+            Trajectory avrg = temp.getTrajectories().get(rand.nextInt(temp.size()));
             Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
             clusters.add(temp.removeClusterAround(furthest, k, dM));
 
