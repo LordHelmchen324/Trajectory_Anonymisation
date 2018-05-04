@@ -2,6 +2,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 abstract class MedianStrategy {
 
@@ -9,7 +10,7 @@ abstract class MedianStrategy {
         Map<Long,List<Place>> placesByTime = new HashMap<Long, List<Place>>();
 
         for (Trajectory t : trajectories) {
-            List<Long> timestamps = t.getTimestamps();
+            Set<Long> timestamps = t.getTimestamps();
 
             for (long time : timestamps) {
                 List<Place> concurrentPlaces = placesByTime.get(time);

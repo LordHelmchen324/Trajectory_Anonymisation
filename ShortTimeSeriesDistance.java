@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class ShortTimeSeriesDistance implements DistanceMeasure {
@@ -18,9 +19,9 @@ public class ShortTimeSeriesDistance implements DistanceMeasure {
         Trajectory sCopy = new Trajectory(s);
         sCopy.add(0, origin);
 
-        List<Long> rCopyTimestamps = rCopy.getTimestamps();
+        List<Long> rCopyTimestamps = new ArrayList<Long>(rCopy.getTimestamps());
         List<Place> rCopyPlaces = rCopy.getPlaces();
-        List<Long> sCopyTimestamps = sCopy.getTimestamps();
+        List<Long> sCopyTimestamps = new ArrayList<Long>(sCopy.getTimestamps());
         List<Place> sCopyPlaces = sCopy.getPlaces();
 
         double result = 0.0;

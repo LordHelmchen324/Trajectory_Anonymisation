@@ -1,6 +1,7 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -75,7 +76,7 @@ public class TrajectoryTest {
         t.add(3, new Place(8, 5));
         t.add(9, new Place(6, 3));
 
-        List<Long> times = t.getTimestamps();
+        List<Long> times = new ArrayList<Long>(t.getTimestamps());
 
         for (int i = 0; i < times.size() - 1; i++) {
             assertTrue(times.get(i) < times.get(i + 1));
@@ -91,7 +92,7 @@ public class TrajectoryTest {
         t.add(9, new Place(6, 3));
         t.add(2, new Place(1, 7));
 
-        List<Long> times = t.getTimestamps();
+        List<Long> times = new ArrayList<Long>(t.getTimestamps());
 
         for (int i = 0; i < times.size() - 1; i++) {
             assertTrue(times.get(i) < times.get(i + 1));

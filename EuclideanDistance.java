@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 
 public class EuclideanDistance implements DistanceMeasure {
@@ -14,9 +15,9 @@ public class EuclideanDistance implements DistanceMeasure {
 
         long result = 0;
 
-        List<Long> rTimes = r.getTimestamps();
+        List<Long> rTimes = new ArrayList<Long>(r.getTimestamps());
         List<Place> rPlaces = r.getPlaces();
-        List<Long> sTimes = s.getTimestamps();
+        List<Long> sTimes = new ArrayList<Long>(s.getTimestamps());
         List<Place> sPlaces = s.getPlaces();
 
         for (int i = 0; i < r.length(); i++) {
