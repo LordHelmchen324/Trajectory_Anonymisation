@@ -9,30 +9,18 @@ import com.google.gson.Gson;
 class Anonymisation {
 
     public static void main(String[] args) {
-        System.out.print("Reading data set from JSON file ... ");
+        Dataset d = new Dataset();
 
         File datasetFile = new File("../Geolife Trajectories 1.3/translated.json");
         try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
-            Gson gson = new Gson();
-            Dataset d = makeLargeDataset();
-            //Dataset d = gson.fromJson(r, Dataset.class);
+            System.out.print("Reading data set from JSON file ... ");
+
+            //Gson gson = new Gson();
+            d = makeLargeDataset();
+            //d = gson.fromJson(r, Dataset.class);
 
             System.out.print("done!\n");
-            System.out.println("Size of the data set = " + d.size() + "\n");
-
-            DistanceMeasure dM = new ShortTimeSeriesDistance();
-            dM.createSupportData(d);
-            dM.removeImpossibleTrajectoriesFromDataset(d);
-
-            MedianStrategy mS = new XMedianY();
-
-            System.out.println("Protecting data set ...");
-
-            Dataset result = d.protectedByMDAV(9, dM, mS);
-
-            System.out.println("Data set protection finished.\n");
-
-            System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
+            System.out.println(" -> Size of the data set = " + d.size() + "\n");
         } catch (FileNotFoundException e) {
             System.err.println("Could not find file at path \"" + datasetFile.getName() + "\".");
             System.exit(1);
@@ -40,6 +28,24 @@ class Anonymisation {
             System.err.println("An I/O exception occured: " + e.getLocalizedMessage());
             System.exit(1);
         }
+
+        System.out.println("Preparing DistanceMeasure and MedianStrategy ...");
+
+        DistanceMeasure dM = new SynchronisedDistance();
+        dM.createSupportData(d);
+        dM.removeImpossibleTrajectoriesFromDataset(d);
+
+        MedianStrategy mS = new XMedianY();
+
+        System.out.println("DistanceMeasure and MedianStrategy prepared.");
+
+        System.out.println("Protecting data set ...");
+
+        Dataset result = d.protectedByMDAV(4, dM, mS);
+
+        System.out.println("Data set protection finished.\n");
+
+        System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
     }
 
     public static Dataset makeSmallDataset() {
