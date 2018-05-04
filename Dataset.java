@@ -73,7 +73,7 @@ class Dataset {
             System.exit(1);
         }
 
-        System.out.print("    > Finding closest trajectory ... ");
+        System.out.print("      > Finding closest trajectory ... ");
 
         double minDistance = Double.MAX_VALUE;
         Trajectory closest = null;
@@ -96,7 +96,7 @@ class Dataset {
             System.exit(1);
         }
 
-        System.out.print("    > Finding furthest trajectory ... ");
+        System.out.print("      > Finding furthest trajectory ... ");
 
         double maxDistance = 0.0;
         Trajectory furthest = null;

@@ -45,7 +45,7 @@ class Anonymisation {
 
         System.out.println("Data set protection finished.\n");
 
-        System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
+        //System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
     }
 
     public static Dataset makeSmallDataset() {
