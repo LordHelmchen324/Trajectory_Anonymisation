@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class SynchronisedDistance implements DistanceMeasure {
 
+    private double[][] distanceGraph;
     private double[][] shortestDistanceMatrix;
 
     @Override
@@ -22,21 +23,16 @@ public class SynchronisedDistance implements DistanceMeasure {
         Dataset temp = new Dataset(d);
 
         System.out.println("    > Synchronising trajectories ...");
-        this.synchroniseTrajectories(temp);
+        SynchronisedDistance.synchroniseTrajectories(temp);
 
         System.out.println("    > Building distance graph ...");
-        double[][] distanceGraph = this.makeDistanceGraph(temp);
+        this.distanceGraph = SynchronisedDistance.makeDistanceGraph(temp);
 
         System.out.println("    > Computing shortest distance matrix ...");
-        this.shortestDistanceMatrix = this.computeShortestDistanceMatrix(distanceGraph);
+        this.shortestDistanceMatrix = SynchronisedDistance.computeShortestDistanceMatrix(this.distanceGraph);
     }
 
-	@Override
-	public void removeImpossibleTrajectoriesFromDataset(Dataset d) {
-		return;   // TODO: Remove everything but the largest part
-	}
-
-    private void synchroniseTrajectories(Dataset d) {
+    private static void synchroniseTrajectories(Dataset d) {
         // Get a set of all timestamps of all existing places within the data set
         System.out.println("      > Getting set of all timestamps ...");
         Set<Long> ts = new HashSet<Long>();
@@ -77,7 +73,7 @@ public class SynchronisedDistance implements DistanceMeasure {
         }
     }
 
-    private double[][] makeDistanceGraph(Dataset temp) {
+    private static double[][] makeDistanceGraph(Dataset temp) {
         List<Trajectory> trajectories = temp.getTrajectories();
 
         double[][] distanceGraph = new double[trajectories.size()][trajectories.size()];
@@ -88,8 +84,8 @@ public class SynchronisedDistance implements DistanceMeasure {
 
                 if (s == r) {
                     d = 0;
-                } else if (this.percentContemporary(r, s) > 0) {
-                    d = this.directDistance(r, s);
+                } else if (SynchronisedDistance.percentContemporary(r, s) > 0) {
+                    d = SynchronisedDistance.directDistance(r, s);
                 } else {
                     d = Double.POSITIVE_INFINITY;
                 }
@@ -101,7 +97,7 @@ public class SynchronisedDistance implements DistanceMeasure {
         return distanceGraph;
     }
 
-    private double percentContemporary(Trajectory r, Trajectory s) {
+    private static double percentContemporary(Trajectory r, Trajectory s) {
         long rFirstT = Collections.min(r.getTimestamps());
         long rLastT = Collections.max(r.getTimestamps());
         long sFirstT = Collections.min(s.getTimestamps());
@@ -112,7 +108,7 @@ public class SynchronisedDistance implements DistanceMeasure {
         return 100 * Math.min((double)I / (double)(rLastT - rFirstT), (double)I / (double)(sLastT - sFirstT));
     }
 
-    private double directDistance(Trajectory r, Trajectory s) {
+    private static double directDistance(Trajectory r, Trajectory s) {
         Set<Long> ot = new HashSet<Long>(r.getTimestamps());
         ot.retainAll(s.getTimestamps());
 
@@ -123,10 +119,10 @@ public class SynchronisedDistance implements DistanceMeasure {
             sum += (a1 + a2) / Math.pow(ot.size(), 2);
         }
 
-        return Math.sqrt(sum) / this.percentContemporary(r, s);
+        return Math.sqrt(sum) / SynchronisedDistance.percentContemporary(r, s);
     }
 
-    private double[][] computeShortestDistanceMatrix(double[][] distanceGraph) {
+    private static double[][] computeShortestDistanceMatrix(double[][] distanceGraph) {
         int n = distanceGraph.length;
 
         double[][] shortestDistanceMatrix = new double[n][n];
@@ -149,6 +145,11 @@ public class SynchronisedDistance implements DistanceMeasure {
 
         return distanceGraph;
     }
+
+    @Override
+	public void removeImpossibleTrajectoriesFromDataset(Dataset d) {
+		return;   // TODO: Remove everything but the largest part
+	}
 
 	@Override
 	public double computeDistance(Trajectory r, Trajectory s) {
