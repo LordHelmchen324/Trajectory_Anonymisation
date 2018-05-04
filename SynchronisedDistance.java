@@ -9,11 +9,13 @@ public class SynchronisedDistance implements DistanceMeasure {
     private double[][] shortestDistanceMatrix;
 
     @Override
-    public void prepareDataset(Dataset d) {
-        this.synchroniseTrajectories(d);
+	public void createSupportData(Dataset d) {
+        Dataset temp = new Dataset(d);
+
+        this.synchroniseTrajectories(temp);
 
         int i = 0;
-        for (Trajectory r : d.getTrajectories()) {
+        for (Trajectory r : temp.getTrajectories()) {
             this.dict.put(r, i);
             i++;
         }
@@ -21,6 +23,11 @@ public class SynchronisedDistance implements DistanceMeasure {
         double[][] distanceGraph = this.makeDistanceGraph();
         this.shortestDistanceMatrix = this.computeShortestDistanceMatrix(distanceGraph);
     }
+
+	@Override
+	public void removeImpossibleTrajectoriesFromDataset(Dataset d) {
+		return;   // TODO: Remove everything but the largest part
+	}
 
     private void synchroniseTrajectories(Dataset d) {
         // Get a set of all timestamps of all existing places within the data set

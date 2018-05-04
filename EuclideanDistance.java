@@ -4,7 +4,10 @@ import java.util.List;
 public class EuclideanDistance implements DistanceMeasure {
 
     @Override
-    public void prepareDataset(Dataset d) { }
+	public void createSupportData(Dataset d) { }
+
+	@Override
+	public void removeImpossibleTrajectoriesFromDataset(Dataset d) { }
 
     @Override
     public double computeDistance(final Trajectory r, final Trajectory s) {

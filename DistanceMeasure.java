@@ -1,6 +1,8 @@
 public interface DistanceMeasure {
 
-    void prepareDataset(Dataset d);
+    void createSupportData(Dataset d);
+
+    void removeImpossibleTrajectoriesFromDataset(Dataset d);
 
     double computeDistance(final Trajectory r, final Trajectory s);
 

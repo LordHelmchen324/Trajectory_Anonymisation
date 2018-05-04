@@ -14,13 +14,16 @@ class Anonymisation {
         File datasetFile = new File("../Geolife Trajectories 1.3/translated.json");
         try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
             Gson gson = new Gson();
-            //Dataset d = makeLargeDataset();
-            Dataset d = gson.fromJson(r, Dataset.class);
+            Dataset d = makeLargeDataset();
+            //Dataset d = gson.fromJson(r, Dataset.class);
 
             System.out.print("done!\n");
             System.out.println("Size of the data set = " + d.size() + "\n");
 
             DistanceMeasure dM = new ShortTimeSeriesDistance();
+            dM.createSupportData(d);
+            dM.removeImpossibleTrajectoriesFromDataset(d);
+
             MedianStrategy mS = new XMedianY();
 
             System.out.println("Protecting data set ...");
