@@ -137,7 +137,10 @@ public class SynchronisedDistance implements DistanceMeasure {
 
 	@Override
 	public double computeDistance(Trajectory r, Trajectory s) {
-		return 0;
+        int rIndex = this.dict.get(r);
+        int sIndex = this.dict.get(s);
+
+        return this.shortestDistanceMatrix[rIndex][sIndex];
 	}
 
 }
