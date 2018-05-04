@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 class Trajectory {
 
@@ -41,8 +42,8 @@ class Trajectory {
         return this.places.get(t);
     }
 
-    public List<Long> getTimestamps() {
-        return new ArrayList<Long>(this.places.keySet());
+    public Set<Long> getTimestamps() {
+        return this.places.keySet();
     }
 
     public List<Place> getPlaces() {
