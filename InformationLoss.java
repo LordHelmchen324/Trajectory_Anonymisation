@@ -42,6 +42,7 @@ class InformationLoss {
         int s = o.size();
 
         double outerSum = 0.0;
+        double n = 1.0;     // TODO: Dummy
         double[] hs = { 0.0, n / 4, n / 2, 3 * n / 4 };     // What is n?
         for (double h : hs) {
             double innerSum = 0.0;
@@ -71,11 +72,13 @@ class InformationLoss {
                 
             }
         }
+        
+        return 0.0;     // TODO: Dummy
     }
 
     // IL_3
     private static double spaceDistortion(Dataset o, Dataset p) {
-
+        return 0.0;     // TOD0: Dummy
     }
 
 }
