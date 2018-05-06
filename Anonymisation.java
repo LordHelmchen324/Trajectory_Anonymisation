@@ -46,6 +46,15 @@ class Anonymisation {
         System.out.println("Data set protection finished.\n");
 
         //System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
+
+        // TODO: Dummy
+        try {
+            Runtime rt = Runtime.getRuntime();
+            Process pr = rt.exec("python plot_ru_map.py 50.0 25.0 25.0 42.0");
+        } catch (IOException e) {
+            System.err.println("An I/O exception occured: " + e.getLocalizedMessage());
+            System.exit(1);
+        }
     }
 
     public static Dataset makeSmallDataset() {
