@@ -39,7 +39,22 @@ class InformationLoss {
 
     // IL_1.2
     private static double averageDifferenceAutocorrelation(Dataset o, Dataset p) {
+        int s = o.size();
 
+        double outerSum = 0.0;
+        for (int h = 0; h < max; h++) {     // TODO: ???
+            
+            double innerSum = 0.0;
+            for (int i = 0; i < s; i++) {
+                double rhoo = o.getTrajectories().get(i).autocorrelation((double)h);
+                double rhop = p.getTrajectories().get(i).autocorrelation((double)h);
+                innerSum += Math.abs(rhoo - rhop);
+            }
+
+            outerSum += innerSum / s;
+        }
+
+        return outerSum / 4;
     }
 
     // IL_2
