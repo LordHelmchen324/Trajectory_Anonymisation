@@ -3,15 +3,15 @@ class InformationLoss {
     public static double compute(Dataset o, Dataset p) {
         // TODO: What if Datasets are of different size?
 
-        double il_11 = InformationLoss.averageDifferenceMeans(o, p);
-        double il_12 = InformationLoss.averageDifferenceAutocorrelation(o, p);
-        double il_1 = (il_11 + il_12) / 2;
+        double il11 = InformationLoss.averageDifferenceMeans(o, p);
+        double il12 = InformationLoss.averageDifferenceAutocorrelation(o, p);
+        double il1 = (il11 + il12) / 2;
 
-        double il_2 = InformationLoss.averageAbsoluteDifference(o, p);
+        double il2 = InformationLoss.averageAbsoluteDifference(o, p);
 
-        double il_3 = InformationLoss.spaceDistortion(o, p);
+        double il3 = InformationLoss.spaceDistortion(o, p);
 
-        return (il_1 + il_2 + il_3) / 3;    // TODO: Is that correct?
+        return (il1 + il2 + il3) / 3;    // TODO: Is that correct?
     }
 
     // IL_1.1
@@ -68,17 +68,30 @@ class InformationLoss {
             Trajectory rp = p.getTrajectories().get(i);
 
             int n = ro.length();    // TODO: What if original and protected have different length?
-            for (int j = 0; j < n; j++) {
-                
+            for (int j = 0; j < n; j++) {    // TODO: They don't really have the same timestamps!
+                Place po = ro.getPlaces().get(j);
+                Place pp = rp.getPlaces().get(j);
+
+                double a1 = Math.abs(Math.abs(po.getX()) - Math.abs(pp.getX()));
+                double b1 = Math.max(Math.abs(po.getX()), Math.abs(pp.getX()));
+                double a2 = Math.abs(Math.abs(po.getY()) - Math.abs(pp.getY()));
+                double b2 = Math.max(Math.abs(po.getY()), Math.abs(pp.getY()));
+
+                sum += a1 / b1 + a2 / b2;
             }
         }
         
-        return 0.0;     // TODO: Dummy
+        return sum / (2 * s * n);   // TODO: n of which Trajectoriy?
     }
 
     // IL_3
     private static double spaceDistortion(Dataset o, Dataset p) {
-        return 0.0;     // TOD0: Dummy
+        int s = o.size();
+
+        double sum = 0.0;
+        for (int i = 0; i < s; i++) {
+            double a = 
+        }
     }
 
 }
