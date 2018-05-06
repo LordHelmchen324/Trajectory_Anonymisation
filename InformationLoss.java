@@ -42,8 +42,8 @@ class InformationLoss {
         int s = o.size();
 
         double outerSum = 0.0;
-        for (int h = 0; h < max; h++) {     // TODO: ???
-            
+        double[] hs = { 0.0, n / 4, n / 2, 3 * n / 4 };     // What is n?
+        for (double h : hs) {
             double innerSum = 0.0;
             for (int i = 0; i < s; i++) {
                 double rhoo = o.getTrajectories().get(i).autocorrelation((double)h);
