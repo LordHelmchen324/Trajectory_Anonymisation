@@ -61,7 +61,7 @@ class Trajectory {
 
     // Autocorrelation
 
-    private double averageX() {
+    public double averageX() {
         int sum = 0;
         for (Place p : this.places.values()) {
             sum += p.getX();
@@ -70,7 +70,7 @@ class Trajectory {
         return (double)sum / (double)this.length();
     }
 
-    private double averageY() {
+    public double averageY() {
         int sum = 0;
         for (Place p : this.places.values()) {
             sum += p.getY();

@@ -1,6 +1,8 @@
 class InformationLoss {
 
     public static double compute(Dataset o, Dataset p) {
+        // TODO: What if Datasets are of different size?
+
         double il_11 = InformationLoss.averageDifferenceMeans(o, p);
         double il_12 = InformationLoss.averageDifferenceAutocorrelation(o, p);
         double il_1 = (il_11 + il_12) / 2;
@@ -14,7 +16,25 @@ class InformationLoss {
 
     // IL_1.1
     private static double averageDifferenceMeans(Dataset o, Dataset p) {
+        int s = o.size();
 
+        double sum = 0.0;
+        for (int i = 0; i < s; i++) {
+            Trajectory ro = o.getTrajectories().get(i);
+            Trajectory rp = p.getTrajectories().get(i);
+
+            double myxro = ro.averageX();
+            double myxrp = rp.averageX();
+            double a = Math.abs(myxro - myxrp) / Math.max(myxro, myxrp);
+
+            double myyro = ro.averageY();
+            double myyrp = rp.averageY();
+            double b = Math.abs(myyro - myyrp) / Math.max(myyro, myyrp);
+
+            sum += a + b;
+        }
+
+        return sum / (2 * s);
     }
 
     // IL_1.2
