@@ -26,41 +26,41 @@ public class TrajectoryTest {
 
     @Test
     public void copyEquals() {
-        Trajectory t = new Trajectory();
-        t.add(1, new Place(3, 6));
-        t.add(2, new Place(1, 7));
-        t.add(3, new Place(8, 5));
+        Trajectory r = new Trajectory();
+        r.add(1, new Place(3, 6));
+        r.add(2, new Place(1, 7));
+        r.add(3, new Place(8, 5));
 
-        Trajectory tCopy = new Trajectory(t);
+        Trajectory rCopy = new Trajectory(r);
 
-        assertEquals(t, tCopy);
+        assertEquals(r, rCopy);
     }
 
     @Test
     public void copyDoesHaveSameListOfPlaces() {
-        Trajectory t = new Trajectory();
-        t.add(1, new Place(3, 6));
-        t.add(2, new Place(1, 7));
-        t.add(3, new Place(8, 5));
+        Trajectory r = new Trajectory();
+        r.add(1, new Place(3, 6));
+        r.add(2, new Place(1, 7));
+        r.add(3, new Place(8, 5));
 
-        Trajectory tCopy = new Trajectory(t);
+        Trajectory rCopy = new Trajectory(r);
 
-        assertTrue(t.getPlaces() != tCopy.getPlaces());
+        assertTrue(r.getPlaces() != rCopy.getPlaces());
     }
 
     @Test
     public void copyDoesNotContainSamePlace() {
-        Trajectory t = new Trajectory();
-        t.add(1, new Place(3, 6));
-        t.add(2, new Place(1, 7));
-        t.add(3, new Place(8, 5));
+        Trajectory r = new Trajectory();
+        r.add(1, new Place(3, 6));
+        r.add(2, new Place(1, 7));
+        r.add(3, new Place(8, 5));
 
-        Trajectory tCopy = new Trajectory(t);
+        Trajectory rCopy = new Trajectory(r);
 
-        List<Place> tPlaces = t.getPlaces();
-        List<Place> tCopyPlaces = tCopy.getPlaces();
+        List<Place> rPlaces = r.getPlaces();
+        List<Place> tCopyPlaces = rCopy.getPlaces();
 
-        for (Place p : tPlaces) {
+        for (Place p : rPlaces) {
             for (Place p2 : tCopyPlaces) {
                 assertTrue(p != p2);
             }
@@ -69,14 +69,14 @@ public class TrajectoryTest {
 
     @Test
     public void placesAreOrderedWhenAddededInOrder() {
-        Trajectory t = new Trajectory();
-        t.add(0, new Place(3, 2));
-        t.add(1, new Place(3, 6));
-        t.add(2, new Place(1, 7));
-        t.add(3, new Place(8, 5));
-        t.add(9, new Place(6, 3));
+        Trajectory r = new Trajectory();
+        r.add(0, new Place(3, 2));
+        r.add(1, new Place(3, 6));
+        r.add(2, new Place(1, 7));
+        r.add(3, new Place(8, 5));
+        r.add(9, new Place(6, 3));
 
-        List<Long> times = new ArrayList<Long>(t.getTimestamps());
+        List<Long> times = new ArrayList<Long>(r.getTimestamps());
 
         for (int i = 0; i < times.size() - 1; i++) {
             assertTrue(times.get(i) < times.get(i + 1));
@@ -85,14 +85,14 @@ public class TrajectoryTest {
 
     @Test
     public void placesAreOrderedWhenAddededUnordered() {
-        Trajectory t = new Trajectory();
-        t.add(3, new Place(8, 5));
-        t.add(0, new Place(3, 2));
-        t.add(1, new Place(3, 6));
-        t.add(9, new Place(6, 3));
-        t.add(2, new Place(1, 7));
+        Trajectory r = new Trajectory();
+        r.add(3, new Place(8, 5));
+        r.add(0, new Place(3, 2));
+        r.add(1, new Place(3, 6));
+        r.add(9, new Place(6, 3));
+        r.add(2, new Place(1, 7));
 
-        List<Long> times = new ArrayList<Long>(t.getTimestamps());
+        List<Long> times = new ArrayList<Long>(r.getTimestamps());
 
         for (int i = 0; i < times.size() - 1; i++) {
             assertTrue(times.get(i) < times.get(i + 1));
@@ -169,16 +169,16 @@ public class TrajectoryTest {
 
     @Test
     public void autocorrelationShouldBeLowerEqualThenAtZero() {
-        Trajectory t = new Trajectory();
-        t.add(1, new Place(3, 6));
-        t.add(2, new Place(1, 7));
-        t.add(3, new Place(8, 5));
+        Trajectory r = new Trajectory();
+        r.add(1, new Place(3, 6));
+        r.add(2, new Place(1, 7));
+        r.add(3, new Place(8, 5));
 
-        double autocorrelationAtZero = t.autocorrelation(0.0);
+        double autocorrelationAtZero = r.autocorrelation(0.0);
 
-        Random r = new Random();
-        double shift = r.nextDouble();
-        double shiftedAutocorrelation = t.autocorrelation(shift);
+        Random rand = new Random();
+        double shift = rand.nextDouble();
+        double shiftedAutocorrelation = r.autocorrelation(shift);
 
         assertTrue(shiftedAutocorrelation <= autocorrelationAtZero);
     }

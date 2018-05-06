@@ -9,8 +9,8 @@ abstract class MedianStrategy {
     protected Map<Long,List<Place>> placesByTime(List<Trajectory> trajectories) {
         Map<Long,List<Place>> placesByTime = new HashMap<Long, List<Place>>();
 
-        for (Trajectory t : trajectories) {
-            Set<Long> timestamps = t.getTimestamps();
+        for (Trajectory r : trajectories) {
+            Set<Long> timestamps = r.getTimestamps();
 
             for (long time : timestamps) {
                 List<Place> concurrentPlaces = placesByTime.get(time);
@@ -21,7 +21,7 @@ abstract class MedianStrategy {
                     placesByTime.put(time, concurrentPlaces);
                 }
 
-                concurrentPlaces.add(t.getPlaceAtTime(time));
+                concurrentPlaces.add(r.getPlaceAtTime(time));
             }
         }
 

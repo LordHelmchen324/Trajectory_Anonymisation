@@ -10,14 +10,14 @@ class Dataset {
     public Dataset() { }
 
     public Dataset(Dataset original) {
-        for (Trajectory t : original.trajectories) this.add(new Trajectory(t));
+        for (Trajectory r : original.trajectories) this.add(new Trajectory(r));
     }
 
     @Override
     public String toString() {
         final String lineSeperator = "--------------";
         String s = "" + lineSeperator;
-        for (Trajectory t : this.trajectories) s += "\n" + t.toString();
+        for (Trajectory r : this.trajectories) s += "\n" + r.toString();
         s += "\n" + lineSeperator;
         return s;
     }
@@ -32,10 +32,10 @@ class Dataset {
 
             List<Trajectory> trajectoriesCopy = new LinkedList<Trajectory>(this.trajectories);
             for (int i = 0; i < d.size(); i++) {
-                Trajectory t = d.getTrajectories().get(i);
+                Trajectory r = d.getTrajectories().get(i);
                 boolean found = false;
                 for (int j = 0; j < trajectoriesCopy.size(); j++) {
-                    if (trajectoriesCopy.get(j).equals(t)) {
+                    if (trajectoriesCopy.get(j).equals(r)) {
                         trajectoriesCopy.remove(j);
                         found = true;
                         break;
@@ -49,12 +49,12 @@ class Dataset {
         }
     }
 
-    public void add(Trajectory t) {
-        this.trajectories.add(t);
+    public void add(Trajectory r) {
+        this.trajectories.add(r);
     }
 
-    public void remove(Trajectory t) {
-        this.trajectories.remove(t);
+    public void remove(Trajectory r) {
+        this.trajectories.remove(r);
     }
 
     public int size() {
@@ -67,9 +67,9 @@ class Dataset {
 
     // MDAV
 
-    public Trajectory closestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
+    public Trajectory closestTrajectoryTo(Trajectory r, DistanceMeasure dM) {
         if (this.trajectories.isEmpty()) {
-            System.err.println("Cannot return clostest Trajectory to t = " + t + " from within empty Dataset!");
+            System.err.println("Cannot return clostest Trajectory to t = " + r + " from within empty Dataset!");
             System.exit(1);
         }
 
@@ -77,11 +77,11 @@ class Dataset {
 
         double minDistance = Double.MAX_VALUE;
         Trajectory closest = null;
-        for (Trajectory t2 : this.trajectories) {
-            double distance = dM.computeDistance(t, t2);
+        for (Trajectory s : this.trajectories) {
+            double distance = dM.computeDistance(r, s);
             if (distance < minDistance || closest == null) {
                 minDistance = distance;
-                closest = t2;
+                closest = s;
             }
         }
 
@@ -90,9 +90,9 @@ class Dataset {
         return closest;
     }
 
-    public Trajectory furthestTrajectoryTo(Trajectory t, DistanceMeasure dM) {
+    public Trajectory furthestTrajectoryTo(Trajectory r, DistanceMeasure dM) {
         if (this.trajectories.isEmpty()) {
-            System.err.println("Cannot return furthest Trajectory to t = " + t + " from within empty Dataset!");
+            System.err.println("Cannot return furthest Trajectory to t = " + r + " from within empty Dataset!");
             System.exit(1);
         }
 
@@ -100,11 +100,11 @@ class Dataset {
 
         double maxDistance = 0.0;
         Trajectory furthest = null;
-        for (Trajectory t2 : this.trajectories) {
-            double distance = dM.computeDistance(t, t2);
+        for (Trajectory s : this.trajectories) {
+            double distance = dM.computeDistance(r, s);
             if (distance > maxDistance || furthest == null) {
                 maxDistance = distance;
-                furthest = t2;
+                furthest = s;
             }
         }
 
@@ -113,13 +113,13 @@ class Dataset {
         return furthest;
     }
 
-    public List<Trajectory> removeClusterAround(Trajectory t, int size, DistanceMeasure dM) {
+    public List<Trajectory> removeClusterAround(Trajectory r, int size, DistanceMeasure dM) {
         List<Trajectory> cluster = new LinkedList<Trajectory>();
-        cluster.add(t);
-        this.remove(t);
+        cluster.add(r);
+        this.remove(r);
 
         for (int i = 0; i < size - 1; i++) {
-            Trajectory closest = this.closestTrajectoryTo(t, dM);
+            Trajectory closest = this.closestTrajectoryTo(r, dM);
             cluster.add(closest);
             this.remove(closest);
         }
@@ -139,8 +139,8 @@ class Dataset {
         Iterator<Trajectory> i = this.trajectories.iterator();
         Trajectory longest = i.next();
         while (i.hasNext()) {
-            Trajectory t = i.next();
-            if (t.length() > longest.length()) longest = t;
+            Trajectory r = i.next();
+            if (r.length() > longest.length()) longest = r;
         }
 
         // fill up all the trajectories to the length of the longest
@@ -178,8 +178,8 @@ class Dataset {
         List<Trajectory> lastCluster = clusters.get(clusters.size() - 1);
         Iterator<Trajectory> it = temp.trajectories.iterator();
         while (it.hasNext()) {
-            Trajectory t = it.next();
-            lastCluster.add(t);
+            Trajectory r = it.next();
+            lastCluster.add(r);
             it.remove();
         }
 

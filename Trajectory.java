@@ -31,8 +31,8 @@ class Trajectory {
         if (this == o) return true;
 
         if (o instanceof Trajectory) {
-            Trajectory t = (Trajectory)o;
-            return this.places.equals(t.places);
+            Trajectory r = (Trajectory)o;
+            return this.places.equals(r.places);
         } else return false;
     }
 
