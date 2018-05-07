@@ -65,14 +65,15 @@ class InformationLoss {
     // IL_2
     private static double averageAbsoluteDifference(Dataset o, Dataset p) {
         int s = o.size();
+        int n = 0;
 
         double sum = 0.0;
         for (int i = 0; i < s; i++) {
             Trajectory ro = o.getTrajectories().get(i);
             Trajectory rp = p.getTrajectories().get(i);
 
-            int n = ro.length();    // TODO: What if original and protected have different length?
-            for (int j = 0; j < n; j++) {    // TODO: They don't really have the same timestamps!
+            n = ro.length();
+            for (int j = 0; j < n; j++) {
                 Place po = ro.getPlaces().get(j);
                 Place pp = rp.getPlaces().get(j);
 
@@ -85,7 +86,7 @@ class InformationLoss {
             }
         }
         
-        return sum / (2 * s * n);   // TODO: n of which Trajectoriy?
+        return sum / (2 * s * n);
     }
 
     // IL_3
