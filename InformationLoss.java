@@ -95,8 +95,18 @@ class InformationLoss {
 
         double sum = 0.0;
         for (int i = 0; i < s; i++) {
-            double a = 
+            Trajectory ro = o.getTrajectories().get(i);
+            Trajectory rp = p.getTrajectories().get(i);
+
+            for (int j = 0; j < ro.length(); j++) {
+                Place po = ro.getPlaces().get(i);
+                Place pp = rp.getPlaces().get(i);
+
+                sum += Math.sqrt(Math.pow(po.getX() - pp.getX(), 2) + Math.pow(po.getY() - pp.getY(), 2));
+            }
         }
+
+        return sum;
     }
 
 }
