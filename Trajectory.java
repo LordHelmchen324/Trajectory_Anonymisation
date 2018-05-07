@@ -23,7 +23,7 @@ class Trajectory {
 
     @Override
     public String toString() {
-        return this.places.toString();
+        return "Trajectory " + this.id + ": " + this.places.toString();
     }
 
     @Override
