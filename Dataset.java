@@ -61,6 +61,13 @@ class Dataset {
         return this.trajectories.size();
     }
 
+    public Trajectory getTrajectoryById(int id) {
+        for (Trajectory r : this.trajectories) {
+            if (r.id == id) return r;
+        }
+        return null;
+    }
+
     public List<Trajectory> getTrajectories() {
         return this.trajectories;
     }

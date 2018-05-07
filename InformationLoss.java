@@ -22,9 +22,12 @@ class InformationLoss {
         int s = o.size();
 
         double sum = 0.0;
-        for (int i = 0; i < s; i++) {
-            Trajectory ro = o.getTrajectories().get(i);
-            Trajectory rp = p.getTrajectories().get(i);
+        for (Trajectory ro : o.getTrajectories()) {
+            Trajectory rp = p.getTrajectoryById(ro.id);
+            if (rp == null) {
+                System.err.println("Protected data set does not contain trajectory with id = " + ro.id +" from the original data set!");
+                System.exit(-1);
+            }
 
             double myxro = ro.averageX();
             double myxrp = rp.averageX();
@@ -45,16 +48,16 @@ class InformationLoss {
         int s = o.size();
 
         double sum = 0.0;
-        for (int i = 0; i < s; i++) {
-            Trajectory ro = o.getTrajectories().get(i);
-            Trajectory rp = p.getTrajectories().get(i);
+
+        for (Trajectory ro : o.getTrajectories()) {
+            Trajectory rp = p.getTrajectoryById(ro.id);
             int n = ro.length();
 
             double[] hs = { 0.0, (double)n / 4.0, (double)n / 2.0, 3 * (double)n / 4.0 };
             for (double h : hs) {
                 double rhoo = ro.autocorrelation(h);        // TODO: kommt hier für 0 nicht immer 1 raus?
                 double rhop = rp.autocorrelation(h);
-                
+
                 sum += Math.abs(rhoo - rhop) / Math.max(rhoo, rhop);
             }
         }
@@ -68,9 +71,8 @@ class InformationLoss {
         int n = 0;
 
         double sum = 0.0;
-        for (int i = 0; i < s; i++) {
-            Trajectory ro = o.getTrajectories().get(i);
-            Trajectory rp = p.getTrajectories().get(i);
+        for (Trajectory ro : o.getTrajectories()) {
+            Trajectory rp = p.getTrajectoryById(ro.id);
 
             n = ro.length();
             for (int j = 0; j < n; j++) {
@@ -91,12 +93,9 @@ class InformationLoss {
 
     // IL_3
     private static double spaceDistortion(Dataset o, Dataset p) {
-        int s = o.size();
-
         double sum = 0.0;
-        for (int i = 0; i < s; i++) {
-            Trajectory ro = o.getTrajectories().get(i);
-            Trajectory rp = p.getTrajectories().get(i);
+        for (Trajectory ro : o.getTrajectories()) {
+            Trajectory rp = p.getTrajectoryById(ro.id);
 
             for (int j = 0; j < ro.length(); j++) {
                 Place po = ro.getPlaces().get(j);
