@@ -44,21 +44,22 @@ class InformationLoss {
     private static double averageDifferenceAutocorrelation(Dataset o, Dataset p) {
         int s = o.size();
 
-        double outerSum = 0.0;
-        double n = 1.0;     // TODO: Dummy
-        double[] hs = { 0.0, n / 4, n / 2, 3 * n / 4 };     // What is n?
-        for (double h : hs) {
-            double innerSum = 0.0;
-            for (int i = 0; i < s; i++) {
-                double rhoo = o.getTrajectories().get(i).autocorrelation((double)h);
-                double rhop = p.getTrajectories().get(i).autocorrelation((double)h);
-                innerSum += Math.abs(rhoo - rhop);
-            }
+        double sum = 0.0;
+        for (int i = 0; i < s; i++) {
+            Trajectory ro = o.getTrajectories().get(i);
+            Trajectory rp = p.getTrajectories().get(i);
+            int n = ro.length();
 
-            outerSum += innerSum / s;
+            double[] hs = { 0, n / 4, n / 2, 3 * n / 4 };
+            for (double h : hs) {
+                double rhoo = ro.autocorrelation(h);
+                double rhop = rp.autocorrelation(h);
+
+                sum += Math.abs(rhoo - rhop) / Math.max(rhoo, rhop);
+            }
         }
 
-        return outerSum / 4;
+        return sum / (4 * s);
     }
 
     // IL_2
