@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 
 class Anonymisation {
 
@@ -15,9 +15,9 @@ class Anonymisation {
         try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
             System.out.print("Reading data set from JSON file ... ");
 
-            Gson gson = new Gson();
-            //d = makeLargeDataset();
-            d = gson.fromJson(r, Dataset.class);
+            //Gson gson = new Gson();
+            //d = gson.fromJson(r, Dataset.class);
+            d = makeLargeDataset();
 
             System.out.print("done!\n");
             System.out.println(" -> Size of the data set = " + d.size() + "\n");
