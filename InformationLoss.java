@@ -50,11 +50,11 @@ class InformationLoss {
             Trajectory rp = p.getTrajectories().get(i);
             int n = ro.length();
 
-            double[] hs = { 0, n / 4, n / 2, 3 * n / 4 };
+            double[] hs = { 0.0, (double)n / 4.0, (double)n / 2.0, 3 * (double)n / 4.0 };
             for (double h : hs) {
-                double rhoo = ro.autocorrelation(h);
+                double rhoo = ro.autocorrelation(h);        // TODO: kommt hier für 0 nicht immer 1 raus?
                 double rhop = rp.autocorrelation(h);
-
+                
                 sum += Math.abs(rhoo - rhop) / Math.max(rhoo, rhop);
             }
         }
@@ -99,8 +99,8 @@ class InformationLoss {
             Trajectory rp = p.getTrajectories().get(i);
 
             for (int j = 0; j < ro.length(); j++) {
-                Place po = ro.getPlaces().get(i);
-                Place pp = rp.getPlaces().get(i);
+                Place po = ro.getPlaces().get(j);
+                Place pp = rp.getPlaces().get(j);
 
                 sum += Math.sqrt(Math.pow(po.getX() - pp.getX(), 2) + Math.pow(po.getY() - pp.getY(), 2));
             }

@@ -37,6 +37,8 @@ class DisclosureRisk {
 
             lp[i][0] = ro;
             lp[i][1] = closest;
+
+            i++;
         }
 
         return lp;
