@@ -31,10 +31,7 @@ class Anonymisation {
 
         System.out.println("Preparing DistanceMeasure and MedianStrategy ...");
 
-        DistanceMeasure dM = new SynchronisedDistance();
-        dM.createSupportData(d);
-        dM.removeImpossibleTrajectoriesFromDataset(d);
-
+        DistanceMeasure dM = new ShortTimeSeriesDistance();
         MedianStrategy mS = new XMedianY();
 
         System.out.println("DistanceMeasure and MedianStrategy prepared.");
@@ -45,12 +42,13 @@ class Anonymisation {
 
         System.out.println("Data set protection finished.\n");
 
-        //System.out.println("Orignal:\n" + d + "\n" + "Protected:\n" + result);
+        double il = InformationLoss.compute(d, result);
+        double dr = DisclosureRisk.computeViaRecordLinkage(d, result);
 
         // TODO: Dummy
         try {
             Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("python plot_ru_map.py 50.0 25.0 25.0 42.0");
+            Process pr = rt.exec("python plot_ru_map.py " + dr + " " + il);
         } catch (IOException e) {
             System.err.println("An I/O exception occured: " + e.getLocalizedMessage());
             System.exit(1);
