@@ -1,7 +1,10 @@
 class InformationLoss {
 
     public static double compute(Dataset o, Dataset p) {
-        // TODO: What if Datasets are of different size?
+        if (o.size() != p.size()) {
+            System.err.println("ERROR: Tried to compute information loss of different sized original and protected Datasets!");
+            System.exit(-1);
+        }
 
         double il11 = InformationLoss.averageDifferenceMeans(o, p);
         double il12 = InformationLoss.averageDifferenceAutocorrelation(o, p);
