@@ -188,7 +188,11 @@ class Dataset {
         Dataset result = new Dataset();
         for (List<Trajectory> c : clusters) {
             Trajectory clusterMedian = mS.computeMedian(c);
-            for (int i = 0; i < c.size(); i++) result.add(clusterMedian);
+            for (Trajectory ro : c) {
+                Trajectory rp = new Trajectory(clusterMedian);
+                rp.id = ro.id;
+                result.add(rp);
+            }
         }
 
         return result;

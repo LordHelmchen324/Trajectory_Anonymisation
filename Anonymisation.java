@@ -29,6 +29,14 @@ class Anonymisation {
             System.exit(1);
         }
 
+        // Assigning IDs to the Trajectories to find their protected version later
+        // TODO: Make sure IDs are unique
+        int i = 0;
+        for (Trajectory r : d.getTrajectories()) {
+            r.id = i;
+            i++;
+        }
+
         System.out.println("Preparing DistanceMeasure and MedianStrategy ...");
 
         DistanceMeasure dM = new ShortTimeSeriesDistance();
