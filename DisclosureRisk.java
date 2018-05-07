@@ -6,12 +6,14 @@ class DisclosureRisk {
         DistanceMeasure eu = new EuclideanDistance();
         DistanceMeasure sts = new ShortTimeSeriesDistance();
 
-        double sum = 0.0;
+        double euSum = 0.0;
+        double stsSum = 0.0;
         for (Trajectory[] pair : lp) {
-            sum += Math.max(eu.computeDistance(pair[0], pair[1]), sts.computeDistance(pair[0], pair[1]));
+            euSum += eu.computeDistance(pair[0], pair[1]);
+            stsSum += sts.computeDistance(pair[0], pair[1]);
         }
 
-        return sum / o.size();         // TODO: I literally just guessed that this is how it works :/
+        return Math.max(euSum, stsSum);
     }
 
     private static Trajectory[][] linkTrajectories(Dataset o, Dataset p) {
