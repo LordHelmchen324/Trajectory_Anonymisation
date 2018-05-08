@@ -90,7 +90,8 @@ class InformationLoss {
                 double a2 = Math.abs(Math.abs(po.getY()) - Math.abs(pp.getY()));
                 double b2 = Math.max(Math.abs(po.getY()), Math.abs(pp.getY()));
 
-                if (b1 == 0) sum += a2 / b2;
+                if (b1 == 0 && b2 == 0) continue;
+                else if (b1 == 0) sum += a2 / b2;
                 else if (b2 == 0) sum += a1 / b1;
                 else sum += a1 / b1 + a2 / b2;
             }
