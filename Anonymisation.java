@@ -1,5 +1,3 @@
-import java.io.IOException;
-
 class Anonymisation {
 
     public static void main(String[] args) {
@@ -33,13 +31,7 @@ class Anonymisation {
         System.out.println("Information loss: " + il);
         System.out.println("");
 
-        try {
-            Runtime rt = Runtime.getRuntime();
-            Process pr = rt.exec("python plot_ru_map.py " + dr + " " + il);
-        } catch (IOException e) {
-            System.err.println("An I/O exception occured: " + e.getLocalizedMessage());
-            System.exit(1);
-        }
+        Plotter.plotRUMap(dr, il);
     }
 
 }
