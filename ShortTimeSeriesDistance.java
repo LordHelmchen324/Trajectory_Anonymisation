@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class ShortTimeSeriesDistance implements DistanceMeasure {
@@ -17,29 +16,21 @@ public class ShortTimeSeriesDistance implements DistanceMeasure {
             System.exit(-1);
         }
 
-        long minT = Collections.min(r.getTimestamps());
-        Place rFirstCopy = new Place(r.getPlaceAtTime(minT));
-        Trajectory rCopy = new Trajectory(r);
-        rCopy.add(minT - 1, rFirstCopy);
-        Place sFirstCopy = new Place(s.getPlaceAtTime(minT));
-        Trajectory sCopy = new Trajectory(s);
-        sCopy.add(minT - 1, sFirstCopy);
-
-        List<Long> rCopyTimestamps = new ArrayList<Long>(rCopy.getTimestamps());
-        List<Place> rCopyPlaces = rCopy.getPlaces();
-        List<Long> sCopyTimestamps = new ArrayList<Long>(sCopy.getTimestamps());
-        List<Place> sCopyPlaces = sCopy.getPlaces();
+        List<Long> rTimestamps = new ArrayList<Long>(r.getTimestamps());
+        List<Place> rPlaces = r.getPlaces();
+        List<Long> sTimestamps = new ArrayList<Long>(s.getTimestamps());
+        List<Place> sPlaces = s.getPlaces();
 
         double result = 0.0;
-        for (int i = 0; i < rCopy.length() - 1 ; i++) {
-            long pt = rCopyTimestamps.get(i);
-            Place p = rCopyPlaces.get(i);
-            long ptNext = rCopyTimestamps.get(i + 1);
-            Place pNext = rCopyPlaces.get(i + 1);
-            long qt = sCopyTimestamps.get(i);
-            Place q = sCopyPlaces.get(i);
-            long qtNext = sCopyTimestamps.get(i + 1);
-            Place qNext = sCopyPlaces.get(i + 1);
+        for (int i = 0; i < r.length() - 1 ; i++) {
+            long pt = rTimestamps.get(i);
+            Place p = rPlaces.get(i);
+            long ptNext = rTimestamps.get(i + 1);
+            Place pNext = rPlaces.get(i + 1);
+            long qt = sTimestamps.get(i);
+            Place q = sPlaces.get(i);
+            long qtNext = sTimestamps.get(i + 1);
+            Place qNext = sPlaces.get(i + 1);
         
             double a1 = (double)(qNext.getX() - q.getX()) / (double)(qtNext - qt);
             double a2 = (double)(pNext.getX() - p.getX()) / (double)(qtNext - qt);
