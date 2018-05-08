@@ -1,0 +1,28 @@
+{
+    "run": {
+        "default": "",
+        "items": [
+            {
+                "name": "Anonymisation",
+                "projectName": "Anonymisation",
+                "workingDirectory": "/Users/jankaiser/Documents/TUHH/Bachelorarbeit/Java",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    },
+    "debug": {
+        "default": "",
+        "items": [
+            {
+                "name": "Anonymisation",
+                "projectName": "Anonymisation",
+                "workingDirectory": "/Users/jankaiser/Documents/TUHH/Bachelorarbeit/Java",
+                "args": [],
+                "vmargs": [],
+                "preLaunchTask": ""
+            }
+        ]
+    }
+}
