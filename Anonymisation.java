@@ -50,8 +50,12 @@ class Anonymisation {
 
         System.out.println("Data set protection finished.\n");
 
-        double il = InformationLoss.compute(d, result);
         double dr = DisclosureRisk.computeViaRecordLinkage(d, result);
+        double il = InformationLoss.compute(d, result);
+
+        System.out.println("Disclosure risk: " + dr);
+        System.out.println("Information loss: " + il);
+        System.out.println("");
 
         // TODO: Dummy
         try {
