@@ -31,11 +31,17 @@ class InformationLoss {
 
             double myxro = ro.averageX();
             double myxrp = rp.averageX();
-            double a = Math.abs(myxro - myxrp) / Math.max(myxro, myxrp);
+            double a1 = Math.abs(myxro - myxrp);
+            double a2 = Math.max(Math.abs(myxro), Math.abs(myxrp));
+            double a = 0;
+            if (a2 != 0) a = a1 / a2;
 
             double myyro = ro.averageY();
             double myyrp = rp.averageY();
-            double b = Math.abs(myyro - myyrp) / Math.max(myyro, myyrp);
+            double b1 = Math.abs(myyro - myyrp);
+            double b2 = Math.max(Math.abs(myyro), Math.abs(myyrp));
+            double b = 0;
+            if (b2 != 0) b = b1 / b2; 
 
             sum += a + b;
         }
@@ -58,7 +64,7 @@ class InformationLoss {
                 double rhoo = ro.autocorrelation(h);        // TODO: kommt hier für 0 nicht immer 1 raus?
                 double rhop = rp.autocorrelation(h);
 
-                sum += Math.abs(rhoo - rhop) / Math.max(rhoo, rhop);
+                sum += Math.abs(rhoo - rhop) / Math.max(Math.abs(rhoo), Math.abs(rhop));    // Autocorrelation won't be 0 for all h in hs
             }
         }
 
@@ -84,7 +90,9 @@ class InformationLoss {
                 double a2 = Math.abs(Math.abs(po.getY()) - Math.abs(pp.getY()));
                 double b2 = Math.max(Math.abs(po.getY()), Math.abs(pp.getY()));
 
-                sum += a1 / b1 + a2 / b2;
+                if (b1 == 0) sum += a2 / b2;
+                else if (b2 == 0) sum += a1 / b1;
+                else sum += a1 / b1 + a2 / b2;
             }
         }
         
