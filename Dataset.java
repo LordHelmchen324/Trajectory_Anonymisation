@@ -1,7 +1,14 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+
+import com.google.gson.Gson;
 
 class Dataset {
 
@@ -11,6 +18,262 @@ class Dataset {
 
     public Dataset(Dataset original) {
         for (Trajectory r : original.trajectories) this.add(new Trajectory(r));
+    }
+
+    public static Dataset geoLife() {
+        File datasetFile = new File("../Geolife Trajectories 1.3/translated.json");
+        try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
+            System.out.print("Reading data set from JSON file ... ");
+
+            Gson gson = new Gson();
+            Dataset d = gson.fromJson(r, Dataset.class);
+
+            System.out.print("done!\n");
+            System.out.println(" -> Size of the data set = " + d.size() + "\n");
+
+            return d;
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find file at path \"" + datasetFile.getName() + "\".");
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println("An I/O exception occured: " + e.getLocalizedMessage());
+            System.exit(1);
+        }
+        return null;
+    }
+
+    public static Dataset smallDummy() {
+        Dataset d = new Dataset();
+
+        Trajectory t1 = new Trajectory();
+        t1.add(1, new Place(1, 0));
+        t1.add(2, new Place(3, 2));
+        t1.add(3, new Place(4, 2));
+        t1.add(4, new Place(5, 2));
+        t1.add(5, new Place(5, 2));
+        t1.add(6, new Place(9, 7));
+        d.add(t1);
+
+        Trajectory t11 = new Trajectory();
+        t11.add(1, new Place(1, 0));
+        t11.add(2, new Place(3, 2));
+        t11.add(3, new Place(4, 2));
+        t11.add(4, new Place(5, 2));
+        t11.add(5, new Place(5, 2));
+        t11.add(6, new Place(9, 7));
+        d.add(t11);
+
+        Trajectory t2 = new Trajectory();
+        t2.add(1, new Place(1, 0));
+        t2.add(2, new Place(3, 2));
+        t2.add(3, new Place(4, 2));
+        t2.add(4, new Place(5, 2));
+        t2.add(5, new Place(5, 2));
+        t2.add(6, new Place(9, 7));
+        d.add(t2);
+        d.add(t2);
+
+        Trajectory t22 = new Trajectory();
+        t22.add(1, new Place(1, 0));
+        t22.add(2, new Place(3, 6));
+        t22.add(3, new Place(5, 3));
+        t22.add(4, new Place(9, 7));
+        t22.add(5, new Place(2, 4));
+        t22.add(6, new Place(4, 2));
+        d.add(t22);
+
+        return d;
+    }
+
+    public static Dataset largeDummy() {
+        Dataset d = new Dataset();
+        
+        // club 1
+
+        Trajectory t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(1, 0));
+        t.add(3, new Place(2, 0));
+        t.add(4, new Place(3, 0));
+        t.add(5, new Place(4, 0));
+        t.add(6, new Place(5, 0));
+        t.add(7, new Place(6, 0));
+        t.add(8, new Place(7, 0));
+        t.add(9, new Place(8, 0));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(1, 2));
+        t.add(2, new Place(1, 0));
+        t.add(3, new Place(2, 0));
+        t.add(4, new Place(3, 0));
+        t.add(5, new Place(4, 1));
+        t.add(6, new Place(5, 0));
+        t.add(7, new Place(6, 0));
+        t.add(8, new Place(7, 0));
+        t.add(9, new Place(8, 0));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(1, 0));
+        t.add(3, new Place(2, 1));
+        t.add(4, new Place(3, 1));
+        t.add(5, new Place(4, 0));
+        t.add(6, new Place(5, 0));
+        t.add(7, new Place(6, 0));
+        t.add(8, new Place(7, 0));
+        t.add(9, new Place(6, 1));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(1, 0));
+        t.add(3, new Place(2, 0));
+        t.add(4, new Place(3, 0));
+        t.add(5, new Place(4, 0));
+        t.add(6, new Place(5, 0));
+        t.add(7, new Place(6, 0));
+        t.add(8, new Place(7, 0));
+        t.add(9, new Place(9, 0));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 1));
+        t.add(2, new Place(1, 1));
+        t.add(3, new Place(2, 1));
+        t.add(4, new Place(3, 0));
+        t.add(5, new Place(4, 0));
+        t.add(6, new Place(5, 0));
+        t.add(7, new Place(6, 0));
+        t.add(8, new Place(7, 0));
+        t.add(9, new Place(8, 0));
+        d.add(t);
+
+        // club 2
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(1, 1));
+        t.add(3, new Place(2, 2));
+        t.add(4, new Place(3, 3));
+        t.add(5, new Place(4, 4));
+        t.add(6, new Place(5, 5));
+        t.add(7, new Place(6, 6));
+        t.add(8, new Place(7, 7));
+        t.add(9, new Place(8, 8));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(1, 1));
+        t.add(3, new Place(2, 3));
+        t.add(4, new Place(3, 4));
+        t.add(5, new Place(4, 5));
+        t.add(6, new Place(5, 6));
+        t.add(7, new Place(6, 7));
+        t.add(8, new Place(7, 8));
+        t.add(9, new Place(8, 8));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 2));
+        t.add(2, new Place(1, 2));
+        t.add(3, new Place(2, 2));
+        t.add(4, new Place(3, 3));
+        t.add(5, new Place(4, 4));
+        t.add(6, new Place(5, 5));
+        t.add(7, new Place(6, 6));
+        t.add(8, new Place(7, 7));
+        t.add(9, new Place(8, 8));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(1, 1));
+        t.add(3, new Place(2, 2));
+        t.add(4, new Place(3, 3));
+        t.add(5, new Place(4, 4));
+        t.add(6, new Place(5, 5));
+        t.add(7, new Place(6, 7));
+        t.add(8, new Place(8, 8));
+        t.add(9, new Place(9, 9));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(1, 1));
+        t.add(3, new Place(1, 2));
+        t.add(4, new Place(2, 3));
+        t.add(5, new Place(4, 4));
+        t.add(6, new Place(5, 5));
+        t.add(7, new Place(6, 6));
+        t.add(8, new Place(7, 7));
+        t.add(9, new Place(8, 8));
+        d.add(t);
+
+        // club 3
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(0, 1));
+        t.add(3, new Place(0, 2));
+        t.add(4, new Place(0, 3));
+        t.add(5, new Place(0, 4));
+        t.add(6, new Place(0, 5));
+        t.add(7, new Place(0, 6));
+        t.add(8, new Place(0, 7));
+        t.add(9, new Place(0, 8));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(1, 0));
+        t.add(2, new Place(1, 1));
+        t.add(3, new Place(0, 2));
+        t.add(4, new Place(0, 3));
+        t.add(5, new Place(0, 4));
+        t.add(6, new Place(0, 5));
+        t.add(7, new Place(0, 6));
+        t.add(8, new Place(0, 7));
+        t.add(9, new Place(1, 8));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(0, 1));
+        t.add(3, new Place(0, 2));
+        t.add(4, new Place(0, 3));
+        t.add(5, new Place(1, 4));
+        t.add(6, new Place(1, 5));
+        t.add(7, new Place(2, 6));
+        t.add(8, new Place(1, 7));
+        t.add(9, new Place(0, 8));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 2));
+        t.add(2, new Place(0, 2));
+        t.add(3, new Place(0, 2));
+        t.add(4, new Place(0, 3));
+        t.add(5, new Place(0, 4));
+        t.add(6, new Place(0, 5));
+        t.add(7, new Place(0, 6));
+        t.add(8, new Place(0, 7));
+        t.add(9, new Place(0, 8));
+        d.add(t);
+
+        t = new Trajectory();
+        t.add(1, new Place(0, 0));
+        t.add(2, new Place(0, 1));
+        t.add(3, new Place(0, 2));
+        t.add(4, new Place(0, 3));
+        t.add(5, new Place(0, 4));
+        t.add(6, new Place(0, 5));
+        t.add(7, new Place(0, 7));
+        t.add(8, new Place(0, 8));
+        t.add(9, new Place(0, 9));
+        d.add(t);
+
+        return d;
     }
 
     @Override
