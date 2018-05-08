@@ -430,8 +430,8 @@ class Dataset {
 
         Random rand = new Random();
         while (temp.size() > k) {
-            //Trajectory avrg = mS.computeMedian(temp.trajectories);
-            Trajectory avrg = temp.getTrajectories().get(rand.nextInt(temp.size()));
+            Trajectory avrg = mS.computeMedian(temp.trajectories);
+            //Trajectory avrg = temp.getTrajectories().get(rand.nextInt(temp.size()));
             Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
             clusters.add(temp.removeClusterAround(furthest, k, dM));
 
