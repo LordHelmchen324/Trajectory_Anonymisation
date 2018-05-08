@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 
 import com.google.gson.Gson;
 
@@ -428,10 +427,8 @@ class Dataset {
 
         System.out.println(" -> Clustering ...");
 
-        Random rand = new Random();
         while (temp.size() > k) {
             Trajectory avrg = mS.computeMedian(temp.trajectories);
-            //Trajectory avrg = temp.getTrajectories().get(rand.nextInt(temp.size()));
             Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
             clusters.add(temp.removeClusterAround(furthest, k, dM));
 
