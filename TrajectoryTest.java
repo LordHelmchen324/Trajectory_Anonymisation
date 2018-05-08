@@ -137,7 +137,7 @@ public class TrajectoryTest {
         s.add(2, new Place(7, 8));
         s.add(3, new Place(2, 4));
 
-        double expected = 14.52583904633395;
+        double expected = 14.177446878757825;
         double actual = this.shortTimeSeries.computeDistance(r, s);
         
         assertEquals(expected, actual, 0.001);
