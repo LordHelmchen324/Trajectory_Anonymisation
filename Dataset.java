@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import com.google.gson.Gson;
 
@@ -39,6 +40,24 @@ class Dataset {
             System.exit(1);
         }
         return null;
+    }
+
+    public static Dataset randomPerfect(int size, long timespan, long maxX, long maxY) {
+        Random rand = new Random();
+
+        Dataset d = new Dataset();
+        
+        for (int i = 0; i < size; i++) {
+            Trajectory r = new Trajectory();
+            for (long t = 0; t < timespan; t++) {
+                long randomX = Math.abs(rand.nextLong() % maxX);
+                long randomY = Math.abs(rand.nextLong() % maxY);
+                r.add(t, new Place(randomX, randomY));
+            }
+            d.add(r);
+        }
+
+        return d;
     }
 
     public static Dataset smallDummy() {
@@ -441,7 +460,7 @@ class Dataset {
                 System.out.println("    > " + temp.size() + " trajecotires remaining");
             }
         }
-
+        
         List<Trajectory> lastCluster = clusters.get(clusters.size() - 1);
         Iterator<Trajectory> it = temp.trajectories.iterator();
         while (it.hasNext()) {

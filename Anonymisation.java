@@ -1,8 +1,8 @@
 class Anonymisation {
 
     public static void main(String[] args) {
-        Dataset d = Dataset.largeDummy();
-
+        Dataset d = Dataset.randomPerfect(4, 6, 20, 20);
+        
         // Assigning IDs to the Trajectories to find their protected version later
         // TODO: Make sure IDs are unique
         int i = 0;
