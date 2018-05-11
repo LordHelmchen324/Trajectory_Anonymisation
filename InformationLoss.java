@@ -103,6 +103,7 @@ class InformationLoss {
     // IL_3
     private static double spaceDistortion(Dataset o, Dataset p) {
         double sum = 0.0;
+        int n = 0;
         for (Trajectory ro : o.getTrajectories()) {
             Trajectory rp = p.getTrajectoryById(ro.id);
 
@@ -111,10 +112,11 @@ class InformationLoss {
                 Place pp = rp.getPlaces().get(j);
 
                 sum += Math.sqrt(Math.pow(po.getX() - pp.getX(), 2) + Math.pow(po.getY() - pp.getY(), 2));
+                n++;
             }
         }
 
-        return sum;
+        return sum / n;
     }
 
 }
