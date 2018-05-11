@@ -13,7 +13,7 @@ class DisclosureRisk {
             stsSum += sts.computeDistance(pair[0], pair[1]);
         }
 
-        return Math.max(euSum, stsSum);
+        return Math.max(euSum, stsSum) / lp.length;
     }
 
     private static Trajectory[][] linkTrajectories(Dataset o, Dataset p) {
