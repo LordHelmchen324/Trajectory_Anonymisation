@@ -1,7 +1,9 @@
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -40,6 +42,24 @@ class Dataset {
             System.exit(1);
         }
         return null;
+    }
+
+    public static void toJSON(Dataset d, String jsonFilePath) {
+        File outputFile = new File(jsonFilePath);
+        try (BufferedWriter w = new BufferedWriter(new FileWriter(outputFile))) {
+            System.out.print("Writing Dataset to JSON file at path \"" + outputFile.getAbsolutePath() + "\" ... ");
+
+            Gson gson = new Gson();
+            gson.toJson(d, w);
+
+            System.out.print("done!\n\n");
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find file at path \"" + outputFile.getName() + "\".");
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println("An I/O exception occured: " + e.getLocalizedMessage());
+            System.exit(1);
+        }
     }
 
     public static Dataset geoLife() {
