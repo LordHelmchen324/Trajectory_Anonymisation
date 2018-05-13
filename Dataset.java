@@ -20,8 +20,8 @@ class Dataset {
         for (Trajectory r : original.trajectories) this.add(new Trajectory(r));
     }
 
-    public static Dataset geoLife() {
-        File datasetFile = new File("../Geolife Trajectories 1.3/translated.json");
+    public static Dataset fromJSON(String jsonFilePath) {
+        File datasetFile = new File(jsonFilePath);
         try (BufferedReader r = new BufferedReader(new FileReader(datasetFile))) {
             System.out.print("Reading data set from JSON file ... ");
 
@@ -40,6 +40,10 @@ class Dataset {
             System.exit(1);
         }
         return null;
+    }
+
+    public static Dataset geoLife() {
+        return Dataset.fromJSON("../Geolife Trajectories 1.3/translated.json");
     }
 
     public static Dataset randomPerfect(int size, long timespan, long maxX, long maxY) {
