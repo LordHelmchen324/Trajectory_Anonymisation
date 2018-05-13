@@ -6,7 +6,7 @@ class Anonymisation {
         DistanceMeasure dM = new ShortTimeSeriesDistance();
         MedianStrategy mS = new XMedianY();
 
-        Dataset result = d.protectedByMDAV(4, dM, mS);
+        Dataset result = d.protectedByMDAV(9, dM, mS);
 
         Dataset.toJSON(result, "./randomPerfect1000_Result.json");
     }
