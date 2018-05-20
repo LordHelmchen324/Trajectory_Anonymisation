@@ -5,10 +5,12 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 
 import com.google.gson.Gson;
 
@@ -366,6 +368,18 @@ class Dataset {
         return this.trajectories.size();
     }
 
+    public int numberOfRecords() {
+        int sum = 0;
+        for (Trajectory r : this.trajectories) sum += r.length();
+        return sum; 
+    }
+
+    public int numberOfRecordedTimestamps() {
+        Set<Long> ts = new HashSet<Long>();
+        for (Trajectory r : this.trajectories) ts.addAll(r.getTimestamps());
+        return ts.size();
+    }
+
     public Trajectory getTrajectoryById(int id) {
         for (Trajectory r : this.trajectories) {
             if (r.id == id) return r;
@@ -470,15 +484,16 @@ class Dataset {
 
         System.out.println(" -> Clustering ...");
 
-        while (temp.size() > k) {
-            Trajectory avrg = mS.computeMedian(temp.trajectories);
-            Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
+        while (temp.size() >= k) {
+            //Trajectory avrg = mS.computeMedian(temp.trajectories);
+            //Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
+            Trajectory furthest = temp.getTrajectories().get(0);    // Currently as alternative to median
             clusters.add(temp.removeClusterAround(furthest, k, dM));
 
             System.out.println("    > " + temp.size() + " trajecotires remaining");
 
-            if (temp.size() > k) {
-                Trajectory furthest2 = temp.furthestTrajectoryTo(avrg, dM);
+            if (temp.size() >= k) {
+                Trajectory furthest2 = temp.furthestTrajectoryTo(furthest, dM);
                 clusters.add(temp.removeClusterAround(furthest2, k, dM));
 
                 System.out.println("    > " + temp.size() + " trajecotires remaining");

@@ -1,14 +1,18 @@
 class Anonymisation {
 
     public static void main(String[] args) {
-        Dataset d = Dataset.fromJSON("./randomPerfect1000.json");
+        Dataset d = Dataset.fromJSON("../Geolife Trajectories 1.3/MS_GeoLife_pandas-downsampled.json");
 
-        DistanceMeasure dM = new ShortTimeSeriesDistance();
+        DistanceMeasure dM = new SynchronisedDistance();
+        dM.createSupportData(d);
         MedianStrategy mS = new XMedianY();
 
         Dataset result = d.protectedByMDAV(9, dM, mS);
 
-        Dataset.toJSON(result, "./randomPerfect1000_Result.json");
+        System.out.println("|d| = " + d.numberOfRecordedTimestamps());
+        System.out.println("|result| = " + result.numberOfRecordedTimestamps());
+
+        Dataset.toJSON(result, "../Geolife Trajectories 1.3/MS_GeoLife_pandas-downsampled_PROTECTED.json");
     }
 
 }

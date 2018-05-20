@@ -311,4 +311,14 @@ public class DatasetTest {
         assertEquals(result.size(), this.largeDataset.size());
     }
 
+    @Test
+    public void protectedHasTheSameAmountRecords() {
+        DistanceMeasure dM = new ShortTimeSeriesDistance();
+        MedianStrategy mS = new XMedianY();
+
+        Dataset result = this.largeDataset.protectedByMDAV(4, dM, mS);
+
+        assertEquals(result.numberOfRecordedTimestamps(), this.largeDataset.numberOfRecordedTimestamps());
+    }
+
 }
