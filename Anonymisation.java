@@ -12,7 +12,7 @@ class Anonymisation {
         dM.removeImpossibleTrajectoriesFromDataset(d);
         MedianStrategy mS = new XMedianY();
 
-        Dataset result = d.protectedByMDAV(9, dM, mS);
+        Dataset result = d.protectedByMDAV(9, dM, mS, 60000);
 
         Dataset.toJSON(result, "../Geolife Trajectories 1.3/MS_GeoLife_pandas-downsampled_PROTECTED.json");
     }

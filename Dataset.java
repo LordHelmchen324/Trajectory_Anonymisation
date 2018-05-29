@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -519,6 +521,70 @@ class Dataset {
         Dataset result = new Dataset();
         for (List<Trajectory> c : clusters) {
             Trajectory clusterMedian = mS.computeMedian(c);
+
+            for (Trajectory ro : c) {
+                Trajectory rp = new Trajectory(clusterMedian);
+                rp.id = ro.id;
+                result.add(rp);
+            }
+        }
+
+        return result;
+    }
+
+    public Dataset protectedByMDAV(int k, DistanceMeasure dM, MedianStrategy mS, long recordInterval) {
+        System.out.print(" -> Creating a temporary copy of the dataset ... ");
+
+        Dataset temp = new Dataset(this);
+
+        System.out.print("done!\n");
+
+        List<List<Trajectory>> clusters = new LinkedList<List<Trajectory>>();
+
+        System.out.println(" -> Clustering ...");
+
+        while (temp.size() >= k) {
+            //Trajectory avrg = mS.computeMedian(temp.trajectories);
+            //Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
+            Trajectory furthest = temp.getTrajectories().get(0);    // Currently as alternative to median
+            clusters.add(temp.removeClusterAround(furthest, k, dM));
+
+            System.out.println("    > " + temp.size() + " trajecotires remaining");
+
+            if (temp.size() >= k) {
+                Trajectory furthest2 = temp.furthestTrajectoryTo(furthest, dM);
+                clusters.add(temp.removeClusterAround(furthest2, k, dM));
+
+                System.out.println("    > " + temp.size() + " trajecotires remaining");
+            }
+        }
+        
+        List<Trajectory> lastCluster = clusters.get(clusters.size() - 1);
+        Iterator<Trajectory> it = temp.trajectories.iterator();
+        while (it.hasNext()) {
+            Trajectory r = it.next();
+            lastCluster.add(r);
+            it.remove();
+        }
+
+        System.out.println(" -> Setting clusters to their median ...");
+
+        Dataset result = new Dataset();
+        for (List<Trajectory> c : clusters) {
+            Trajectory clusterMedian = mS.computeMedian(c);
+
+            // Don't add if clusterMedian has interval longer than recordInterval
+            List<Long> ts = new ArrayList<Long>(clusterMedian.getTimestamps());
+            Collections.sort(ts);
+            boolean lagging = false;
+            for (int i = 0; i < ts.size() - 1; i++) {
+                if (ts.get(i + 1) - ts.get(i) > recordInterval) {
+                    lagging = true;
+                    break;
+                }
+            }
+            if (lagging) continue;
+
             for (Trajectory ro : c) {
                 Trajectory rp = new Trajectory(clusterMedian);
                 rp.id = ro.id;
