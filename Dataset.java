@@ -380,6 +380,12 @@ class Dataset {
         return ts.size();
     }
 
+    public Set<Long> recordedTimestamps() {
+        Set<Long> ts = new HashSet<Long>();
+        for (Trajectory r : this.trajectories) ts.addAll(r.getTimestamps());
+        return ts;
+    }
+
     public Trajectory getTrajectoryById(int id) {
         for (Trajectory r : this.trajectories) {
             if (r.id == id) return r;
