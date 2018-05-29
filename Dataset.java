@@ -532,12 +532,22 @@ class Dataset {
             }
         }
         
-        List<Trajectory> lastCluster = clusters.get(clusters.size() - 1);
-        Iterator<Trajectory> it = temp.trajectories.iterator();
-        while (it.hasNext()) {
-            Trajectory r = it.next();
-            lastCluster.add(r);
-            it.remove();
+        // Add remaining trajectories to the cluster with their closest neighbour
+        for (Trajectory r : temp.getTrajectories()) {
+            double closestDistance = Double.POSITIVE_INFINITY;
+            List<Trajectory> chosenCluster = clusters.get(0);
+
+            for (List<Trajectory> c : clusters) {
+                for (Trajectory s : c) {
+                    double distance = dM.computeDistance(r, s);
+                    if (distance < closestDistance) {
+                        chosenCluster = c;
+                        closestDistance = distance;
+                    }
+                }
+            }
+
+            chosenCluster.add(r);
         }
 
         System.out.println(" -> Setting clusters to their median ...");
@@ -582,13 +592,23 @@ class Dataset {
                 System.out.println("    > " + temp.size() + " trajecotires remaining");
             }
         }
-        
-        List<Trajectory> lastCluster = clusters.get(clusters.size() - 1);
-        Iterator<Trajectory> it = temp.trajectories.iterator();
-        while (it.hasNext()) {
-            Trajectory r = it.next();
-            lastCluster.add(r);
-            it.remove();
+
+        // Add remaining trajectories to the cluster with their closest neighbour
+        for (Trajectory r : temp.getTrajectories()) {
+            double closestDistance = Double.POSITIVE_INFINITY;
+            List<Trajectory> chosenCluster = clusters.get(0);
+
+            for (List<Trajectory> c : clusters) {
+                for (Trajectory s : c) {
+                    double distance = dM.computeDistance(r, s);
+                    if (distance < closestDistance) {
+                        chosenCluster = c;
+                        closestDistance = distance;
+                    }
+                }
+            }
+
+            chosenCluster.add(r);
         }
 
         System.out.println(" -> Setting clusters to their median ...");
