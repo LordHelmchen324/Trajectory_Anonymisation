@@ -15,6 +15,7 @@ class Anonymisation {
         Dataset result = d.protectedByMDAV(9, dM, mS, 60000);
 
         Dataset.toJSON(result, "../Geolife Trajectories 1.3/MS_GeoLife_pandas-downsampled_PROTECTED.json");
+        Dataset.toCSV(result, "../Geolife Trajectories 1.3/MS_GeoLife_pandas-downsampled_PROTECTED.csv");
     }
 
 }

@@ -66,6 +66,30 @@ class Dataset {
         }
     }
 
+    public static void toCSV(Dataset d, String csvFilePath) {
+        File outputFile = new File(csvFilePath);
+        try (BufferedWriter w = new BufferedWriter(new FileWriter(outputFile))) {
+            System.out.print("Writing Dataset to CSV file at path \"" + outputFile.getAbsolutePath() + "\" ... ");
+
+            for (Trajectory r : d.getTrajectories()) {
+                List<Long> ts = new ArrayList<Long>(r.getTimestamps());
+                Collections.sort(ts);
+                for (long t : ts) {
+                    Place p = r.getPlaceAtTime(t);
+                    w.write(r.id + "," + t + "," + p.getX() + "," + p.getY() + "\n");
+                }
+            }
+
+            System.out.print("done!\n\n");
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not find file at path \"" + outputFile.getName() + "\".");
+            System.exit(1);
+        } catch (IOException e) {
+            System.err.println("An I/O exception occured: " + e.getLocalizedMessage());
+            System.exit(1);
+        }
+    }
+
     public static Dataset geoLife() {
         return Dataset.fromJSON("../Geolife Trajectories 1.3/translated.json");
     }
