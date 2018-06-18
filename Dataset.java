@@ -123,6 +123,8 @@ class Dataset {
 
         for (int i = 0; i < size; i++) {
             Trajectory r = new Trajectory();
+            r.id = i;
+
             long startX = Math.abs((rand.nextLong() % xGridLines) * gridStep);
             long startY = Math.abs((rand.nextLong() % yGridLines) * gridStep);
             Place prev = new Place(startX, startY);
@@ -134,9 +136,9 @@ class Dataset {
 
                 Place p;
                 if (direction == 0) {
-                    p = new Place(prev.getX() + step * gridStep, prev.getY());
+                    p = new Place(Math.abs(Math.min(prev.getX() + step * gridStep, 2000)), prev.getY());
                 } else {
-                    p = new Place(prev.getX(), prev.getY() + step * gridStep);
+                    p = new Place(prev.getX(), Math.abs(Math.min(prev.getY() + step * gridStep, 2000)));
                 }
 
                 r.add(t, p);
