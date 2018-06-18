@@ -142,6 +142,8 @@ class Dataset {
                 r.add(t, p);
                 prev = p;
             }
+
+            d.add(r);
         }
 
         return d;
