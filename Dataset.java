@@ -112,6 +112,41 @@ class Dataset {
         return d;
     }
 
+    public static Dataset randomPerfectOnGrid(int size, long timespan, long maxX, long maxY) {
+        Random rand = new Random();
+        final long gridStep = 50;
+
+        Dataset d = new Dataset();
+
+        long xGridLines = maxX / gridStep;
+        long yGridLines = maxY / gridStep;
+
+        for (int i = 0; i < size; i++) {
+            Trajectory r = new Trajectory();
+            long startX = Math.abs((rand.nextLong() % xGridLines) * gridStep);
+            long startY = Math.abs((rand.nextLong() % yGridLines) * gridStep);
+            Place prev = new Place(startX, startY);
+            r.add(0, prev);
+
+            for (long t = 1; t < timespan; t++) {
+                int direction = (rand.nextInt() % 2);
+                int step = (rand.nextInt() % 7) - 3;
+
+                Place p;
+                if (direction == 0) {
+                    p = new Place(prev.getX() + step * gridStep, prev.getY());
+                } else {
+                    p = new Place(prev.getX(), prev.getY() + step * gridStep);
+                }
+
+                r.add(t, p);
+                prev = p;
+            }
+        }
+
+        return d;
+    }
+
     public static Dataset smallDummy() {
         Dataset d = new Dataset();
 
