@@ -75,8 +75,9 @@ public class SynchronisedDistance implements DistanceMeasure {
     private static double[][] makeDistanceGraph(List<Trajectory> rs) {
         double[][] distanceGraph = new double[rs.size()][rs.size()];
 
+        int builtIn = 1;
         for (Trajectory r : rs) {
-            double percentage = (r.id + 1) * 100 / rs.size();
+            double percentage = builtIn * 100 / rs.size();
             System.out.print("\rBuilding distance graph ... " + percentage + "%");
 
             for (Trajectory s : rs) {
@@ -92,6 +93,8 @@ public class SynchronisedDistance implements DistanceMeasure {
 
                 distanceGraph[r.id][s.id] = distanceGraph[s.id][r.id] = d;
             }
+
+            builtIn++;
         }
 
         System.out.print("\rBuilt distance graph\n");
