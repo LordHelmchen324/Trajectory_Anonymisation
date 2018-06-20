@@ -34,8 +34,7 @@ class Dataset {
             Gson gson = new Gson();
             Dataset d = gson.fromJson(r, Dataset.class);
 
-            System.out.print("done!\n");
-            System.out.println(" -> Size of the data set = " + d.size() + "\n");
+            System.out.print("\rData set was read from JSON file: "+ d.size() + " trajectories\n");
 
             return d;
         } catch (FileNotFoundException e) {
@@ -51,12 +50,12 @@ class Dataset {
     public static void toJSON(Dataset d, String jsonFilePath) {
         File outputFile = new File(jsonFilePath);
         try (BufferedWriter w = new BufferedWriter(new FileWriter(outputFile))) {
-            System.out.print("Writing Dataset to JSON file at path \"" + outputFile.getAbsolutePath() + "\" ... ");
+            System.out.print("\rWriting to JSON file: \'" + outputFile.getName() + "\' ... ");
 
             Gson gson = new Gson();
             gson.toJson(d, w);
 
-            System.out.print("done!\n\n");
+            System.out.print("\rWrote to JSON file: \'" + outputFile.getName() + "\'            \n");
         } catch (FileNotFoundException e) {
             System.err.println("Could not find file at path \"" + outputFile.getName() + "\".");
             System.exit(1);
@@ -69,7 +68,7 @@ class Dataset {
     public static void toCSV(Dataset d, String csvFilePath) {
         File outputFile = new File(csvFilePath);
         try (BufferedWriter w = new BufferedWriter(new FileWriter(outputFile))) {
-            System.out.print("Writing Dataset to CSV file at path \"" + outputFile.getAbsolutePath() + "\" ... ");
+            System.out.print("\rWriting to CSV file: \'" + outputFile.getName() + "\' ... ");
 
             for (Trajectory r : d.getTrajectories()) {
                 List<Long> ts = new ArrayList<Long>(r.getTimestamps());
@@ -80,7 +79,7 @@ class Dataset {
                 }
             }
 
-            System.out.print("done!\n\n");
+            System.out.print("\rWrote to CSV file: \'" + outputFile.getName() + "\'            \n");
         } catch (FileNotFoundException e) {
             System.err.println("Could not find file at path \"" + outputFile.getName() + "\".");
             System.exit(1);
@@ -470,8 +469,6 @@ class Dataset {
             System.exit(1);
         }
 
-        System.out.print("      > Finding closest trajectory ... ");
-
         double minDistance = Double.MAX_VALUE;
         Trajectory closest = null;
         for (Trajectory s : this.trajectories) {
@@ -482,8 +479,6 @@ class Dataset {
             }
         }
 
-        System.out.print("done!\n");
-
         return closest;
     }
 
@@ -492,8 +487,6 @@ class Dataset {
             System.err.println("Cannot return furthest Trajectory to t = " + r + " from within empty Dataset!");
             System.exit(1);
         }
-
-        System.out.print("      > Finding furthest trajectory ... ");
 
         double maxDistance = 0.0;
         Trajectory furthest = null;
@@ -504,8 +497,6 @@ class Dataset {
                 furthest = s;
             }
         }
-
-        System.out.print("done!\n");
 
         return furthest;
     }
@@ -520,8 +511,6 @@ class Dataset {
             cluster.add(closest);
             this.remove(closest);
         }
-
-        System.out.println("    > Made cluster of size " + size);
 
         return cluster;
     }
@@ -544,91 +533,24 @@ class Dataset {
         for (Trajectory t : this.trajectories) t.lengthenToEqualLengthAs(longest);
     }
 
-    public Dataset protectedByMDAV(int k, DistanceMeasure dM, MedianStrategy mS) {
-        System.out.print(" -> Creating a temporary copy of the dataset ... ");
-
-        Dataset temp = new Dataset(this);
-
-        System.out.print("done!\n");
-
-        List<List<Trajectory>> clusters = new LinkedList<List<Trajectory>>();
-
-        System.out.println(" -> Clustering ...");
-
-        while (temp.size() >= k) {
-            //Trajectory avrg = mS.computeMedian(temp.trajectories);
-            //Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
-            Trajectory furthest = temp.getTrajectories().get(0);    // Currently as alternative to median
-            clusters.add(temp.removeClusterAround(furthest, k, dM));
-
-            System.out.println("    > " + temp.size() + " trajecotires remaining");
-
-            if (temp.size() >= k) {
-                Trajectory furthest2 = temp.furthestTrajectoryTo(furthest, dM);
-                clusters.add(temp.removeClusterAround(furthest2, k, dM));
-
-                System.out.println("    > " + temp.size() + " trajecotires remaining");
-            }
-        }
-        
-        // Add remaining trajectories to the cluster with their closest neighbour
-        for (Trajectory r : temp.getTrajectories()) {
-            double closestDistance = Double.POSITIVE_INFINITY;
-            List<Trajectory> chosenCluster = clusters.get(0);
-
-            for (List<Trajectory> c : clusters) {
-                for (Trajectory s : c) {
-                    double distance = dM.computeDistance(r, s);
-                    if (distance < closestDistance) {
-                        chosenCluster = c;
-                        closestDistance = distance;
-                    }
-                }
-            }
-
-            chosenCluster.add(r);
-        }
-
-        System.out.println(" -> Setting clusters to their median ...");
-
-        Dataset result = new Dataset();
-        for (List<Trajectory> c : clusters) {
-            Trajectory clusterMedian = mS.computeMedian(c);
-
-            for (Trajectory ro : c) {
-                Trajectory rp = new Trajectory(clusterMedian);
-                rp.id = ro.id;
-                result.add(rp);
-            }
-        }
-
-        return result;
-    }
-
     public Dataset protectedByMDAV(int k, DistanceMeasure dM, MedianStrategy mS, long recordInterval) {
-        System.out.print(" -> Creating a temporary copy of the dataset ... ");
+        System.out.print("\rProtecting data set for k = " + k + " ...");
 
         Dataset temp = new Dataset(this);
 
-        System.out.print("done!\n");
-
         List<List<Trajectory>> clusters = new LinkedList<List<Trajectory>>();
 
-        System.out.println(" -> Clustering ...");
-
         while (temp.size() >= k) {
+            System.out.print("\rProtecting data set for k = " + k + " : Trajectories remaining ... " + temp.size());
+
             //Trajectory avrg = mS.computeMedian(temp.trajectories);
             //Trajectory furthest = temp.furthestTrajectoryTo(avrg, dM);
             Trajectory furthest = temp.getTrajectories().get(0);    // Currently as alternative to median
             clusters.add(temp.removeClusterAround(furthest, k, dM));
 
-            System.out.println("    > " + temp.size() + " trajecotires remaining");
-
             if (temp.size() >= k) {
                 Trajectory furthest2 = temp.furthestTrajectoryTo(furthest, dM);
                 clusters.add(temp.removeClusterAround(furthest2, k, dM));
-
-                System.out.println("    > " + temp.size() + " trajecotires remaining");
             }
         }
 
@@ -649,8 +571,6 @@ class Dataset {
 
             chosenCluster.add(r);
         }
-
-        System.out.println(" -> Setting clusters to their median ...");
 
         Dataset result = new Dataset();
         for (List<Trajectory> c : clusters) {
@@ -673,7 +593,11 @@ class Dataset {
                 rp.id = ro.id;
                 result.add(rp);
             }
+
+            System.out.print("\rProtecting data set for k = " + k + " : Trajectories set to median ... " + result.size());
         }
+
+        System.out.print("\rProtected data set for k = " + k + "                                                       \n");
 
         return result;
     }

@@ -300,7 +300,7 @@ public class DatasetTest {
             assertTrue(shortTimeSeries.computeDistance(r, e) >= shortTimeSeries.computeDistance(r, closestShortTimeSeries));
         }
     }
-
+    /*
     @Test
     public void protectedHasTheSameAmountTrajectories() {
         DistanceMeasure dM = new ShortTimeSeriesDistance();
@@ -320,5 +320,5 @@ public class DatasetTest {
 
         assertEquals(result.numberOfRecordedTimestamps(), this.largeDataset.numberOfRecordedTimestamps());
     }
-
+    */
 }
