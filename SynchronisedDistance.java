@@ -17,7 +17,7 @@ public class SynchronisedDistance implements DistanceMeasure {
         for (Dataset d : ds) {
             dsCopies.add(new Dataset(d));
         }
-        System.out.print("\rCopied data sets\n");
+        System.out.print("\rCopied data sets       \n");
 
         List<Trajectory> all = new LinkedList<Trajectory>();
         for (Dataset d : dsCopies) all.addAll(d.getTrajectories());
@@ -151,7 +151,7 @@ public class SynchronisedDistance implements DistanceMeasure {
             }
         }
 
-        System.out.print("\rComputed shortest distance matrix\n");
+        System.out.print("\rComputed shortest distance matrix      \n");
 
         return distanceGraph;
     }
@@ -159,6 +159,8 @@ public class SynchronisedDistance implements DistanceMeasure {
     @Override
 	public void removeImpossibleTrajectoriesFromDataset(Dataset d) {
         System.out.print("\rRemoving unreachable trajectories ...");
+
+        int sizeBefore = d.size();
 
         int[] visitedMask = new int[d.size()];
         for (int i = 0; i < visitedMask.length; i++) visitedMask[i] = -1;
@@ -189,7 +191,7 @@ public class SynchronisedDistance implements DistanceMeasure {
             }
         }
 
-        System.out.print("\rRemoved unreachable trajectories\n");
+        System.out.print("\rRemoved unreachable trajectories ... " + (d.size() - sizeBefore) + "\n");
     }
     
     public int depthFirstSearch(int v, int c, int[] visitedMask) {
