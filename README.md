@@ -8,4 +8,4 @@ Check out [jank324/anonymisation-evaluator](https://github.com/jank324/anonymisa
 
 ## References
 <a id="1">[1]</a> 
-S. Martinez-Bea and V. Torra. Trajectory anonymization from a time series per- spective. In *IEEE International Conference on Fuzzy Systems*, pages 401–408, 2011.
+S. Martinez-Bea and V. Torra. Trajectory anonymization from a time series perspective. In *IEEE International Conference on Fuzzy Systems*, pages 401–408, 2011.
